@@ -1,0 +1,960 @@
+openapi: 3.0.2
+servers:
+  - description: Production
+    url: 'https://maps.hereapi.com/v3'
+info:
+  description: |
+    The HERE Raster Tile v3 is a REST API that allows you to request map tile images for all regions in the world.
+    These map tiles, when combined in a grid, form a complete map of the world.
+  license:
+    name: HERE Documentation License
+    url: 'https://legal.here.com/en-gb/terms/documentation-license'
+  termsOfService: 'https://legal.here.com/en-gb/terms/here-platform'
+  title: HERE Raster Tile API v3
+  version: 3.0.0
+  x-apisguru-categories:
+    - location
+  x-document-meta-data:
+    copyright: © 2023 HERE Europe B.V.
+    date-created: '2023-03-06T14:27:34+00:00'
+    document-id: 5923a537-c16c-41f4-a9a8-e55f2589a092
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://avatars.githubusercontent.com/u/2835506'
+  x-origin:
+    - format: openapi
+      url: 'https://developer.here.com/documentation/raster-tile-api/swagger/rastertiles-v3-openapi.yml'
+      version: '3.0'
+  x-providerName: here.com
+  x-serviceName: rastertiles
+security:
+  - Bearer: []
+  - ApiKey: []
+tags:
+  - description: Endpoints to request tiles
+    name: Tiles
+  - description: Endpoints to request API metadata
+    name: Metadata
+  - description: Endpoints to request status of the API
+    name: API Information
+paths:
+  /copyright:
+    get:
+      description: 'Returns the copyright. If your products and/or services use map data that is made accessible using this service, you shall provide end-users of your products and/or services with notice, in a reasonably conspicuous manner.'
+      operationId: getCopyright
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CopyrightsSchema'
+          description: OK - Information about the copyright.
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: Returns the copyright
+      tags:
+        - Metadata
+  /features:
+    get:
+      description: Returns the list of available features per style. Then these values can be used to request a tile with particular features specified as query parameters. Must be consistent with 'style' parameter.
+      operationId: getFeatures
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeaturesSchema'
+          description: OK - List of style mappings to it's features.
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: Returns styles features
+      tags:
+        - Metadata
+  /health:
+    get:
+      description: Tests basic health of the service. This can be used to discard connectivity problems.
+      operationId: getHealth
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponseOk'
+          description: Health response in case of success.
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponseFail'
+          description: Health response in case of failure.
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+      summary: Tests basic health of the service
+      tags:
+        - API Information
+  /info:
+    get:
+      description: 'Returns information about accepted values of some API parameters, like accepted ppi, styles, and so on. Also returns the map version. This version is valid only for 24h.'
+      operationId: getInfo
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoSchema'
+          description: OK - Information about accepted values of some API parameters returned.
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: Returns information about accepted values of some API parameters
+      tags:
+        - Metadata
+  /languages:
+    get:
+      description: 'Returns the list of available map languages per resource. These values can then be used to request a tile with a particular language for the labels. The values follow ISO 639-1 two-letter language code and, optionally, ISO 15924 four-letter script code.'
+      operationId: getLanguages
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LanguagesSchema'
+          description: OK - List of languages per resource.
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: Returns map languages
+      tags:
+        - Metadata
+  /openapi:
+    get:
+      operationId: getOpenAPI
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK - OpenAPI file returned.
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: Returns OpenAPI 3.0 definition of the API (current file)
+      tags:
+        - API Information
+  /politicalViews:
+    get:
+      description: 'Returns the list of available geopolitical views. These values can then be used to request a tile with a particular country view. For more information on geopolitical views, see [Geopolitical views](https://developer.here.com/documentation/raster-tile-api/dev_guide/topics/geopolitical-views.html).'
+      operationId: getPoliticalViews
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliticalViewsSchema'
+          description: OK - List of geopolitical views
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: Returns geopolitical views
+      tags:
+        - Metadata
+  /version:
+    get:
+      description: Retrieves API Specification version information. This is purely informational to know when the API has been updated.
+      operationId: getVersion
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+          description: Version of API
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: Retrieves API Specification version information
+      tags:
+        - API Information
+  '/{resource}/{projection}/{zoom}/{column}/{row}/{format}':
+    get:
+      description: 'Retrieve the rendered map tile in requested format. It is possible to select among different parameters to modify the output, like a different style, languages, label size, and so on.'
+      operationId: getTile
+      parameters:
+        - $ref: '#/components/parameters/ResourceParam'
+        - $ref: '#/components/parameters/ProjectionParam'
+        - $ref: '#/components/parameters/ZoomParam'
+        - $ref: '#/components/parameters/ColumnParam'
+        - $ref: '#/components/parameters/RowParam'
+        - $ref: '#/components/parameters/FormatParam'
+        - $ref: '#/components/parameters/MapVersionParam'
+        - $ref: '#/components/parameters/LanguageParam'
+        - $ref: '#/components/parameters/Language2Param'
+        - $ref: '#/components/parameters/PviewParam'
+        - $ref: '#/components/parameters/StyleParam'
+        - $ref: '#/components/parameters/PpiParam'
+        - $ref: '#/components/parameters/IfNoneMatchParam'
+        - $ref: '#/components/parameters/RenderFeaturesParam'
+        - $ref: '#/components/parameters/SizeParam'
+      responses:
+        '200':
+          content:
+            image/jpg:
+              schema:
+                format: binary
+                type: string
+            image/png:
+              schema:
+                format: binary
+                type: string
+            image/png8:
+              schema:
+                format: binary
+                type: string
+          description: OK - Requested resource is returned
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        '304':
+          description: The resource cached in the client (identified by the If-None-Match header) has not changed.
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/X-Correlation-ID'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: Retrieve the rendered map tile in requested format
+      tags:
+        - Tiles
+components:
+  headers:
+    Cache-Control:
+      description: 'Specifies how the response can be cached. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control'
+      example: max-age=3600
+      schema:
+        type: string
+    ETag:
+      description: Entity tag. Version of the provided tile.
+      schema:
+        type: string
+    X-Correlation-ID:
+      description: |
+        Auto-generated ID, which uniquely identifies the request, available in the response. When contacting the support with an inquiry regarding a specific request, provide the value of this header; This will help troubleshooting the issue.
+      example: 4199533b-6290-41db-8d79-edf4f4019a74
+      schema:
+        type: string
+  parameters:
+    ColumnParam:
+      description: |
+        col – can be any number between 0 and number of columns - 1, both inclusive.
+
+        The number of tiles per column is a function of the zoom: number of columns = 2^zoom.
+
+        [0,0] (col,row) corresponds to top left of a typical western map.
+      example: 4400
+      in: path
+      name: column
+      required: true
+      schema:
+        maximum: 1048576
+        minimum: 0
+        type: integer
+    FormatParam:
+      description: |
+        Returned image format. Supported values are listed in 'info' resource.
+      example: png
+      in: path
+      name: format
+      required: true
+      schema:
+        $ref: '#/components/schemas/FormatSchema'
+    IfNoneMatchParam:
+      description: |
+        Specifies an optional entity tag of the resource cached in the client.
+        See `304` response of getTile operation for more details.
+      example: '12345'
+      in: header
+      name: If-None-Match
+      required: false
+      schema:
+        type: string
+    Language2Param:
+      description: |
+        This parameter can be used to provide a second language for use in dual labeling,
+        it follows the same behavior as the parameter 'lang'.
+      example: en
+      in: query
+      name: lang2
+      required: false
+      schema:
+        $ref: '#/components/schemas/LanguageSchema'
+    LanguageParam:
+      description: |
+        The BCP47 language code (https://www.rfc-editor.org/rfc/bcp/bcp47.txt)
+        limited to ISO 639-1 two-letter language code and, optionally, ISO 15924 four-letter script code.
+        It is used for requesting a map tile rendered in a specific language.
+        Supported values are listed in 'languages' resource.
+
+        Default behavior when no parameter is given is:
+          - Each country will be shown in the default language of the country.
+          - The following labels will be shown in the default language: continent, ocean, sea, bay.
+      example: en
+      in: query
+      name: lang
+      required: false
+      schema:
+        $ref: '#/components/schemas/LanguageSchema'
+    MapVersionParam:
+      description: Specifies the map version to be used. The map version can be retrieved by querying /info
+      in: query
+      name: mv
+      required: false
+      schema:
+        $ref: '#/components/schemas/MapVersionSchema'
+    PpiParam:
+      description: |
+        Pixels per inch. Resolution that can be requested, valid values are:
+          - 100 – normal
+          - 400 – hi-res
+      example: 100
+      in: query
+      name: ppi
+      required: false
+      schema:
+        default: 100
+        enum:
+          - 100
+          - 400
+        type: integer
+    ProjectionParam:
+      description: |
+        Specifies the tile projection. Supported values are listed in 'info' resource.
+          * mc - Mercator Projection
+      example: mc
+      in: path
+      name: projection
+      required: true
+      schema:
+        $ref: '#/components/schemas/ProjectionSchema'
+    PviewParam:
+      description: |
+        Use this parameter to render the map with boundaries based on international or local country views.
+        In general, the international view should be used unless the map is being used within one of those countries
+        for which a local view is available.
+        If the parameter is specified and the view is supported, boundaries of the selected country view are being shown.
+        Not specifying the parameter results in a default view of boundaries.
+
+        The values follow [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes schema.
+
+        Note: You should check the /politicalViews path for further information about how to get the most up to date list of geopolitical views available from the service.
+        Note: If this parameter is missing, the international view is returned.
+      example: IN
+      in: query
+      name: pview
+      required: false
+      schema:
+        $ref: '#/components/schemas/PoliticalViewSchema'
+    RenderFeaturesParam:
+      description: |
+        If present, allows to query tiles by specific features.
+        The features are independent, and the result of the example is that the tile is rendered with `feature_a` feature in `mode_a` mode AND `feature_b` feature in `mode_b` mode.
+        The possible values for features and modes are listed in 'features' resource.
+        * congestion_zones - Display of congestion zones.
+        * environmental_zones - Display of environmental zones.
+        * pois - Display of points of interest.
+        * (preview) vehicle_restrictions - Display of road signs specific to trucks or other special vehicles.
+      explode: false
+      in: query
+      name: features
+      required: false
+      schema:
+        example: 'feature_a:mode_a,feature_b:mode_b'
+        items:
+          pattern: '^[a-zA-Z0-9\-_]+:[a-zA-Z0-9\-_]+$'
+          type: string
+        type: array
+      style: form
+    ResourceParam:
+      description: |
+        Specifies the type of tile. Supported values are listed in 'info' resource.
+      example: base
+      in: path
+      name: resource
+      required: true
+      schema:
+        $ref: '#/components/schemas/ResourceSchema'
+    RowParam:
+      description: |
+        row –  can be any number between 0 and number of rows - 1, both inclusive.
+
+        The number of tiles per row is a function of the zoom: number of rows = 2^zoom.
+
+        [0,0] (col,row) corresponds to top left of a typical western map.
+      example: 2686
+      in: path
+      name: row
+      required: true
+      schema:
+        maximum: 1048576
+        minimum: 0
+        type: integer
+    SizeParam:
+      description: |
+        Image size in pixels. Supported values are listed in 'info' resource.
+      example: 512
+      in: query
+      name: size
+      required: false
+      schema:
+        default: 256
+        type: integer
+    StyleParam:
+      description: |
+        If present, selects the style to use to render the tile. The possible values are listed in 'info' resource.
+        Note: When not provided, the default style is "explore.day".
+      example: explore.day
+      in: query
+      name: style
+      required: false
+      schema:
+        $ref: '#/components/schemas/StyleSchema'
+    ZoomParam:
+      description: |
+        Zoom level of the map image. Minimum and maximum zoom level is specified in the 'info' resource.
+      example: 13
+      in: path
+      name: zoom
+      required: true
+      schema:
+        type: integer
+  responses:
+    ErrorResponse:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponseSchema'
+      description: API response in case of errors.
+      headers:
+        X-Correlation-ID:
+          $ref: '#/components/headers/X-Correlation-ID'
+    ForbiddenError:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ForbiddenErrorSchema'
+      description: Access token does not authorize access.
+      headers:
+        X-Correlation-ID:
+          $ref: '#/components/headers/X-Correlation-ID'
+    UnauthorizedError:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/UnauthorizedErrorSchema'
+      description: Access token is missing or invalid.
+      headers:
+        X-Correlation-ID:
+          $ref: '#/components/headers/X-Correlation-ID'
+  schemas:
+    CopyrightLayersSchema:
+      description: The mapping that matches styles with copyright bounding box definitions.
+      example:
+        styles:
+          explore.satellite.day:
+            - in
+            - sat
+      properties:
+        styles:
+          $ref: '#/components/schemas/CopyrightStylesSchema'
+      type: object
+    CopyrightResourcesSchema:
+      additionalProperties:
+        $ref: '#/components/schemas/CopyrightLayersSchema'
+      description: The copyright style mappings for this particular resource.
+      example:
+        background:
+          styles:
+            explore.satellite.day:
+              - in
+              - sat
+        base:
+          styles:
+            explore.satellite.day:
+              - in
+              - sat
+      type: object
+    CopyrightSchema:
+      properties:
+        boundingBoxes:
+          description: A collection of areas that belong to this copyright
+          items:
+            description: |
+              The bounding boxes define areas where specific copyrights are valid.
+              A bounding box is defined by `west` (longitude), `south` (latitude) and `east` (longitude), `north` (latitude).
+            properties:
+              east:
+                example: 90
+                format: float
+                type: number
+              north:
+                example: 90
+                format: float
+                type: number
+              south:
+                example: -90
+                format: float
+                type: number
+              west:
+                example: -90
+                format: float
+                type: number
+            type: object
+          type: array
+        copyrightText:
+          description: Verbose copyright text of the label displayed upon mouse hover over the label or info menu entry.
+          example: copyright IGN 2009 - BD TOPO
+          type: string
+        label:
+          description: Copyright text to display after the copyright symbol on the map.
+          example: IGN
+          type: string
+        maxLevel:
+          description: Maximum zoom level for the specified copyright label.
+          example: 20
+          type: integer
+        minLevel:
+          description: Minimum zoom level for the specified copyright label.
+          example: 11
+          type: integer
+      type: object
+    CopyrightStylesSchema:
+      additionalProperties:
+        items:
+          example: in
+          type: string
+        type: array
+      example:
+        explore.satellite.day:
+          - in
+          - sat
+      type: object
+    CopyrightsObjectSchema:
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/CopyrightSchema'
+        type: array
+      description: The copyright objects.
+      example:
+        base:
+          - boundingBoxes:
+              - east: 90
+                north: 90
+                south: -90
+                west: -90
+            copyrightText: copyright IGN 2009 - BD TOPO
+            label: IGN
+            maxLevel: 20
+            minLevel: 11
+      type: object
+    CopyrightsSchema:
+      description: Copyright objects and a mapping of "resource" paths to a set of copyright objects associated with the resource.
+      example:
+        copyrights:
+          in:
+            - boundingBoxes:
+                - east: -89.0225
+                  north: 17.8168
+                  south: 16.5943
+                  west: -91.4256
+                - east: -88.2215
+                  north: 16.1868
+                  south: 14.9642
+                  west: -89.0225
+              copyrightText: Aprobado por el INSTITUTO GEOGRAFICO NACIONAL Resolucion del IGN No 186-2011
+              label: IGN Guatemala
+              maxLevel: 20
+              minLevel: 10
+          sat:
+            - boundingBoxes:
+                - east: -180
+                  north: 90
+                  south: -90
+                  west: 180
+              copyrightText: Airbus
+              label: Airbus
+              maxLevel: 20
+              minLevel: 14
+        resources:
+          base:
+            styles:
+              explore.day:
+                - in
+              explore.satellite.day:
+                - in
+                - sat
+      properties:
+        copyrights:
+          $ref: '#/components/schemas/CopyrightsObjectSchema'
+        resources:
+          $ref: '#/components/schemas/CopyrightResourcesSchema'
+      type: object
+    DataVersion:
+      description: Version of a specific data set
+      properties:
+        name:
+          description: 'Identifies a data set, e.g. a HRN, or a service specific identifier'
+          type: string
+        version:
+          description: The current version of this data set
+          type: string
+      required:
+        - name
+        - version
+    ErrorResponseDetailsSchema:
+      description: Detailed information about the error
+      properties:
+        message:
+          description: Error message
+          example: output parameter matches none of the supported values
+          type: string
+    ErrorResponseSchema:
+      description: Response in case of error
+      properties:
+        action:
+          description: Human-readable description of the action that can be taken to correct the error
+          example: Request a valid id
+          type: string
+        cause:
+          description: Human-readable explanation for the error
+          example: The input data in question does not comply with validation rules
+          type: string
+        code:
+          description: Error code.
+          example: E622002
+          type: string
+        correlationId:
+          description: Auto-generated id that uniquely identifies the request
+          example: 4199533b-6290-41db-8d79-edf4f4019a74
+          type: string
+        details:
+          items:
+            $ref: '#/components/schemas/ErrorResponseDetailsSchema'
+          type: array
+        status:
+          description: HTTP status code
+          example: 400
+          type: integer
+        title:
+          description: Human-readable error description
+          example: Input data failed validation
+          type: string
+      required:
+        - title
+        - status
+        - code
+        - cause
+        - action
+        - correlationId
+    FeaturesSchema:
+      description: Provides information about supported features.
+      properties:
+        features:
+          $ref: '#/components/schemas/StylesFeaturesSchema'
+      type: object
+    ForbiddenErrorSchema:
+      description: Custom error response schema returned by authentication
+      properties:
+        error:
+          pattern: ^Forbidden$
+          type: string
+        error_description:
+          type: string
+      type: object
+    FormatSchema:
+      description: Supported image format
+      example: png
+      type: string
+    FormatsSchema:
+      description: List of supported formats
+      items:
+        $ref: '#/components/schemas/FormatSchema'
+      type: array
+    HealthResponseFail:
+      description: Returns the health of the service
+      properties:
+        status:
+          description: |
+            Health status of the service:
+
+            * `ok` - the service is operating normally
+            * `fail` - the service is currently encountering a failure
+          enum:
+            - fail
+          type: string
+    HealthResponseOk:
+      description: Returns the health of the service
+      properties:
+        status:
+          description: |
+            Health status of the service:
+
+            * `ok` - the service is operating normally
+            * `fail` - the service is currently encountering a failure
+          enum:
+            - ok
+          type: string
+    InfoSchema:
+      properties:
+        imageFormats:
+          $ref: '#/components/schemas/FormatsSchema'
+        imageSizes:
+          $ref: '#/components/schemas/SizesSchema'
+        mapVersion:
+          $ref: '#/components/schemas/MapVersionSchema'
+        projections:
+          $ref: '#/components/schemas/ProjectionsSchema'
+        resources:
+          $ref: '#/components/schemas/ResourcesSchema'
+        styles:
+          $ref: '#/components/schemas/StylesSchema'
+        zoomLevels:
+          $ref: '#/components/schemas/ZoomLevelsSchema'
+      type: object
+    LanguageSchema:
+      description: |
+        Indicates that the map on this layer supports the returned language language.
+        The values follow ISO 639-1 two-letter language code and, optionally, ISO 15924 four-letter script code.
+      example: en
+      pattern: '^[a-z]{2}(-[a-zA-Z]{1,4})?$'
+      type: string
+    LanguagesSchema:
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/LanguageSchema'
+        type: array
+      description: Map resource to list of supported languages for that resource
+      example:
+        base:
+          - en
+          - es
+          - ru
+      type: object
+    MapVersionSchema:
+      description: 'The current encoded map version. Lasts for 24 hours. After that period, this value should be refreshed.'
+      example: in123jp45
+      pattern: '^([a-z]{2}[0-9]+)+$'
+      type: string
+    PoliticalViewSchema:
+      description: |
+        Indicates a certain geopolitical view of the map.
+        The values follow [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes schema.
+      example: IN
+      pattern: '^[A-Z]{2,3}$'
+      type: string
+    PoliticalViewsSchema:
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/PoliticalViewSchema'
+        type: array
+      description: |
+        Map resource to list of supported geopolitical views for that resource.
+        The values follow [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes schema.
+      example:
+        base:
+          - AR
+          - CY
+          - EG
+          - IN
+      type: object
+    ProjectionSchema:
+      description: The projection used when rendering tiles
+      example: mc
+      type: string
+    ProjectionsSchema:
+      description: List of available projections
+      items:
+        $ref: '#/components/schemas/ProjectionSchema'
+      type: array
+    ResourceSchema:
+      description: Name of a tile resource
+      example: base
+      type: string
+    ResourcesSchema:
+      description: List of available resources
+      items:
+        $ref: '#/components/schemas/ResourceSchema'
+      type: array
+    SizeSchema:
+      description: Supported image size
+      example: 512
+      type: integer
+    SizesSchema:
+      description: List of supported image sizes
+      items:
+        $ref: '#/components/schemas/SizeSchema'
+      type: array
+    StyleFeatureSchema:
+      description: Defines a single feature.
+      properties:
+        modes:
+          description: Applicable feature modes. The first entry is the default mode. The default mode is used if no other mode is specified in tile request.
+          example:
+            - disabled
+            - all
+          items:
+            type: string
+          type: array
+        name:
+          description: Feature name.
+          example: environmental_zones
+          type: string
+      type: object
+    StyleFeaturesSchema:
+      description: Defines all the features supported by a particular style.
+      items:
+        $ref: '#/components/schemas/StyleFeatureSchema'
+      type: array
+    StyleSchema:
+      example: explore.day
+      type: string
+    StylesFeaturesSchema:
+      additionalProperties:
+        $ref: '#/components/schemas/StyleFeaturesSchema'
+      description: Mapping of a style to all supported features for the style.
+      example:
+        explore.day:
+          - modes:
+              - disabled
+              - all
+            name: environmental_zones
+          - modes:
+              - disabled
+              - all
+            name: congestion_zones
+          - modes:
+              - all
+              - disabled
+            name: pois
+          - modes:
+              - disabled
+              - active_and_inactive
+            name: vehicle_restrictions
+        explore.night:
+          - modes:
+              - disabled
+              - all
+            name: congestion_zones
+      type: object
+    StylesSchema:
+      description: List of available styles
+      items:
+        $ref: '#/components/schemas/StyleSchema'
+      type: array
+    UnauthorizedErrorSchema:
+      description: Custom error response schema returned by authentication
+      properties:
+        error:
+          pattern: ^Unauthorized$
+          type: string
+        error_description:
+          type: string
+      type: object
+    VersionResponse:
+      description: Returns the versions of the service components.
+      properties:
+        apiVersion:
+          description: The current version of the API.
+          pattern: '^[0-9]+\.[0-9]+(\.[0-9]+)?$'
+          type: string
+        dataVersions:
+          description: Returns the versions of data sets used by the service
+          items:
+            $ref: '#/components/schemas/DataVersion'
+          type: array
+        serviceVersion:
+          description: The current version of the service.
+          pattern: '^[0-9]+\.[0-9]+\.[0-9]+-[a-f0-9]{7}(-[a-z]*)?$'
+          type: string
+      required:
+        - apiVersion
+    ZoomLevelsSchema:
+      description: The range of available zoom levels
+      properties:
+        max:
+          description: The maximum value for the zoom parameter
+          example: 20
+          type: integer
+        min:
+          description: The minimum value for the zoom parameter
+          example: 0
+          type: integer
+      type: object
+  securitySchemes:
+    ApiKey:
+      description: |
+        A key generated specifically to authenticate API requests. For more information on how to get an API key, see the API key used to authorize requests. For more information, see [Identity & Access Management - API keys](https://developer.here.com/documentation/identity-access-management/dev_guide/topics/plat-using-apikeys.html).
+      in: query
+      name: apiKey
+      type: apiKey
+    Bearer:
+      bearerFormat: JWT
+      description: |
+        A token obtained from a separate endpoint using client credentials and an OAuth 1.0a HMAC-SHA256 signed request.
+        For more information on how to get a bearer token, see the
+        [Identity & Access Management - OAuth tokens](https://developer.here.com/documentation/identity-access-management/dev_guide/topics/plat-token.html).
+      scheme: bearer
+      type: http
