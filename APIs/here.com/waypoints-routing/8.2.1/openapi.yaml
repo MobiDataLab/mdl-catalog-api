@@ -1,0 +1,1473 @@
+openapi: 3.0.3
+servers:
+  - url: 'https://wps.hereapi.com'
+info:
+  description: Compute the best Sequence for Waypoints (Travelling Salesman Problem)
+  license:
+    name: HERE Documentation License
+    url: 'https://legal.here.com/en-gb/terms/documentation-license'
+  termsOfService: 'http://developer.here.com/terms-conditions'
+  title: Waypoints Sequence
+  version: 8.2.1
+  x-apisguru-categories:
+    - location
+  x-document-meta-data:
+    copyright: © 2023 HERE Europe B.V.
+    date-created: '2023-02-28T17:34:58+00:00'
+    document-id: 8a6b95a2-4983-433b-9afb-3c2fb2c33005
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://avatars.githubusercontent.com/u/2835506'
+  x-origin:
+    - format: openapi
+      url: 'https://developer.here.com/documentation/routing-waypoints/swagger/waypointssequence.json'
+      version: '3.0'
+  x-providerName: here.com
+  x-serviceName: waypoints-routing
+tags:
+  - description: Compute best Sequence for Waypoints (Travelling Salesman Problem)
+    name: Waypoints Sequence
+paths:
+  /v8/findsequence2:
+    get:
+      operationId: findSequenceGETUsingGET_2
+      parameters:
+        - allowReserved: true
+          description: 'One of three authentication methods to choose from. A key generated specifically to authenticate API requests. For more information on how to get an API key, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html .<br/>Other Options are Bearer, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html or app_id with app_code for backward compatibility.'
+          in: query
+          name: apiKey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: '1=vehicle registered for commercial use, 0=otherwise. For toll cost, environmental zone regulations and delivery-only zones.<br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: commercial
+          required: false
+          schema:
+            type: string
+          style: form
+        - allowReserved: true
+          description: "There are two ways of specifying locations to be visited. Below is the documentation of destination0...destinationN.<br/>Using the notation of waypoint0 ... waypointN switches the behavior of this endpoint to the behavior of /2/findpickups.json. This includes the availability as well as the syntax of the parameters.Please check the /2/findpickups.json section of this documentation.<br/>For this endpoint using \"destination...\" is recommended.<br/><br/>Usage of destination0...destinationN:<br/>A waypoint of this service contains an id, a set of latitude, longitude in WGS-84 degree and constraints, which may impose certain restrictions when calculating the sequence.\r\nThe number of waypoints (including start point and end point) without traffic is technically limited to 202 with traffic we have a limit at 52 waypoints, but if the waypoints are in a small area (BBox <30km diagonale) we allow some points more: 72.The format is [ID;]latitude,longitude[;st:{time in seconds}][[;acc:opening hours]|[;at:appointment]][;before:destinationNumber of other waypoint].<br/><br/>The constraints are:<br/>st: service time spent at the waypoint is seconds. Example: st:300<br/>at: an appointment, requires the service time as the duration of the appointment. Example: at:2021-11-15T16:00:00+02:00;st:1800<br/>acc: access hours when a destination can be visited. Requires a service time setting. Example: acc:mo12:00:00+02:00|fr18:00:00+02:00;st:900<br/>before: referencing a destination which must be reached later. Example: before:7 <br/>acc and at cannot be used together on the same destination.<br/><br/>Examples:<br/>&destination3=Berlin_appointment;52.51605,13.37691;at:2021-10-14T16:00:00+02:00;st:300<br/>&destination11=Bratislava_limited_access;48.154722,17.145556;acc:tu06:00:00+02:00|tu20:00:00+02:00;st:900<br/>&destination12=Copenhagen_long_servicetime;st:7200<br/>&destination17=Malmo_before_Copenhagen55.600289,12.995798;before:12<br/>"
+          in: query
+          name: destination0...destinationN or waypoint0...waypointN
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: '1=vehicle equipped to carry disabled people, 0=otherwise. For toll cost. <br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: disabledEquipped
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: '1=EURO I, 2=EURO II, 3=EURO III, 4=EURO IV, 5=EURO V, 6=EURO VI, 7=EURO EEV, 8=Electric Vehicles. For toll cost and environmental zone restrictions. <br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: emissionType
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Defines the fuel powering the vehicle. Can be Diesel, Petrol, LPG, LNG, CNG, Ethanol, Propane, Hydrogen, Electric. (LPG=Liquefied Petroleum Gas,  LNG=Liquefied Natural Gas). Used f.e. for environmental zone restrictions, toll cost calculation, consumption based routing for Electric vehicles.<br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: fuelType
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Actual height of the overall rigid/semi truck including trailers: 350cm or 3.5m or 138in. For truck restrictions and toll cost.'
+          in: query
+          name: height
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 350cm or 3.5m or 138in. For toll cost.<br/>(Not available for Waypoints Sequence)
+          in: query
+          name: heightAbove1stAxle
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: '1=fuel+electric, 0=otherwise. For toll cost. <br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: hybrid
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Length of the vehicle (including potential trailers). 350cm or 3.5m or 138in. For truck restrictions and toll cost.
+          in: query
+          name: length
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Actual total weight of vehicle incl. payload and trailers/caravan incl. their payload. 7.5t or 7500kg or 16500lbs. For truck restrictions, speed profile, toll cost and environmental zone restrictions. See also vehicleWeight. Note that country wide weight restrictions depend on the number of axles and trailers as well, so it might be necessary to specify them as well.'
+          in: query
+          name: limitedWeight
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Actual number of passengers. For toll cost. See also vehicle type carHOV. <br/>(Not available for Waypoints Sequence)
+          in: query
+          name: passengersCount
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Comma separated list from explosive, gas, flammable, combustible, organic, poison, radioActive, corrosive, poisonousInhalation, harmfulToWater, other, allhazardousGoods, explosiveFlammable. For toll cost (only explosive and other) and for truck restrictions.'
+          in: query
+          name: shippedHazardousGoods
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Number of tires. For toll cost.<br/>(Not available for Waypoints Sequence)
+          in: query
+          name: tiresCount
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Actual height of the trailer(s). 350cm or 3.5m or 138in. For toll cost only, not considered for route path creation (use height parameter)<br/>(Not available for Waypoints Sequence).'
+          in: query
+          name: trailerHeight
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Number of trailer axles. For toll cost and for country wide truck restrictions. <br/>(Not available for Waypoints Sequence)
+          in: query
+          name: trailerNumberAxles
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: '0=None, 1=Caravan, 2=Trailer, 3=RVTrailer, 4=BoatTrailer. For toll cost and recreational vehicles. <br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: trailerType
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Actual total weight of trailers with their payload. 7.5t or 7500kg or 16500lbs. See also limitedWeight. For toll cost.
+          in: query
+          name: trailerWeight
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Number of trailers, 0...4. For toll cost and truck restrictions. 0=no trailer, 1=one or more trailers, 2=two or more trailers, 3=three or more trailers. For truck restrictions: 4=one or more semi-trailers. <br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: trailersCount
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Number of axles excluding trailers. For toll cost and for country wide truck restrictions. <br/>
+          in: query
+          name: vehicleNumberAxles
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Actual total weight of vehicle incl. payload, but not trailers'' weight or payload. 7.5t or 7500kg or 16500lbs. See also limitedWeight. For toll cost.<br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: vehicleWeight
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Actual total weight per axle, incl. payload. 7.5t or 7500kg or 16500lbs (Waypoints Sequence in kg, no unit). For toll cost and truck restrictions.'
+          in: query
+          name: weightPerAxle
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Semicolon separated list of vehicle weight [tons] per axle group. Each item is a tuple (name,value). Supported names are drive, single, tandem, triple, quad, quint. Example: &weightPerAxleGroup=drive:12;single:11;tandem:18 <br/>(Not available for Waypoints Sequence)'
+          in: query
+          name: weightPerAxleGroup
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Width of the vehicle, e.g. 350cm or 3.5m or 138in. For truck restrictions.'
+          in: query
+          name: width
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Waypoint to start the sequence.<br/><br/>Example:<br/>&start=Munich;48.132777,11.565352'
+          in: query
+          name: start
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: 'Waypoint to be reached at the end of the sequence. Usage is optional, but recommended.<br/><br/>Example:<br/>&end=Paris;48.857397,2.346642'
+          in: query
+          name: end
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'The routing mode determines how the route is calculated. <br/>Type;TransportModes;TrafficMode;RouteFeature1,RouteFeature2<br/>Calculation is limited to transport modes car, carHOV, truck, bicycle and pedestrian. Transport types are shortest and fastest. TrafficMode can be enabled or disabled. RouteFeatures can be used to avoid certain types of roads to a certain degree. Road features are: tollroad, motorway, boatFerry, railFerry, tunnel, dirtRoad, park. Usage of any such links can be restricted with values 0 (normal) to -4 (strict avoid). Delimiter between RouteFeatuers are commas.<br/><br/>Examples:<br/>&mode=fastest;car;traffic:disabled;motorway:-2<br/>&mode=fastest;car;traffic:enabled;motorway:-2,tollroad:-2'
+          in: query
+          name: mode
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: 'Time when travel is expected to start. Traffic speed and incidents are taken into account when calculating the route. You can use now to specify the current time. Type: xs:dateTime.<br/><br/>Example:<br/>&departure=2021-07-04T17:00:00+02:00'
+          in: query
+          name: departure
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Does the vehicle tow a trailer? Values: true/false'
+          in: query
+          name: hasTrailer
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Links which the route must not cross. The list of LinkIdTypes. LinkIdType is a xs:string with the following regular expression restrictions: [*-+]\d+<br/><br/>Example:<br/>&avoidLinks=-53623477'
+          in: query
+          name: avoidLinks
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Areas which the route must not cross. Array of up to 20 BoundingBox-es.<br/><br/>Example with two bounding boxes:<br/>avoidAreas=52.517100760,13.3905424488;52.5169701849,13.391808451!52.517000760,13.3700424488;52.5168701849,13.371308451'
+          in: query
+          name: avoidAreas
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Measure to optimize. Values: distance,time. Default: time'
+          in: query
+          name: improveFor
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response
+          in: query
+          name: jsonCallback
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Request Id returned in the response to match it with the request
+          in: query
+          name: requestId
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Activates the accounting for rest times. Rest times are modelled with a short and a long cycle. Both cycles consist of a driving phase and a resting phase..<br/>Also it can be specified if times at waypoint (service times) should be counted as <br/>restTimes=durations:{short driving time in seconds},{short rest time in seconds},{long driving time in seconds},{long rest time in seconds;serviceTimes:work|rest.<br/>Also the value can be set o default ''restTimes=default'' which activates simplified European rules with 45min rest after 4.5h hours driving and 11h of long rest after 9h working, service times are accounted as work.<br/><br/>Example:<br/>&restTimes=durations:16200,2700,32400,39600;serviceTimes:work'
+          in: query
+          name: restTimes
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Truck routing only, specifies the vehicle type. Values:truck | tractorTruck, Defaults to truck. '
+          in: query
+          name: truckType
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Sets the speed (m/s), if the routing mode comes with ''pedestrian'''
+          in: query
+          name: walkSpeed
+          required: false
+          schema:
+            type: string
+          style: form
+        - allowReserved: true
+          description: 'Truck routing only, specifies the tunnel category to restrict certain route links. The route will pass only through tunnels of a less strict category. Values: B, C, D, E'
+          in: query
+          name: tunnelCategory
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Activates accounting of times for charging electric vehicles. Requires a distance to be driven in Meter and the time in seconds required to recharge the energy required for the given distance.<br/><br/>Example:<br/>evChargingTimePerDistance=250000,7200'
+          in: query
+          name: evChargingTimePerDistance
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'The "clustering" parameter enables clustering of the waypoints. Two clustering algorithms are supported; drivingDistance and topologySegment. <br/>The algorithm drivingDistance is a connectivity-based clustering algorithm where all waypoints of a cluster are within a driving distance of 50 meters of the specified vehicle in both directions. A custom value of the driving distance can be specified by drivingDistance:distanceInMeter. <br/>The algorithm topologySegment creates a cluster of waypoints that can be map-matched to the same topology segment. <br/><br/>Examples:<br/>&clustering=drivingDistance:100<br/>&clustering=topologySegment'
+          in: query
+          name: clustering
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/WseResponse'
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Compute best Sequence for Waypoints (Travelling Salesman Problem).
+      tags:
+        - Waypoints Sequence
+    post:
+      operationId: findSequencePOSTUsingPOST_2
+      parameters:
+        - allowReserved: true
+          description: 'One of three authentication methods to choose from. A key generated specifically to authenticate API requests. For more information on how to get an API key, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html .<br/>Other Options are Bearer, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html or app_id with app_code for backward compatibility.'
+          in: query
+          name: apiKey
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                avoidAreas:
+                  description: 'Areas which the route must not cross. Array of up to 20 BoundingBox-es.<br/><br/>Example with two bounding boxes:<br/>avoidAreas=52.517100760,13.3905424488;52.5169701849,13.391808451!52.517000760,13.3700424488;52.5168701849,13.371308451'
+                  type: string
+                avoidLinks:
+                  description: 'Links which the route must not cross. The list of LinkIdTypes. LinkIdType is a xs:string with the following regular expression restrictions: [*-+]\d+<br/><br/>Example:<br/>&avoidLinks=-53623477'
+                  type: string
+                clustering:
+                  description: 'The "clustering" parameter enables clustering of the waypoints. Two clustering algorithms are supported; drivingDistance and topologySegment. <br/>The algorithm drivingDistance is a connectivity-based clustering algorithm where all waypoints of a cluster are within a driving distance of 50 meters of the specified vehicle in both directions. A custom value of the driving distance can be specified by drivingDistance:distanceInMeter. <br/>The algorithm topologySegment creates a cluster of waypoints that can be map-matched to the same topology segment. <br/><br/>Examples:<br/>&clustering=drivingDistance:100<br/>&clustering=topologySegment'
+                  type: string
+                commercial:
+                  description: '1=vehicle registered for commercial use, 0=otherwise. For toll cost, environmental zone regulations and delivery-only zones.<br/>(Not available for Waypoints Sequence)'
+                  type: string
+                departure:
+                  description: 'Time when travel is expected to start. Traffic speed and incidents are taken into account when calculating the route. You can use now to specify the current time. Type: xs:dateTime.<br/><br/>Example:<br/>&departure=2021-07-04T17:00:00+02:00'
+                  type: string
+                disabledEquipped:
+                  description: '1=vehicle equipped to carry disabled people, 0=otherwise. For toll cost. <br/>(Not available for Waypoints Sequence)'
+                  type: string
+                emissionType:
+                  description: '1=EURO I, 2=EURO II, 3=EURO III, 4=EURO IV, 5=EURO V, 6=EURO VI, 7=EURO EEV, 8=Electric Vehicles. For toll cost and environmental zone restrictions. <br/>(Not available for Waypoints Sequence)'
+                  type: string
+                end:
+                  description: 'Waypoint to be reached at the end of the sequence. Usage is optional, but recommended.<br/><br/>Example:<br/>&end=Paris;48.857397,2.346642'
+                  type: string
+                evChargingTimePerDistance:
+                  description: 'Activates accounting of times for charging electric vehicles. Requires a distance to be driven in Meter and the time in seconds required to recharge the energy required for the given distance.<br/><br/>Example:<br/>evChargingTimePerDistance=250000,7200'
+                  type: string
+                fuelType:
+                  description: 'Defines the fuel powering the vehicle. Can be Diesel, Petrol, LPG, LNG, CNG, Ethanol, Propane, Hydrogen, Electric. (LPG=Liquefied Petroleum Gas,  LNG=Liquefied Natural Gas). Used f.e. for environmental zone restrictions, toll cost calculation, consumption based routing for Electric vehicles.<br/>(Not available for Waypoints Sequence)'
+                  type: string
+                hasTrailer:
+                  description: 'Does the vehicle tow a trailer? Values: true/false'
+                  type: string
+                height:
+                  description: 'Actual height of the overall rigid/semi truck including trailers: 350cm or 3.5m or 138in. For truck restrictions and toll cost.'
+                  type: string
+                heightAbove1stAxle:
+                  description: 350cm or 3.5m or 138in. For toll cost.<br/>(Not available for Waypoints Sequence)
+                  type: string
+                hybrid:
+                  description: '1=fuel+electric, 0=otherwise. For toll cost. <br/>(Not available for Waypoints Sequence)'
+                  type: string
+                improveFor:
+                  description: 'Measure to optimize. Values: distance,time. Default: time'
+                  type: string
+                jsonCallback:
+                  description: Specifies the function used to wrap the JSON response
+                  type: string
+                length:
+                  description: Length of the vehicle (including potential trailers). 350cm or 3.5m or 138in. For truck restrictions and toll cost.
+                  type: string
+                limitedWeight:
+                  description: 'Actual total weight of vehicle incl. payload and trailers/caravan incl. their payload. 7.5t or 7500kg or 16500lbs. For truck restrictions, speed profile, toll cost and environmental zone restrictions. See also vehicleWeight. Note that country wide weight restrictions depend on the number of axles and trailers as well, so it might be necessary to specify them as well.'
+                  type: string
+                mode:
+                  description: 'The routing mode determines how the route is calculated. <br/>Type;TransportModes;TrafficMode;RouteFeature1,RouteFeature2<br/>Calculation is limited to transport modes car, carHOV, truck, bicycle and pedestrian. Transport types are shortest and fastest. TrafficMode can be enabled or disabled. RouteFeatures can be used to avoid certain types of roads to a certain degree. Road features are: tollroad, motorway, boatFerry, railFerry, tunnel, dirtRoad, park. Usage of any such links can be restricted with values 0 (normal) to -4 (strict avoid). Delimiter between RouteFeatuers are commas.<br/><br/>Examples:<br/>&mode=fastest;car;traffic:disabled;motorway:-2<br/>&mode=fastest;car;traffic:enabled;motorway:-2,tollroad:-2'
+                  type: string
+                passengersCount:
+                  description: Actual number of passengers. For toll cost. See also vehicle type carHOV. <br/>(Not available for Waypoints Sequence)
+                  type: string
+                requestId:
+                  description: Request Id returned in the response to match it with the request
+                  type: string
+                restTimes:
+                  description: 'Activates the accounting for rest times. Rest times are modelled with a short and a long cycle. Both cycles consist of a driving phase and a resting phase..<br/>Also it can be specified if times at waypoint (service times) should be counted as <br/>restTimes=durations:{short driving time in seconds},{short rest time in seconds},{long driving time in seconds},{long rest time in seconds;serviceTimes:work|rest.<br/>Also the value can be set o default ''restTimes=default'' which activates simplified European rules with 45min rest after 4.5h hours driving and 11h of long rest after 9h working, service times are accounted as work.<br/><br/>Example:<br/>&restTimes=durations:16200,2700,32400,39600;serviceTimes:work'
+                  type: string
+                shippedHazardousGoods:
+                  description: 'Comma separated list from explosive, gas, flammable, combustible, organic, poison, radioActive, corrosive, poisonousInhalation, harmfulToWater, other, allhazardousGoods, explosiveFlammable. For toll cost (only explosive and other) and for truck restrictions.'
+                  type: string
+                start:
+                  description: 'Waypoint to start the sequence.<br/><br/>Example:<br/>&start=Munich;48.132777,11.565352'
+                  type: string
+                tiresCount:
+                  description: Number of tires. For toll cost.<br/>(Not available for Waypoints Sequence)
+                  type: string
+                trailerHeight:
+                  description: 'Actual height of the trailer(s). 350cm or 3.5m or 138in. For toll cost only, not considered for route path creation (use height parameter)<br/>(Not available for Waypoints Sequence).'
+                  type: string
+                trailerNumberAxles:
+                  description: Number of trailer axles. For toll cost and for country wide truck restrictions. <br/>(Not available for Waypoints Sequence)
+                  type: string
+                trailerType:
+                  description: '0=None, 1=Caravan, 2=Trailer, 3=RVTrailer, 4=BoatTrailer. For toll cost and recreational vehicles. <br/>(Not available for Waypoints Sequence)'
+                  type: string
+                trailerWeight:
+                  description: Actual total weight of trailers with their payload. 7.5t or 7500kg or 16500lbs. See also limitedWeight. For toll cost.
+                  type: string
+                trailersCount:
+                  description: 'Number of trailers, 0...4. For toll cost and truck restrictions. 0=no trailer, 1=one or more trailers, 2=two or more trailers, 3=three or more trailers. For truck restrictions: 4=one or more semi-trailers. <br/>(Not available for Waypoints Sequence)'
+                  type: string
+                truckType:
+                  description: 'Truck routing only, specifies the vehicle type. Values:truck | tractorTruck, Defaults to truck. '
+                  type: string
+                tunnelCategory:
+                  description: 'Defines the tunnel categories the truck must NOT use. B, C, D or E. A tunnels have no restrictions. E tunnels have most restrictions. If C is defined, the route will use A and B tunnels but not C, D or E.'
+                  type: string
+                vehicleNumberAxles:
+                  description: Number of axles excluding trailers. For toll cost and for country wide truck restrictions. <br/>
+                  type: string
+                vehicleWeight:
+                  description: 'Actual total weight of vehicle incl. payload, but not trailers'' weight or payload. 7.5t or 7500kg or 16500lbs. See also limitedWeight. For toll cost.<br/>(Not available for Waypoints Sequence)'
+                  type: string
+                walkSpeed:
+                  description: 'Truck routing only, specifies the vehicle type. Values:truck | tractorTruck, Defaults to truck. '
+                  type: string
+                weightPerAxle:
+                  description: 'Actual total weight per axle, incl. payload. 7.5t or 7500kg or 16500lbs (Waypoints Sequence in kg, no unit). For toll cost and truck restrictions.'
+                  type: string
+                weightPerAxleGroup:
+                  description: 'Semicolon separated list of vehicle weight [tons] per axle group. Each item is a tuple (name,value). Supported names are drive, single, tandem, triple, quad, quint. Example: &weightPerAxleGroup=drive:12;single:11;tandem:18 <br/>(Not available for Waypoints Sequence)'
+                  type: string
+                width:
+                  description: 'Width of the vehicle, e.g. 350cm or 3.5m or 138in. For truck restrictions.'
+                  type: string
+              required:
+                - mode
+                - start
+              type: object
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/WseResponse'
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Compute best Sequence for Waypoints (Travelling Salesman Problem).
+      tags:
+        - Waypoints Sequence
+components:
+  schemas:
+    Activity:
+      description: Activity to be performed. If location or time omitted then values defined on parent stop are used.
+      properties:
+        jobId:
+          description: 'A unique identifier of an entity. Avoid referencing any confidential or personal information as part of the `Id`. '
+          example: 7f3423c2-784a-4983-b472-e14107d5a54a
+          type: string
+        jobTag:
+          description: 'A free text associated with the job place. Avoid referencing any confidential or personal information as part of the `JobTag`. '
+          example: some_tag
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        time:
+          $ref: '#/components/schemas/Interval'
+        type:
+          enum:
+            - arrival
+            - break
+            - delivery
+            - departure
+            - pickup
+          type: string
+      required:
+        - jobId
+        - type
+      title: Activity
+      type: object
+    AvoidRoutes:
+      description: Avoid routes that violate these properties.
+      properties:
+        features:
+          items:
+            enum:
+              - dirtRoad
+              - ferry
+              - motorway
+              - tollRoad
+              - tunnel
+            type: string
+          type: array
+          uniqueItems: true
+      title: AvoidRoutes
+      type: object
+    CarProfile:
+      description: 'Routing calculations for cars. The `departureTime` property allows to specify a custom date-time for which `traffic optimization` in routing calculations shall be performed. See `configuration.optimizations.traffic` for details. '
+      properties:
+        avoid:
+          $ref: '#/components/schemas/AvoidRoutes'
+        departureTime:
+          description: Represents date-time unit as defined by RFC3339.
+          example:
+            dayOfMonth: 4
+            dayOfWeek: SATURDAY
+            dayOfYear: 186
+            hour: 0
+            minute: 0
+            month: JULY
+            monthValue: 7
+            nano: 0
+            offset:
+              id: Z
+              rules:
+                fixedOffset: true
+                transitionRules: []
+                transitions: []
+              totalSeconds: 0
+            second: 0
+            year: 2020
+          format: date-time
+          type: string
+        name:
+          description: 'Specifies name of profile. Avoid assigning real-life identifiers, such as for instance a vehicle license plate Id as the `profileName` of the routing profile. '
+          example: normal_car
+          type: string
+        type:
+          enum:
+            - car
+          type: string
+      required:
+        - name
+        - type
+      title: CarProfile
+      type: object
+    FailedConstraint:
+      properties:
+        constraint:
+          description: The constraint reflects the input setting in the same format.
+          example: 'acc:mo09:00:00+02:00|mo10:00:00+02:00;st:1200'
+          type: string
+        reason:
+          description: ' The reason defines why the constraint was not met: 0:Undetermined, 1:not reachable in time, 2:service time did not fit, 3: conflicts with arrival time of final waypoint.'
+          example: 2
+          format: int32
+          type: integer
+      title: FailedConstraint
+      type: object
+    Fleet:
+      description: A fleet represented by various vehicle types for serving jobs.
+      properties:
+        profiles:
+          example: '[{"type":"car","name":"normal_car"}]'
+          items:
+            $ref: '#/components/schemas/OneOfCarProfileTruckProfile'
+          type: array
+        types:
+          description: 'A list of vehicle types. The upper limit for the number of vehicle types is 35 for the synchronous problems endpoint and 150 for the asynchronous problems endpoint. '
+          items:
+            $ref: '#/components/schemas/VehicleType'
+          type: array
+      required:
+        - profiles
+        - types
+      title: Fleet
+      type: object
+    Interconnection:
+      properties:
+        distance:
+          description: Distance between the two waypoints
+          example: 28484
+          format: double
+          type: number
+        fromWaypoint:
+          description: Waypoint of the sequence to be reached next.
+          example: DuisburgRuhrort
+          type: string
+        rest:
+          description: Rest time at or between the waypoints
+          example: 0
+          format: double
+          type: number
+        time:
+          description: Time needed for traveling between the two waypoints
+          example: 1495
+          format: double
+          type: number
+        toWaypoint:
+          description: Waypoint of the sequence to be reached next.
+          example: ZecheZollverein
+          type: string
+        waiting:
+          description: Waiting time at the destination
+          example: 261305
+          format: double
+          type: number
+      title: Interconnection
+      type: object
+    Interval:
+      description: Represents an activity interval.
+      properties:
+        end:
+          description: Represents date-time unit as defined by RFC3339.
+          example:
+            dayOfMonth: 4
+            dayOfWeek: SATURDAY
+            dayOfYear: 186
+            hour: 0
+            minute: 0
+            month: JULY
+            monthValue: 7
+            nano: 0
+            offset:
+              id: Z
+              rules:
+                fixedOffset: true
+                transitionRules: []
+                transitions: []
+              totalSeconds: 0
+            second: 0
+            year: 2020
+          format: date-time
+          type: string
+        start:
+          description: Represents date-time unit as defined by RFC3339.
+          example:
+            dayOfMonth: 4
+            dayOfWeek: SATURDAY
+            dayOfYear: 186
+            hour: 0
+            minute: 0
+            month: JULY
+            monthValue: 7
+            nano: 0
+            offset:
+              id: Z
+              rules:
+                fixedOffset: true
+                transitionRules: []
+                transitions: []
+              totalSeconds: 0
+            second: 0
+            year: 2020
+          format: date-time
+          type: string
+      required:
+        - end
+        - start
+      title: Interval
+      type: object
+    Job:
+      description: Represents a job with one or many sub jobs.
+      properties:
+        id:
+          description: 'Specifies id of the job. Avoid assigning real-life identifiers, such as for instance a vehicle license plate Id as the `id`. '
+          type: string
+        places:
+          $ref: '#/components/schemas/JobPlaces'
+        skills:
+          description: A list of skills for a vehicle or a job.
+          example: '["fridge"]'
+          items:
+            type: string
+          type: array
+      required:
+        - id
+        - places
+      title: Job
+      type: object
+    JobPlace:
+      description: A place where a part or a whole job should be done.
+      properties:
+        demand:
+          description: 'Unit of measure, e.g. volume, mass, size, etc.'
+          example: '[10,5]'
+          items:
+            format: int32
+            type: integer
+          type: array
+        duration:
+          description: Represents duration in seconds.
+          example: 180
+          format: int32
+          type: integer
+        location:
+          $ref: '#/components/schemas/Location'
+        tag:
+          description: 'A free text associated with the job place. Avoid referencing any confidential or personal information as part of the `JobTag`. '
+          example: some_tag
+          type: string
+        times:
+          description: Represents multiple time windows.
+          example: '[["2020-07-04T08:00:00Z","2020-07-04T10:00:00Z"],["2020-07-04T16:00:00Z","2020-07-04T18:00:00Z"]]'
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+      required:
+        - demand
+        - duration
+        - location
+      title: JobPlace
+      type: object
+    JobPlaces:
+      description: Places where sub jobs to be performed. All pickups are done before any other delivery. Order of execution inside each group is any. At least one sub job must be specified.
+      properties:
+        deliveries:
+          items:
+            $ref: '#/components/schemas/JobPlace'
+          type: array
+        pickups:
+          items:
+            $ref: '#/components/schemas/JobPlace'
+          type: array
+      title: JobPlaces
+      type: object
+    Location:
+      description: Represents geospatial location defined by latitude and longitude.
+      properties:
+        lat:
+          description: Specifies latitude.
+          example: 52.53088
+          format: double
+          type: number
+        lng:
+          description: Specifies longitude.
+          example: 13.38471
+          format: double
+          type: number
+      required:
+        - lat
+        - lng
+      title: Location
+      type: object
+    ModelConfiguration:
+      description: Provides the way to tweak solver behaviour.
+      properties:
+        optimizations:
+          $ref: '#/components/schemas/Optimizations'
+      title: ModelConfiguration
+      type: object
+    OneOfCarProfileTruckProfile:
+      properties:
+        carProfile:
+          $ref: '#/components/schemas/CarProfile'
+        name:
+          type: string
+        truckProfile:
+          $ref: '#/components/schemas/TruckProfile'
+        type:
+          type: string
+      title: OneOfCarProfileTruckProfile
+      type: object
+    Optimizations:
+      description: Defines parameter for additional optimizations.
+      properties:
+        traffic:
+          description: 'Specifies what kind of traffic information should be considered for routing: * `liveOrHistorical`: for departure times in the future, either live or historical traffic data are applied depending on how far in the future the departure time is. For departure times in the past, only historical traffic data are applied. The departure time of a vehicle type can be configured via the vehicle profile''s optional departureTime property. In case this property is omitted when defining a vehicle profile, the earliest shift start time of all vehicle types sharing that same vehicle profile is used as that profile''s departure time. Choose this setting if all locations are within a radius of 190 km and you want to use live traffic data whenever possible. * `historicalOnly`: only free-flow speeds based on historical traffic data are applied. Choose this setting if you want to avoid live traffic data usage. * `automatic`: the same as `liveOrHistorical`, if all coordinates are within a radius of 190 km, otherwise the same as `historicalOnly`. Choose this setting if you want the service to decide automatically what is the best option. '
+          enum:
+            - automatic
+            - historicalOnly
+            - liveOrHistorical
+          example: liveOrHistorical
+          type: string
+        waitingTime:
+          $ref: '#/components/schemas/OptimizationsWaitingTime'
+      title: Optimizations
+      type: object
+    OptimizationsWaitingTime:
+      description: Configures departure time optimization which tries to adapt the starting time of the tour in order to reduce waiting time as a consequence of a vehicle arriving at a stop before the starting time of the time window defined for serving the job.
+      properties:
+        bufferTime:
+          description: Specifies a minimum buffer time we have to keep before time window ends time (in minutes).
+          example: 15
+          format: int32
+          type: integer
+        reduce:
+          description: Enables or disables waiting time optimization.
+          example: false
+          type: boolean
+      required:
+        - reduce
+      title: OptimizationsWaitingTime
+      type: object
+    OutOfSequenceWaypoint:
+      properties:
+        failedConstraints:
+          description: List containing pairs of unmet constraints and reasons.
+          items:
+            $ref: '#/components/schemas/FailedConstraint'
+          type: array
+        id:
+          description: User provided id
+          example: ZecheZollverein
+          type: string
+        lat:
+          description: Latitude of the waypoint
+          example: 51.486
+          format: double
+          type: number
+        lng:
+          description: Longitude of the waypoint
+          example: 7.0459
+          format: double
+          type: number
+      title: OutOfSequenceWaypoint
+      type: object
+    Plan:
+      description: Represents the list of jobs to be served.
+      properties:
+        jobs:
+          description: 'List of all jobs. When checking against the upper limit for the number of jobs, the total amount of jobs is calculated as the sum of all pickups and deliveries defined in each job. The upper limit is 250 jobs for the synchronous problems endpoint and 3000 for the asynchronous problems endpoint. '
+          items:
+            $ref: '#/components/schemas/Job'
+          type: array
+        relations:
+          description: 'Represents a list of preferred relations between jobs, vehicles.'
+          items:
+            $ref: '#/components/schemas/Relation'
+          type: array
+      required:
+        - jobs
+      title: Plan
+      type: object
+    Problem:
+      description: Vehicle Routing Problem definition including resources to solve it.
+      properties:
+        configuration:
+          $ref: '#/components/schemas/ModelConfiguration'
+        fleet:
+          $ref: '#/components/schemas/Fleet'
+        id:
+          description: 'A unique identifier of an entity. Avoid referencing any confidential or personal information as part of the `Id`. '
+          example: 7f3423c2-784a-4983-b472-e14107d5a54a
+          type: string
+        plan:
+          $ref: '#/components/schemas/Plan'
+      required:
+        - fleet
+        - plan
+      title: Problem
+      type: object
+    Relation:
+      description: 'Specifies a relation between multiple jobs and a particular vehicle. A vehicle is defined by its id which should follow the pattern `${vehicleType}_${sequence_index}`. '
+      properties:
+        jobs:
+          description: 'Ids of jobs or reserved activities. There are three reserved activity ids: * `departure`: specifies departure activity. Should be first in the list. * `break`: specifies vehicle break activity * `arrival`: specifies arrival activity. Should be last in the list. '
+          items:
+            type: string
+          type: array
+        type:
+          enum:
+            - flexible
+            - sequence
+            - tour
+          type: string
+        vehicleId:
+          description: 'A unique identifier of an entity. Avoid referencing any confidential or personal information as part of the `Id`. '
+          example: 7f3423c2-784a-4983-b472-e14107d5a54a
+          type: string
+      required:
+        - jobs
+        - type
+        - vehicleId
+      title: Relation
+      type: object
+    Result:
+      properties:
+        description:
+          description: Human readable description of the optimization goals
+          example: Targeted best time; without traffic
+          type: string
+        distance:
+          description: Overall distance to travel the whole sequence in meter
+          example: '55678'
+          type: string
+        interconnections:
+          description: Timings and distances to travel from one waypoint to the next waypoint of the sequence
+          items:
+            $ref: '#/components/schemas/Interconnection'
+          type: array
+        time:
+          description: Overall time to travel the whole sequence in seconds
+          example: '264400'
+          type: string
+        timeBreakdown:
+          $ref: '#/components/schemas/TimeBreakdown'
+          description: Time needed for traveling through the sequence by categories.
+        waypoints:
+          description: Waypoints in the order of the calculated sequence
+          items:
+            $ref: '#/components/schemas/Waypoint'
+          type: array
+      title: Result
+      type: object
+    Schedule:
+      description: Represents a schedule for stop.
+      properties:
+        arrival:
+          description: Represents date-time unit as defined by RFC3339.
+          example: '2020-07-04T00:00Z'
+          type: string
+        departure:
+          description: Represents date-time unit as defined by RFC3339.
+          example: '2020-07-04T00:00Z'
+          type: string
+      required:
+        - arrival
+        - departure
+      title: Schedule
+    Solution:
+      description: VRP solution.
+      properties:
+        problemId:
+          description: 'A unique identifier of an entity. Avoid referencing any confidential or personal information as part of the `Id`. '
+          example: 7f3423c2-784a-4983-b472-e14107d5a54a
+          type: string
+        statistic:
+          $ref: '#/components/schemas/Statistic'
+        tours:
+          description: List of tours.
+          items:
+            $ref: '#/components/schemas/Tour'
+          type: array
+        unassigned:
+          description: List of unassigned jobs.
+          items:
+            $ref: '#/components/schemas/UnassignedJob'
+          type: array
+      required:
+        - statistic
+      title: Solution
+      type: object
+    Statistic:
+      description: Represents statistic of one or multiple trips.
+      properties:
+        cost:
+          description: Total cost.
+          example: 1024
+          format: double
+          type: number
+        distance:
+          description: Total distance (in meters).
+          example: 32000
+          format: int32
+          type: integer
+        duration:
+          description: Represents duration in seconds.
+          example: 180
+          format: int32
+          type: integer
+        times:
+          $ref: '#/components/schemas/Timing'
+      required:
+        - cost
+        - distance
+        - duration
+        - times
+      title: Statistic
+      type: object
+    Stop:
+      description: Represents a stop made to perform a job activities.
+      properties:
+        activities:
+          description: List of activities to be done on stop.
+          items:
+            $ref: '#/components/schemas/Activity'
+          type: array
+        load:
+          description: 'Unit of measure, e.g. volume, mass, size, etc.'
+          example: '[10,5]'
+          items:
+            format: int32
+            type: integer
+          type: array
+        location:
+          $ref: '#/components/schemas/Location'
+        time:
+          $ref: '#/components/schemas/Schedule'
+      required:
+        - activities
+        - load
+        - location
+        - time
+      title: Stop
+      type: object
+    TimeBreakdown:
+      properties:
+        driving:
+          description: Time spent in motion for completing the sequence in seconds
+          example: 3035
+          format: int32
+          type: integer
+        rest:
+          description: Time needed for resting according to legal regulations (simplified model) in seconds
+          example: 0
+          format: int32
+          type: integer
+        service:
+          description: Active time spent at the waypoints in seconds
+          example: 60
+          format: int32
+          type: integer
+        waiting:
+          description: Time spent waiting at the waypoints in seconds
+          example: 261305
+          format: int32
+          type: integer
+      title: TimeBreakdown
+      type: object
+    Timing:
+      description: Contains information about time consumption for various activities.
+      properties:
+        break:
+          description: Represents duration in seconds.
+          example: 180
+          format: int32
+          type: integer
+        driving:
+          description: Represents duration in seconds.
+          example: 180
+          format: int32
+          type: integer
+        serving:
+          description: Represents duration in seconds.
+          example: 180
+          format: int32
+          type: integer
+        waiting:
+          description: Represents duration in seconds.
+          example: 180
+          format: int32
+          type: integer
+      required:
+        - break
+        - driving
+        - serving
+        - waiting
+      title: Timing
+      type: object
+    Tour:
+      description: Represents a tour with jobs made by single vehicle.
+      properties:
+        statistic:
+          $ref: '#/components/schemas/Statistic'
+        stops:
+          description: List of stops.
+          items:
+            $ref: '#/components/schemas/Stop'
+          type: array
+        typeId:
+          description: 'A unique identifier of an entity. Avoid referencing any confidential or personal information as part of the `Id`. '
+          example: 7f3423c2-784a-4983-b472-e14107d5a54a
+          type: string
+        vehicleId:
+          description: 'A unique identifier of an entity. Avoid referencing any confidential or personal information as part of the `Id`. '
+          example: 7f3423c2-784a-4983-b472-e14107d5a54a
+          type: string
+      required:
+        - statistic
+        - stops
+        - typeId
+        - vehicleId
+      title: Tour
+      type: object
+    TruckOptions:
+      description: Specifies truck profile options.
+      properties:
+        grossWeight:
+          description: 'Total vehicle weight, including trailers and shipped goods, in kilograms.'
+          format: int32
+          type: integer
+        height:
+          description: 'Vehicle height, in centimeters.'
+          format: int32
+          type: integer
+        length:
+          description: 'Vehicle length, in centimeters.'
+          format: int32
+          type: integer
+        shippedHazardousGoods:
+          items:
+            enum:
+              - combustible
+              - corrosive
+              - explosive
+              - flammable
+              - gas
+              - harmfulToWater
+              - organic
+              - other
+              - poison
+              - poisonousInhalation
+              - radioactive
+            type: string
+          type: array
+        tunnelCategory:
+          description: Specifies the tunnel category to restrict certain route streets. The route will pass only through tunnels of a less strict category.
+          enum:
+            - B
+            - C
+            - D
+            - E
+          type: string
+        weightPerAxle:
+          description: 'Vehicle weight per axle, in kilograms.'
+          format: int32
+          type: integer
+        width:
+          description: 'Vehicle width, in centimeters.'
+          format: int32
+          type: integer
+      title: TruckOptions
+      type: object
+    TruckProfile:
+      description: 'Route calculation for trucks. This mode considers truck limitations on links and uses different speed assumptions when calculating the route. The `departureTime` property allows to specify a custom date-time for which `traffic optimization` in routing calculations shall be performed. See `configuration.optimizations.traffic` for details. '
+      properties:
+        avoid:
+          $ref: '#/components/schemas/AvoidRoutes'
+        departureTime:
+          description: Represents date-time unit as defined by RFC3339.
+          example:
+            dayOfMonth: 4
+            dayOfWeek: SATURDAY
+            dayOfYear: 186
+            hour: 0
+            minute: 0
+            month: JULY
+            monthValue: 7
+            nano: 0
+            offset:
+              id: Z
+              rules:
+                fixedOffset: true
+                transitionRules: []
+                transitions: []
+              totalSeconds: 0
+            second: 0
+            year: 2020
+          format: date-time
+          type: string
+        name:
+          description: 'Specifies name of profile. Avoid assigning real-life identifiers, such as for instance a vehicle license plate Id as the `profileName` of the routing profile. '
+          example: normal_car
+          type: string
+        options:
+          $ref: '#/components/schemas/TruckOptions'
+        type:
+          enum:
+            - truck
+          type: string
+      required:
+        - name
+        - type
+      title: TruckProfile
+      type: object
+    UnassignedJob:
+      description: Specifies unassigned job with possible reasons why it is unassigned.
+      properties:
+        jobId:
+          description: 'A unique identifier of an entity. Avoid referencing any confidential or personal information as part of the `Id`. '
+          example: 7f3423c2-784a-4983-b472-e14107d5a54a
+          type: string
+        reasons:
+          description: List of possible reasons why job is unassigned.
+          items:
+            $ref: '#/components/schemas/UnassignedJobReason'
+          type: array
+      required:
+        - jobId
+        - reasons
+      title: UnassignedJob
+      type: object
+    UnassignedJobReason:
+      description: 'A possible reason why job is not assigned.  | Code  | Reason                                                                             | | ------| ---------------------------------------------------------------------------------- | | `NO_REASON_FOUND`         | no reason found                                                | | `SKILL_CONSTRAINT`        | cannot serve required skill                                    | | `TIME_WINDOW_CONSTRAINT`  | cannot be visited within time window                           | | `CAPACITY_CONSTRAINT`     | does not fit into any vehicle due to capacity                  | | `REACHABLE_CONSTRAINT`    | location unreachable                                           | | `MAX_DISTANCE_CONSTRAINT` | cannot be assigned due to max distance constraint of vehicle   | | `SHIFT_TIME_CONSTRAINT`   | cannot be assigned due to shift time constraint of vehicle     | '
+      properties:
+        code:
+          description: Reason code.
+          example: MAX_DISTANCE_CONSTRAINT
+          type: string
+        description:
+          description: Reason description.
+          example: cannot serve required skill
+          type: string
+      required:
+        - code
+        - description
+      title: UnassignedJobReason
+      type: object
+    VehicleBreak:
+      description: A vehicle break time.
+      properties:
+        duration:
+          description: Represents duration in seconds.
+          example: 180
+          format: int32
+          type: integer
+        location:
+          $ref: '#/components/schemas/Location'
+        times:
+          description: Represents multiple time windows.
+          example: '[["2020-07-04T08:00:00Z","2020-07-04T10:00:00Z"],["2020-07-04T16:00:00Z","2020-07-04T18:00:00Z"]]'
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+      required:
+        - duration
+        - times
+      title: VehicleBreak
+      type: object
+    VehicleCosts:
+      description: Defines different vehicle costs per unit.
+      properties:
+        distance:
+          description: A cost per meter.
+          example: 0.0001
+          format: double
+          type: number
+        fixed:
+          description: A fixed cost to start using vehicle of this type.
+          example: 22
+          format: double
+          type: number
+        time:
+          description: A cost per second.
+          example: 0.0048
+          format: double
+          type: number
+      required:
+        - distance
+        - time
+      title: VehicleCosts
+      type: object
+    VehicleLimits:
+      description: Contains constraints applied to a vehicle type.
+      properties:
+        maxDistance:
+          description: Max distance in meters per shift.
+          example: 20000
+          format: double
+          type: number
+        shiftTime:
+          description: 'The property shiftTime defines the maximum allowed working time of a vehicle type. In case a break is defined for this particular vehicle type, the duration of the break should be added to the shiftTime. For instance, if a vehicle type has a shift of 8 hours and a 30 minutes break, the total shiftTime should be defined as 8 hours 30 minutes. The properties `start.time` and `end.time` on the VehicleShift define the lower and upper bounds of the time interval in which the vehicle''s shift must lie. Under no circumstances may a vehicle start working before `start.time` or finish working after `end.time`. The `start.time` and `end.time` can be imagined as the opening and closing times of a depot where the vehicle starts and ends its tour. `start.time` and `end.time` can override the defined `shiftTime`. That means, in case the time defined by the `shiftTime` property is longer than the time interval between `start.time` and `end.time` the maximum working time of the vehicle will be reduced and will not exceed that time interval. '
+          example: 21600
+          format: double
+          type: number
+      title: VehicleLimits
+      type: object
+    VehiclePlace:
+      description: 'Represents a depot: a place where a vehicle starts or ends.'
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        time:
+          description: Represents date-time unit as defined by RFC3339.
+          example:
+            dayOfMonth: 4
+            dayOfWeek: SATURDAY
+            dayOfYear: 186
+            hour: 0
+            minute: 0
+            month: JULY
+            monthValue: 7
+            nano: 0
+            offset:
+              id: Z
+              rules:
+                fixedOffset: true
+                transitionRules: []
+                transitions: []
+              totalSeconds: 0
+            second: 0
+            year: 2020
+          format: date-time
+          type: string
+      required:
+        - location
+        - time
+      title: VehiclePlace
+      type: object
+    VehicleShift:
+      description: Specifies how vehicle should operate in one work shift.
+      properties:
+        breaks:
+          items:
+            $ref: '#/components/schemas/VehicleBreak'
+          type: array
+        end:
+          $ref: '#/components/schemas/VehiclePlace'
+        start:
+          $ref: '#/components/schemas/VehiclePlace'
+      required:
+        - start
+      title: VehicleShift
+      type: object
+    VehicleType:
+      description: Represents a vehicle type.
+      properties:
+        amount:
+          description: Amount of vehicles available.
+          example: 1
+          format: int32
+          type: integer
+        capacity:
+          description: 'Unit of measure, e.g. volume, mass, size, etc.'
+          example: '[10,5]'
+          items:
+            format: int32
+            type: integer
+          type: array
+        costs:
+          $ref: '#/components/schemas/VehicleCosts'
+        id:
+          description: 'Specifies id of profile. Avoid referencing any confidential or personal information as part of the vehicle''s `Id`. '
+          type: string
+        limits:
+          $ref: '#/components/schemas/VehicleLimits'
+        profile:
+          description: 'Specifies name of profile. Avoid assigning real-life identifiers, such as for instance a vehicle license plate Id as the `profileName` of the routing profile. '
+          example: normal_car
+          type: string
+        shifts:
+          items:
+            $ref: '#/components/schemas/VehicleShift'
+          type: array
+        skills:
+          description: A list of skills for a vehicle or a job.
+          example: '["fridge"]'
+          items:
+            type: string
+          type: array
+      required:
+        - amount
+        - capacity
+        - costs
+        - id
+        - profile
+        - shifts
+      title: VehicleType
+      type: object
+    Warnings:
+      properties:
+        outOfSequenceWaypoints:
+          items:
+            $ref: '#/components/schemas/OutOfSequenceWaypoint'
+          type: array
+      title: Warnings
+      type: object
+    Waypoint:
+      properties:
+        estimatedArrival:
+          description: Expected time of arrival at the waypoint
+          example: '2023-01-13T08:24:55+01:00'
+          type: string
+        estimatedDeparture:
+          description: 'Expected time of departure from the waypoint, based on estimated arrival time and the service time at the waypoint'
+          example: '2023-01-16T09:01:00+01:00'
+          type: string
+        fulfilledConstraints:
+          description: 'User specified constraints of the waypoint, which have been met'
+          items:
+            type: string
+          type: array
+        id:
+          description: User provided id
+          example: ZecheZollverein
+          type: string
+        lat:
+          description: Latitude of the waypoint
+          example: 51.486
+          format: double
+          type: number
+        lng:
+          description: Longitude of the waypoint
+          example: 7.0459
+          format: double
+          type: number
+        sequence:
+          description: Position in the sequence
+          example: 1
+          format: int32
+          type: integer
+      title: Waypoint
+      type: object
+    WseResponse:
+      properties:
+        errors:
+          description: 'This field provides descriptions of errors which occurred during the calculation. The value is always included in the answer, but is a empty array, if there is no error. errors is providing information if the HTTP response code indicates an error.'
+          items:
+            example: 'null'
+            type: string
+          type: array
+        processingTimeDesc:
+          description: 'Calculation time for the result, including the time unit. If the response does not contains an error, the processing time value is included.'
+          example: 123ms
+          type: string
+        requestId:
+          description: 'Identifier defined in the request and passed through the system. This field is null, if no such value was defined in the request.'
+          example: 'null'
+          type: string
+        responseCode:
+          description: 'This value is set to the HTTP response code. If the parameter jsonCallback is set in the request, the HTTP response code is always 200. In this case this field gives the actual response code.'
+          example: '200'
+          type: string
+        results:
+          description: 'This List contains 1 or 0 elements with an ordered list of waypoints. This value is set, if a result is found.'
+          items:
+            $ref: '#/components/schemas/Result'
+          type: array
+        warnings:
+          $ref: '#/components/schemas/Warnings'
+          description: 'This List contains 0 or more elements with an ordered list of waypoints. This value is set only, if no sequence is found due to constraints.'
+      title: WseResponse
+      type: object
+  securitySchemes:
+    apiKey:
+      in: query
+      name: apiKey
+      type: apiKey
+    bearerTokenAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
