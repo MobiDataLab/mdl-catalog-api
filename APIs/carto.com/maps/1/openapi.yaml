@@ -24,7 +24,7 @@ info:
     - location
   x-logo:
     backgroundColor: '#FFFFFF'
-    url: 'https://carto.com/developers/img/logo-carto.21197b2f.svg'
+    url: 'https://assets-global.website-files.com/6345207a1b18e581fcf67604/636a830d6e0e097a6f760262_logo-desktop-negative.svg'
   x-origin:
     - format: openapi
       url: 'https://carto.com/developers/maps-api/reference/swagger.yaml'
