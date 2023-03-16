@@ -12,6 +12,5 @@ on:
 jobs:
   add_api:
     uses: mobidatalab/mdl-catalog-deployment/.github/workflows/base_issue.yaml@main
-    secrets:
-      DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+    secrets: inherit
 
