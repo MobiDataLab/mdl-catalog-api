@@ -1,0 +1,1687 @@
+openapi: 3.0.3
+servers:
+  - url: 'https://smap.hereapi.com'
+info:
+  description: 'Simple and fast access to the rich HERE Map content, seamlessly extensible by your own map data'
+  license:
+    name: HERE Documentation License
+    url: 'https://legal.here.com/en-gb/terms/documentation-license'
+  termsOfService: 'http://developer.here.com/terms-conditions'
+  title: Map Attributes
+  version: 8.2.1
+  x-apisguru-categories:
+    - location
+  x-document-meta-data:
+    copyright: © 2023 HERE Europe B.V.
+    date-created: '2023-02-21T17:34:15+00:00'
+    document-id: 8f33cec8-754d-4a52-b02c-991661e09256
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://avatars.githubusercontent.com/u/2835506'
+  x-origin:
+    - format: openapi
+      url: 'https://developer.here.com/documentation/content-map-attributes/swagger/advanceddatasets.json'
+      version: '3.0'
+  x-providerName: here.com
+  x-serviceName: map-attributes
+tags:
+  - description: 'The HERE Map Attributes API offes simple and fast access to the rich HERE Map Content, seamlessly extensible by your own map data'
+    name: Map Attributes V8
+paths:
+  /v8/maps/attributes:
+    get:
+      description: 'Simple and fast access to the rich HERE Map Content, seamlessly extensible by your own map data'
+      operationId: v8GetMapAttributesJsonUsingGET_1
+      parameters:
+        - description: app_id
+          in: query
+          name: app_id
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: app_code
+          in: query
+          name: app_code
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not specified, the content of all maps containing the requested layer(s) is retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Comma separated list of layers to be searched. Layer names are not case sensitive. Both custom layers and Map Attribute layers are supported. Map Attribute layers divided by functional class, like ROAD_GEOM_FC1 ... FC5 can be selected by N, e.g. ROAD_GEOM_FCN. The maximum length of a layer name and the permitted characters can be looked up up in the service via /serviceconfiguration.json'
+          in: query
+          name: layers
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: "Spatial filtering. Supported are bbox, proximity, tile, corridor and all (full layer). \r\nThe format is &in=all or \r\n&in=bbox:{west longitude},{south latitude},{east longitude},{north latitude} or \r\n&in=proximity:latitude,longitude;r={radius} or \r\n&in=tile:{comma separated list of tile ids. The number of tile ids must match with the number of layers.} or \r\n&in=corridor:{comma separated WGS84 degree coordinates of corridor, for example:latitude 1,longitude 1,latitude 2,longitude 2 / encoded polyline string from Routing v8 response/ routeHandle string from Routing v8 response};r={radius}[;type=geoCoordinate(gc)/encodedPolyline(ep)/routeHandle(rh) }.\r\n When using routeHandle for corridor search an access token or apikey used for the router v8 service should be specified as Authorization header, else request will fail."
+          in: query
+          name: in
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: "A SQL expression being evaluated for each geometry matching search query.\r\nColumns value for the geometry are available as defined variables.\r\nWhen specified, only geometries where expression evaluates to true will be returned.\r\nSupport SQL filter operators are: '=', '!=', '>', '<', 'AND', 'OR', 'LIKE'.\r\nExample: filter=RATING > 3 AND NAME != 'MyPlace23' AND NAME LIKE 'FOOD%' \r\nParameter value must be url encoded when using special characters.\r\nThis filter expression is applied to all geometries, so it can become slow for big layers.\r\nTo avoid service overload, filter expressions must not exceed 100 characters of text."
+          in: query
+          name: filter
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: When set to 1 then stable topology ids are returned in the response. The default value is 1.
+          in: query
+          name: link2stabletopologyid
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Map release quarter, e.g. 2015Q4, 161J0, 16153 or LATEST (= default) for the latest available map release quarter. Specifying a map release is strongly discouraged, because there is no guarantee how long old map releases are available, hence applications that specify a release might stop working when the release gets retired. To choose a (nearest to) specific snapshot of the live traffic speed record or archived weather layer, a UNIX timestamp (number of milliseconds since 1970) or a date in 2017-12-01T17:30:00+01:00 format can be passed.'
+          in: query
+          name: release
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: When set to 1 then meta info is returned in the response. The default value is 1.
+          in: query
+          name: meta
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Semicolon separated list of column names (in uppercase) to specify which attributes shall appear in the result. If the request specifies several layers, then pass this for each layer, as a comma separated list. Default = all.'
+          in: query
+          name: attributes
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Mode of transport to be used for the route calculation: car, truck, pedestrian. Required when routeHandle is used to retrieve attributes in corridor, please specify the same transportMode which was used to get the route handle from v8 Routing API.'
+          in: query
+          name: transportMode
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: |-
+            The number of geometries in the response. If more geometries satisfy the search/filter criteria, they will be suppressed. It is undefined, which of the matching geometries are returned, unless this parameter is used together with offset, which sorts the results set by geometry id.
+            Parameter can be a single value that applies to all layers, or a comma separated list equal in number to the number of layers specified in layer_id parameter.
+            The maximum number of records supported within a single request can be looked up in the /serviceconfiguration.json endpoint.
+          in: query
+          name: count
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: |-
+            To paginate huge responses, this parameter specifies the lowest geometry id to be returned. If geometry ids are not known, then retrieve the first page using zero, and to retrieve subsequent pages then request highest geometry of current page + 1 (it doesn't matter whether this geometry id actually exists or not). Use this parameter together with count.
+            Parameter can be a single value that applies to all layers, or a comma separated list equal in number to the number of layers specified in layer_id parameter.
+          in: query
+          name: offset
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Optional. If this parameter is set to true, user will get list of geometries from available layers, even if some of the requested layers are missing. If none of the requested layers are found, service returns empty list.'
+          in: query
+          name: acceptMissingLayers
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'local, full or none. Specifies the geometry representation in the result. Default = local. Local geometry is used for map display purposes, returning geometry pieces that cover the given search radius, bounding box or corridor polygon. Full geometry is used for interactive editing, where the original geometry is required. Full geometry can only be retrieved for custom layers, for map  None is used for applications like geofencing, which most of the time want to know only the ids of the geofence points/lines polygons they are in or near.'
+          in: query
+          name: geom
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MapAttributesV8Response'
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Simple and fast access to the rich HERE Map Content
+      tags:
+        - Map Attributes V8
+    post:
+      description: 'Simple and fast access to the rich HERE Map Content, seamlessly extensible by your own map data'
+      operationId: v8GetMapAttributesJsonUsingPOST_1
+      parameters:
+        - description: app_id
+          in: query
+          name: app_id
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: app_code
+          in: query
+          name: app_code
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not specified, the content of all maps containing the requested layer(s) is retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Comma separated list of layers to be searched. Layer names are not case sensitive. Both custom layers and Map Attribute layers are supported. Map Attribute layers divided by functional class, like ROAD_GEOM_FC1 ... FC5 can be selected by N, e.g. ROAD_GEOM_FCN. The maximum length of a layer name and the permitted characters can be looked up up in the service via /serviceconfiguration.json'
+          in: query
+          name: layers
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: "Spatial filtering. Supported are bbox, proximity, tile, corridor and all (full layer). \r\nThe format is &in=all or \r\n&in=bbox:{west longitude},{south latitude},{east longitude},{north latitude} or \r\n&in=proximity:latitude,longitude;r={radius} or \r\n&in=tile:{comma separated list of tile ids. The number of tile ids must match with the number of layers.} or \r\n&in=corridor:{comma separated WGS84 degree coordinates of corridor, for example:latitude 1,longitude 1,latitude 2,longitude 2 / encoded polyline string from Routing v8 response/ routeHandle string from Routing v8 response};r={radius}[;type=geoCoordinate(gc)/encodedPolyline(ep)/routeHandle(rh) }.\r\n When using routeHandle for corridor search an access token or apikey used for the router v8 service should be specified as Authorization header, else request will fail."
+          in: query
+          name: in
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: "A SQL expression being evaluated for each geometry matching search query.\r\nColumns value for the geometry are available as defined variables.\r\nWhen specified, only geometries where expression evaluates to true will be returned.\r\nSupport SQL filter operators are: '=', '!=', '>', '<', 'AND', 'OR', 'LIKE'.\r\nExample: filter=RATING > 3 AND NAME != 'MyPlace23' AND NAME LIKE 'FOOD%' \r\nParameter value must be url encoded when using special characters.\r\nThis filter expression is applied to all geometries, so it can become slow for big layers.\r\nTo avoid service overload, filter expressions must not exceed 100 characters of text."
+          in: query
+          name: filter
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: When set to 1 then stable topology ids are returned in the response. The default value is 1.
+          in: query
+          name: link2stabletopologyid
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Map release quarter, e.g. 2015Q4, 161J0, 16153 or LATEST (= default) for the latest available map release quarter. Specifying a map release is strongly discouraged, because there is no guarantee how long old map releases are available, hence applications that specify a release might stop working when the release gets retired. To choose a (nearest to) specific snapshot of the live traffic speed record or archived weather layer, a UNIX timestamp (number of milliseconds since 1970) or a date in 2017-12-01T17:30:00+01:00 format can be passed.'
+          in: query
+          name: release
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: When set to 1 then meta info is returned in the response. The default value is 1.
+          in: query
+          name: meta
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Semicolon separated list of column names (in uppercase) to specify which attributes shall appear in the result. If the request specifies several layers, then pass this for each layer, as a comma separated list. Default = all.'
+          in: query
+          name: attributes
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Mode of transport to be used for the route calculation: car, truck, pedestrian. Required when routeHandle is used to retrieve attributes in corridor, please specify the same transportMode which was used to get the route handle from v8 Routing API.'
+          in: query
+          name: transportMode
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: |-
+            The number of geometries in the response. If more geometries satisfy the search/filter criteria, they will be suppressed. It is undefined, which of the matching geometries are returned, unless this parameter is used together with offset, which sorts the results set by geometry id.
+            Parameter can be a single value that applies to all layers, or a comma separated list equal in number to the number of layers specified in layer_id parameter.
+            The maximum number of records supported within a single request can be looked up in the /serviceconfiguration.json endpoint.
+          in: query
+          name: count
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: |-
+            To paginate huge responses, this parameter specifies the lowest geometry id to be returned. If geometry ids are not known, then retrieve the first page using zero, and to retrieve subsequent pages then request highest geometry of current page + 1 (it doesn't matter whether this geometry id actually exists or not). Use this parameter together with count.
+            Parameter can be a single value that applies to all layers, or a comma separated list equal in number to the number of layers specified in layer_id parameter.
+          in: query
+          name: offset
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Optional. If this parameter is set to true, user will get list of geometries from available layers, even if some of the requested layers are missing. If none of the requested layers are found, service returns empty list.'
+          in: query
+          name: acceptMissingLayers
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'local, full or none. Specifies the geometry representation in the result. Default = local. Local geometry is used for map display purposes, returning geometry pieces that cover the given search radius, bounding box or corridor polygon. Full geometry is used for interactive editing, where the original geometry is required. Full geometry can only be retrieved for custom layers, for map  None is used for applications like geofencing, which most of the time want to know only the ids of the geofence points/lines polygons they are in or near.'
+          in: query
+          name: geom
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MapAttributesV8Response'
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Simple and fast access to the rich HERE Map Content
+      tags:
+        - Map Attributes V8
+  /v8/maps/content.html:
+    get:
+      description: Landing page for inline documentation in HTML format
+      operationId: v8ContentHTMLUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            text/html;charset=UTF-8:
+              schema:
+                type: string
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Landing page for inline documentation
+      tags:
+        - Map Attributes V8
+  /v8/maps/delete:
+    get:
+      description: 'Delete some of my geometry layers. To delete complete maps and overlays, leave the layerNames field in parameter ''id'' empty'
+      operationId: v8DeleteMapsLayersUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Unique identifier for the layer in the format {app_id}.{mapName}.{layerNames}. app_id: app_id of the project under which the layers exit; mapName: delete the layers within this map, default = delete the layers in app_id''s default map; layerNames:  Comma separated name of layers to delete. The maximum length of a layer name and the permitted characters can be looked up up in the service via /serviceconfiguration.json.'
+          in: query
+          name: layerId
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: 'Either updatable or readonly. Default = updatable. Only updatable layers can be deleted, for readonly layers and overlays complete map contianing the layer should be deleted.'
+          in: query
+          name: storage
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response.
+          in: query
+          name: callback
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteLayersResponse'
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Delete geometry layers
+      tags:
+        - Map Attributes V8
+  /v8/maps/file.bin:
+    get:
+      description: 'Retrieve the binary content of a file, like a junction view image'
+      operationId: v8GetFileUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not specified, the content of all maps is retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: layer name
+          in: query
+          name: layer
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'file path, as specified in the referencing layer''s attribute value'
+          in: query
+          name: path
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response.
+          in: query
+          name: callback
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                format: byte
+                type: string
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: File content
+      tags:
+        - Map Attributes V8
+  /v8/maps/index:
+    get:
+      description: Retrieve the IDs of tiles that contain a given (set of) attribute value(s). Does not work for custom layers.
+      operationId: v8IndexUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: layer name
+          in: query
+          name: layer
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not specified, the content of all maps is retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: comma separated list of the index attribute names
+          in: query
+          name: attributes
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'comma separated list of index attribute values, corresponding to the attribute names'
+          in: query
+          name: values
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/IndexResponse'
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Tile IDs containing a given value
+      tags:
+        - Map Attributes V8
+  /v8/maps/indexes:
+    get:
+      description: List the available indexes of custom and public layers.
+      operationId: v8MapIndexesJSONUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not given, the content from all maps is retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response.
+          in: query
+          name: callback
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/IndexDocBean'
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: List available layer indexes
+      tags:
+        - Map Attributes V8
+  /v8/maps/indexes.html:
+    get:
+      description: List the available indexes of custom and public layers.
+      operationId: v8MapIndexesHTMLUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not given, the content from all maps is retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            text/html;charset=UTF-8:
+              schema:
+                type: string
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: List available layer indexes
+      tags:
+        - Map Attributes V8
+  /v8/maps/layers/attributes:
+    get:
+      description: List the map layer attributes across all layers
+      operationId: v8LayerAttributesJSONUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not given, the layer attributes of all maps are retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response
+          in: query
+          name: callback
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AttributeDocBean'
+                type: array
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: List the layer attributes across all layers
+      tags:
+        - Map Attributes V8
+  /v8/maps/layers/attributes.html:
+    get:
+      description: List the layer attributes across all layers in basic HTML format
+      operationId: v8LayerAttributesHTMLUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not given, the layer attributes of all maps are retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            text/html;charset=UTF-8:
+              schema:
+                type: string
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: List the layer attributes across all layers
+      tags:
+        - Map Attributes V8
+  /v8/maps/layers/doc:
+    get:
+      description: 'Show the layer documentation for a specific layer (public/private) in JSON format. Public layer documentation list the attributes and corresponding official attribute description, for private layers attribute description might be empty.'
+      operationId: v8LayerDocJSONUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: layer
+          in: query
+          name: layer
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not specified, the layer doc available in all maps are retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response.
+          in: query
+          name: callback
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/LayerDetailDocBean'
+                type: array
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Show the layer documentation for a specific layer (public/private) in JSON format.
+      tags:
+        - Map Attributes V8
+  /v8/maps/layers/doc.html:
+    get:
+      description: 'Show the layer documentation for a specific layer (public/private) in HTML format. Public layer documentation list the attributes and corresponding official attribute description, for private layers attribute description might be empty.'
+      operationId: v8LayerDocHTMLUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: layer
+          in: query
+          name: layer
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not specified, the layer doc available in all maps are retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            text/html;charset=UTF-8:
+              schema:
+                type: string
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Show the layer documentation for a specific layer (public/private) in HTML format.
+      tags:
+        - Map Attributes V8
+  /v8/maps/layers/list:
+    get:
+      description: 'List the available map layers (public/private/both) in JSON format. To see only the layers of a given map region, like Postal Code Boundaries or WEU, then specify it as map ''region'''
+      operationId: v8LayersListJSONUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not specified, the layers of all maps are retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response.
+          in: query
+          name: callback
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Option to filter layers to be listed based on whether they are public, private or both, default value 0: both private and public layers, 1: only public layers, 2: only private layers'
+          in: query
+          name: layerType
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/LayerDocBean'
+                type: array
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: 'List the available map layers (public/private/both) in JSON format. '
+      tags:
+        - Map Attributes V8
+  /v8/maps/layers/list.html:
+    get:
+      description: 'List the available map layers (public/private/both) in HTML format. To see only the layers of a given map region, like Postal Code Boundaries or WEU, then specify it as map ''region'''
+      operationId: v8LayersListHTMLUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If not specified, the layers of all maps are retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Option to filter layers to be listed based on whether they are public, private or both, default value 0: both private and public layers, 1: only public layers, 2: only private layers'
+          in: query
+          name: layerType
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            text/html;charset=UTF-8:
+              schema:
+                type: string
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: List the available map layers (public/private/both) in HTML format.
+      tags:
+        - Map Attributes V8
+  /v8/maps/list:
+    get:
+      operationId: v8MapsListJSONUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If specified, all versions of specified map is retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Option to filter maps to be listed based on whether they are public, private or both, default value 0: both private and public maps, 1: only public maps, 2: only private maps'
+          in: query
+          name: mapType
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response.
+          in: query
+          name: callback
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MapDocResponse'
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: List available map (public/private/both) regions/releases available to the app.
+      tags:
+        - Map Attributes V8
+  /v8/maps/list.html:
+    get:
+      operationId: v8MapsListHTMLUsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'map name. Optional for public HERE maps and for private BYOD maps. If specified, all versions of specified map is retrieved'
+          in: query
+          name: mapName
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Option to filter maps to be listed based on whether they are public, private or both, default value 0: both private and public maps, 1: only public maps, 2: only private maps'
+          in: query
+          name: mapType
+          required: false
+          schema:
+            type: string
+          style: form
+      responses:
+        '200':
+          content:
+            text/html;charset=UTF-8:
+              schema:
+                type: string
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: List all maps (public/private/both) available to the app in HTML format.
+      tags:
+        - Map Attributes V8
+  /v8/maps/modify:
+    post:
+      description: "Modify geometries using an HTTP GET or POST request. After the response there is a delay of several seconds to compile, store and make the modified geometries available in the service.\r\nNote: The level (tile grid size) of the layer can only be changed by uploading the whole layer, not as a modification operation."
+      operationId: v8ModifyPostUsingPOST_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Unique identifier for the layer in the format {app_id}.{mapName}.{layerName}. app_id: app_id of the project modifying the layer; mapName: the map into which the layer is uploaded, default = upload the layer into the app_id''s default map; layerName:  Name of layer to modify, the maximum length of a layer name and the permitted characters can be looked up up in the service via /serviceconfiguration.json.'
+          in: query
+          name: layerId
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: 'append, update or delete. Geometries are identified by their geometry_id column value. For append, the geometries must not exist yet and will be added. For update, the geometries must exist and will be replaced. All column values must be specified, not only the changes. For update and delete, the columns must not change - names, sequence orders and type must be identical. For delete, the geometries must exist and will be replaced. Only the geometry_id column is required.'
+          in: query
+          name: action
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: Specify the quote character to use. Default = " (double quotes). Specifying NONE disables quotes.
+          in: query
+          name: wktQuote
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LayerModifyResponse'
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LayerModifyResponse'
+          description: Modify Conflict
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Modify Geometries in Existing Layers
+      tags:
+        - Map Attributes V8
+  /v8/maps/routeisoline:
+    get:
+      description: Retrieve the POIs that are reachable within a certain time or distance from the main route
+      operationId: searchRouteIsolineV8UsingGET_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: app_id
+          in: query
+          name: app_id
+          required: false
+          schema:
+            type: string
+          style: form
+        - allowReserved: true
+          description: Parameters to specify the vehicle. See calculateroute.json for details.
+          in: query
+          name: 'trailerType, trailersCount, vehicleNumberAxles, trailerNumberAxles, hybrid, emissionType, height, trailerHeight, vehicleWeight, limitedWeight, disabledEquipped, minimalPollution, hov, passengersCount, tiresCount, commercial, shippedHazardousGoods, heightAbove1stAxle'
+          required: true
+          schema:
+            type: string
+          style: form
+        - allowReserved: true
+          description: "Either waypoints or route_id must be specified. Comma separated waypoint latitude, longitude in WGS-84 degree. A route must consist of at least 2\r\nwaypoints (start and destination). The maximum number of waypoints is limited. However, this limit is\r\nnot a fixed number but is a result of the limit for the overall processing time. To define a loading/delay\r\ntime at a waypoint, use stopOver[,timeInSeconds]!. Example: &waypoint1=stopOver,300!50.12,8.65.\r\nNone of the optional specifications geo!, stopOver!, passThrough!, altitude,\r\ntransitRadius, custom label, heading, !StreetPosition, !LinkPosition are currently supported."
+          in: query
+          name: waypoint0 ... waypointN
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: app_code
+          in: query
+          name: app_code
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Comma separated list of layer IDs to be searched. Layer names are not case sensitive. Both custom layers and PDE map layers are supported. PDE layers divided by functional class, like ROAD_GEOM_FC1 ... FC5 can be selected by N, e.g. ROAD_GEOM_FCN. Layers must have a LINK_ID column. If a customer doesn''t have a LINK_ID column, customers can create it using the Geocoder, Reverse Geocoder or RME. The maximum length of a layer name and the permitted characters can be looked up up in the service via /serviceconfiguration.json'
+          in: query
+          name: layer_ids
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: List of comma separated column names to specify which attributes shall appear in the result. Column names are not case sensitive. Default = all.
+          in: query
+          name: attributes
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'local, full or none. Specifies the geometry representation in the result. Default = local. Local geometry is used for map display purposes, returning geometry pieces that cover the given search radius, bounding box or corridor polygon. Full geometry is used for interactive editing, where the original geometry is required. None is used for applications like geofencing, which most of the time want to know only the ids of the geofence points/lines polygons they are in or near.'
+          in: query
+          name: geom
+          required: false
+          schema:
+            enum:
+              - full
+              - local
+              - none
+            type: string
+          style: form
+        - description: 'Either max_detour_distance or max_detour_time must be specified. Maximum travel distance in meter away from the route to reach the map object. This is one way, from the junction that leaves the route until to the map object. The distance to get back onto the route is not considered here.'
+          in: query
+          name: max_detour_distance
+          required: false
+          schema:
+            format: double
+            type: number
+          style: form
+        - description: "Either max_detour_time or max_detour_distance\tMaximum travel time in seconds away from the route to reach the map object. This is one way, from the junction that leaves the route until to the map object. The time to get back onto the route is not considered here."
+          in: query
+          name: max_detour_time
+          required: false
+          schema:
+            format: double
+            type: number
+          style: form
+        - description: 'Optional, default searches in both. Specify ''updatable'' or ''readonly'', how you uploaded the layer.'
+          in: query
+          name: storage
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Maximum adaptive map match search radius [meter]. Will be applied to each way point. If given it overrides waypoints'' transitRadius values and the default maximum adaptive search radius. For routing, default 1600. Limit 5000.'
+          in: query
+          name: mapMatchRadius
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Optional (default=whole world excl. JPN, CHN, SK). Map coverage region, e.g. APAC, AUS, WEU, IND, MEA, NA, SAM, TWN, JPN. The region may contain hints to distinguish specific content. E.g. there can be an WEU and PCBEU, where the 2nd map contains only Postal Code Boundary layers. If not specified, the service will find the region(s) automatically, that cover the request. The parameter can contain a comma separated list of regions (f.e. WEU,MEA). If the region parameter is specified, the service will use these region(s) and skip region(s) that may also cover the response (f.e. EEU). Except of JPN, specifying a region is strongly discouraged, because regions might change and hence applications that specify a region might stop working when the region gets discontinued, renamed, split or changed otherwise. As the APAC region contains a simplified entry map content of JPN, JPN needs to be specified as region to access the full JPN content.'
+          in: query
+          name: region
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: language
+          in: query
+          name: language
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Optional. Map within to look for the layer. Default: Look into the default map.'
+          in: query
+          name: map_name
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specifies the function used to wrap the JSON response.
+          in: query
+          name: callback
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Define optional attributes to be returned for each link. Currently supported: cost.'
+          in: query
+          name: linkAttributes
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Specifies in which intervals route isoline POIs are requested. Defined as from/to elapsed time on the route &searchInterval=fromSeconds,ToSeconds,FromSeconds,ToSeconds,...'
+          in: query
+          name: searchInterval
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'The routing mode (e.g. fastest;car;traffic:disabled) that determines how the route is calculated.'
+          in: query
+          name: mode
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/GeometrySearchResponse'
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Retrieve the POIs that are reachable within a certain time or distance from the main route
+      tags:
+        - Map Attributes V8
+  /v8/maps/upload:
+    post:
+      description: 'Import polygons, polylines or points in WKT (Wellknown Text) or Shapefile format geometries using an HTTP POST request, or import WKT geometries using HTTP GET. A layer can contain only one geometry type - polygons, polylines or points, but not a mix of different types. After the response there is a delay of several seconds to compile, store and make the geometries available in the service.'
+      operationId: v8UploadPostUsingPOST_1
+      parameters:
+        - allowReserved: true
+          in: query
+          name: apikey
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Unique identifier for the layer in the format {app_id}.{mapName}.{layerName}. app_id: app_id of the project creating the layer; mapName: the map into which the layer is uploaded, default = upload the layer into the app_id''s default map; layerName:  Name of layer to create/replace, the maximum length of a layer name and the permitted characters can be looked up up in the service via /serviceconfiguration.json.'
+          in: query
+          name: layerId
+          required: true
+          schema:
+            type: string
+          style: form
+        - description: 'Specify tile size for the database for performance optimization, if not specified default tile size of 12 is used.'
+          in: query
+          name: level
+          required: false
+          schema:
+            format: int32
+            type: integer
+          style: form
+        - description: Either updatable or readonly. Default = updatable.
+          in: query
+          name: storage
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Specify the quote character to use. Default = " (double quotes). Specifying NONE disables quotes.
+          in: query
+          name: wktQuote
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Specify columns of the layer that should be indexed. Column name is followed by semi-colon(;) and indexing type. Supported indexing type are: order(o), text(t) or both order,text(o,t). Columns are separated by pipe(|). Example &indexColumns=POI_ID;order|CAT_ID;text|ADMIN_IDS;order,text'
+          in: query
+          name: indexColumns
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Comma separated list of app_ids which also have (per default read+export) access to this layer (specifying ownerAppId.mapName.layerName). Example &granted_app_ids=otherAppId1,otherAppId2'
+          in: query
+          name: grantedAppIds
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            encoding:
+              file:
+                contentType: text/plain
+            schema:
+              format: binary
+              type: string
+          application/octet-stream:
+            encoding:
+              file:
+                contentType: text/plain
+            schema:
+              format: binary
+              type: string
+          multipart/form-data:
+            encoding:
+              file:
+                contentType: text/plain
+            schema:
+              type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LayerUploadResponse'
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Import Geometries in a WKT or Shape File
+      tags:
+        - Map Attributes V8
+components:
+  schemas:
+    AttributeDocBean:
+      properties:
+        description:
+          type: string
+        layers:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        name:
+          type: string
+      title: AttributeDocBean
+      type: object
+    DeleteLayersResponse:
+      properties:
+        deletedLayers:
+          items:
+            type: string
+          type: array
+      title: DeleteLayersResponse
+      type: object
+    Geometry:
+      properties:
+        attributes:
+          additionalProperties:
+            type: string
+          description: Attribute/value map
+          type: object
+        distance:
+          format: double
+          type: number
+        geometry:
+          description: WKT string
+          type: string
+        id:
+          type: string
+        nearestLat:
+          format: double
+          type: number
+        nearestLon:
+          format: double
+          type: number
+      title: Geometry
+      type: object
+    GeometrySearchResponse:
+      properties:
+        geometries:
+          items:
+            $ref: '#/components/schemas/Geometry'
+          type: array
+        meta:
+          items:
+            $ref: '#/components/schemas/SearchMetaResponse'
+          type: array
+      title: GeometrySearchResponse
+      type: object
+    IndexDocBean:
+      properties:
+        exampleNames:
+          type: string
+        exampleUrlParams:
+          type: string
+        indexType:
+          type: string
+        indexedColumnNames:
+          type: string
+        indexedLayerName:
+          type: string
+        mapName:
+          type: string
+      title: IndexDocBean
+      type: object
+    IndexResponse:
+      properties:
+        Layers:
+          description: 'List of layers containing this attribute value. Usually 1 layer, but can be multiple when request a ..._FCN layer.'
+          items:
+            $ref: '#/components/schemas/IndexResponseLayer'
+          type: array
+      title: IndexResponse
+      type: object
+    IndexResponseLayer:
+      properties:
+        layer:
+          type: string
+        level:
+          description: Tiling level of the layer.
+          format: int32
+          type: integer
+        tileXYs:
+          description: tileX and tileY components of the tile ID.
+          items:
+            $ref: '#/components/schemas/IndexTileCoords'
+          type: array
+      title: IndexResponseLayer
+      type: object
+    IndexTileCoords:
+      properties:
+        x:
+          format: int32
+          type: integer
+        'y':
+          format: int32
+          type: integer
+      title: IndexTileCoords
+      type: object
+    LayerDetailDocBean:
+      properties:
+        attributes:
+          additionalProperties:
+            type: string
+          type: object
+        description:
+          type: string
+        isStaticContent:
+          type: boolean
+        referencedStaticContents:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        tileRequestsLevel:
+          format: int32
+          type: integer
+        tileX:
+          format: int32
+          type: integer
+        tileY:
+          format: int32
+          type: integer
+      title: LayerDetailDocBean
+      type: object
+    LayerDocBean:
+      properties:
+        attributes:
+          items:
+            type: string
+          type: array
+        featureMapping:
+          type: string
+        layerType:
+          type: string
+        level:
+          format: int32
+          type: integer
+        mapName:
+          type: string
+        name:
+          type: string
+        storage:
+          type: string
+        tileLevel:
+          format: int32
+          type: integer
+        type:
+          type: string
+      title: LayerDocBean
+      type: object
+    LayerModifyResponse:
+      properties:
+        action:
+          type: string
+      title: LayerModifyResponse
+      type: object
+    LayerUploadResponse:
+      properties:
+        storedTilesCount:
+          format: int32
+          type: integer
+      title: LayerUploadResponse
+      type: object
+    MapAttributesV8Response:
+      properties:
+        Tiles:
+          items:
+            $ref: '#/components/schemas/TileResponseV8'
+          type: array
+        geometries:
+          items:
+            $ref: '#/components/schemas/Geometry'
+          type: array
+        meta:
+          items:
+            $ref: '#/components/schemas/SearchMetaResponse'
+          type: array
+      title: MapAttributesV8Response
+      type: object
+    MapDocBean:
+      properties:
+        coverage:
+          type: string
+        isLatest:
+          type: boolean
+        layerNames:
+          items:
+            type: string
+          type: array
+        mapType:
+          type: string
+        name:
+          type: string
+        releaseYearAndQuarter:
+          type: string
+        size:
+          format: int64
+          type: integer
+        storage:
+          type: string
+        version:
+          format: int64
+          type: integer
+      title: MapDocBean
+      type: object
+    MapDocResponse:
+      properties:
+        maps:
+          items:
+            $ref: '#/components/schemas/MapDocBean'
+          type: array
+      title: MapDocResponse
+      type: object
+    MetaResponseV8:
+      properties:
+        layerName:
+          type: string
+        level:
+          format: int32
+          type: integer
+        mapRegion:
+          type: string
+        mapRelease:
+          type: string
+        tileId:
+          format: int32
+          type: integer
+      title: MetaResponseV8
+      type: object
+    SearchMetaResponse:
+      properties:
+        lastUpdateTimeStamp:
+          description: last modification milli second timestamp
+          format: int64
+          type: integer
+        layerId:
+          description: the layername the geometry belongs to
+          type: string
+        search:
+          description: the search id in the request where these result geometries belong to
+          type: string
+      title: SearchMetaResponse
+      type: object
+    ServiceConfigurationContent:
+      properties:
+        maxGetLinkInfoLinkIdsPerRequest:
+          type: string
+        maxIndexValuesPerRequest:
+          type: string
+        maxProximityLayers:
+          type: string
+        maxSearchResults:
+          type: string
+        maxTilesPerRequest:
+          type: string
+      title: ServiceConfigurationContent
+      type: object
+    ServiceConfigurationResponse:
+      properties:
+        Configuration:
+          $ref: '#/components/schemas/ServiceConfigurationContent'
+      title: ServiceConfigurationResponse
+      type: object
+    TileResponseV8:
+      properties:
+        meta:
+          $ref: '#/components/schemas/MetaResponseV8'
+        rows:
+          items:
+            $ref: '#/components/schemas/TileRow'
+          type: array
+      title: TileResponseV8
+      type: object
+    TileRow:
+      properties:
+        columns:
+          items:
+            type: string
+          type: array
+      title: TileRow
+      type: object
+  securitySchemes:
+    apiKey:
+      in: query
+      name: apiKey
+      type: apiKey
+    bearerTokenAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
