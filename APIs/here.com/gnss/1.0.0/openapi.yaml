@@ -1,0 +1,109 @@
+openapi: 3.0.0
+servers:
+  - description: Production Server
+    url: 'https://gnss.hereapi.com/websocket/v1'
+info:
+  description: |
+    HERE GNSS API provides data to:
+
+    - Shorten the time needed to get the first GNSS-based position estimate both in online and offline mode.
+    - Achieve continuous position tracking with much weaker signal levels both in online and offline mode.
+    - Reduce of power consumption by reducing the time it takes to calculate the current position both in online and offline mode.
+    - Improve the overall GNSS position estimate accuracy to sub-meter range in online mode.
+
+    HERE GNSS API is an asynchronous WebSocket API that supports two methods for retrieving data:
+    - Single shot requests for fetching data one time.
+    - Subscriptions to get a continuous stream of data.
+
+    The API utilizes protobuf format for methods and responses. It provides additional health and
+    version REST end-points to query the state of the API. The WebSocket part of the API is documented
+    in the [GNSS Service Developer Guide](https://developer.here.com/documentation/gnss-positioning/).
+  license:
+    name: HERE Documentation License
+    url: 'https://legal.here.com/en-gb/terms/documentation-license'
+    x-copyright: Copyright (C) 2021 HERE Europe B.V.
+  termsOfService: 'http://developer.here.com/terms-conditions'
+  title: HERE GNSS API v1
+  version: 1.0.0
+  x-apisguru-categories:
+    - location
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://avatars.githubusercontent.com/u/2835506'
+  x-olp-service:
+    name: gnss-positioning
+    version: v1
+  x-origin:
+    - format: openapi
+      url: 'https://registry.services.api.platform.here.com/v1/services/hrn%3Ahere%3Aservice%3A%3Aolp-here%3Agnss-positioning-1/openApi'
+      version: '3.0'
+  x-providerName: here.com
+  x-serviceName: gnss
+security:
+  - APIKey: []
+  - AccessToken: []
+paths:
+  /health:
+    get:
+      description: Tests basic health of the service
+      operationId: getHealth
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiHealthStatus'
+          description: Health status
+      summary: Service health
+      tags:
+        - API Information
+  /version:
+    get:
+      description: Retrieves API Specification version information
+      operationId: getApiVersion
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+          description: Version of API
+      summary: API version
+      tags:
+        - API Information
+components:
+  schemas:
+    ApiHealthStatus:
+      properties:
+        status:
+          description: Health status of API
+          example: ok
+          type: string
+      type: object
+    ApiVersion:
+      properties:
+        apiVersion:
+          description: Version of API
+          example: 1.0.0
+          type: string
+        serviceVersion:
+          description: Version of the Service
+          example: 1.0.1
+          type: string
+      type: object
+  securitySchemes:
+    APIKey:
+      description: |
+        A 43-byte Base64 URL-safe encoded string used for the authentication of the client application. As a logged in user, you can generate it at your [Projects](https://developer.here.com/projects). API Keys never expire but you can invalidate your API Keys at any time. You cannot have more than two API Keys for one app at the same time. You must include API key with every request, unless bearer token is provided.
+
+        See the [Identity & Access Management Developer Guide](https://developer.here.com/documentation/identity-access-management/dev_guide/index.html) for more details.
+      in: query
+      name: apiKey
+      type: apiKey
+    AccessToken:
+      bearerFormat: JWT
+      description: |
+        HERE Account bearer token. Required unless API Key provided in the query string parameters.
+        See the [Identity & Access Management Developer Guide](https://developer.here.com/documentation/identity-access-management/dev_guide/index.html) for more details.
+      scheme: bearer
+      type: http
