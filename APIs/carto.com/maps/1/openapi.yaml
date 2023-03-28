@@ -22,6 +22,7 @@ info:
   version: '1'
   x-apisguru-categories:
     - location
+    - maps
   x-logo:
     backgroundColor: '#FFFFFF'
     url: 'https://assets-global.website-files.com/6345207a1b18e581fcf67604/636a830d6e0e097a6f760262_logo-desktop-negative.svg'

@@ -11,6 +11,8 @@ info:
   version: 8.2.1
   x-apisguru-categories:
     - location
+    - maps
+    - poi
   x-document-meta-data:
     copyright: © 2023 HERE Europe B.V.
     date-created: '2023-02-21T17:34:15+00:00'

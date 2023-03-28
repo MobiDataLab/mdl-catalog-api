@@ -21,6 +21,7 @@ info:
   version: 2.2.0
   x-apisguru-categories:
     - location
+    - vector_tiles
   x-document-meta-data:
     copyright: © 2023 HERE Europe B.V.
     date-created: '2023-02-07T12:25:54+00:00'

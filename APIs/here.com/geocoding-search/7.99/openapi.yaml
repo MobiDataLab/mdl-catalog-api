@@ -24,6 +24,8 @@ info:
   version: '7.99'
   x-apisguru-categories:
     - location
+    - geocoding
+    - poi
   x-document-meta-data:
     copyright: © 2023 HERE Europe B.V.
     date-created: '2023-03-02T11:21:34+00:00'

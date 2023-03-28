@@ -15,6 +15,7 @@ info:
   version: 8.18.0
   x-apisguru-categories:
     - location
+    - routing
   x-document-meta-data:
     copyright: © 2023 HERE Europe B.V.
     date-created: '2023-02-15T16:13:39+00:00'

@@ -34,6 +34,7 @@ info:
   version: 2.1.1
   x-apisguru-categories:
     - location
+    - positioning
   x-comment: >
     This API definition uses custom keywords for specifying rules not
     defined in OAS 3.0.x. They convey machine-readable information on additional

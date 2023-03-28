@@ -7,6 +7,10 @@ info:
   version: 8.0.7
   x-apisguru-categories:
     - location
+    - geofencing
+    - route_matching
+    - routing
+    - poi
   x-document-meta-data:
     copyright: © 2022 HERE Europe B.V.
     date-created: '2022-11-17T06:59:11+00:00'

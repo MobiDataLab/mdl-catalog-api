@@ -11,6 +11,8 @@ info:
   version: 1.0.0
   x-apisguru-categories:
     - location
+    - poi
+    - geocoding
   x-logo:
     url: https://twitter.com/TomTom/profile_image?size=original
   x-origin:

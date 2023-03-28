@@ -17,6 +17,7 @@ info:
   version: 2.1.58
   x-apisguru-categories:
     - location
+    - tracking
   x-document-meta-data:
     copyright: © 2021 HERE Europe B.V.
     date-created: 2021-03-23T07:09:46+00:00
