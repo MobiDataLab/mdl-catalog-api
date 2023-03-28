@@ -29,6 +29,7 @@ info:
     - location
     - routing
     - poi
+    - geocoding
   x-logo:
     backgroundColor: '#FFFFFF'
     url: 'https://doc.navitia.io/images/logo-97f24197.png'
