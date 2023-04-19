@@ -1,4 +1,12 @@
 openapi: 3.0.2
+servers:
+  - url: 'http://semantic.westeurope.cloudapp.azure.com:8000/'
+  - url: '{server}'
+    description: 'Custom server'
+    variables:
+      server:
+        default: http://semantic.westeurope.cloudapp.azure.com:8000/
+        description: 'server'
 info:
   description: MobiDataLab semantic enrichment API
   title: Semantic Enrichment Processor
