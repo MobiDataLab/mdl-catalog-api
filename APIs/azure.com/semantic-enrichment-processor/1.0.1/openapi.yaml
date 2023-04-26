@@ -1,4 +1,12 @@
 openapi: 3.0.2
+servers:
+  - url: 'http://semantic.westeurope.cloudapp.azure.com:8000/'
+  - url: '{server}'
+    description: 'Custom server'
+    variables:
+      server:
+        default: http://semantic.westeurope.cloudapp.azure.com:8000/
+        description: 'server'
 info:
   contact:
     url: 'https://github.com/MobiDataLab/mdl-semantic-enrichment'
@@ -6,11 +14,14 @@ info:
   title: Semantic Enrichment Processor
   version: 1.0.1
   x-apisguru-categories:
-    - open_data
+    - semantic
   x-origin:
     - format: openapi
       url: 'http://semantic.westeurope.cloudapp.azure.com:8000/openapi.json'
       version: '3.0'
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://mobidatalab.eu/wp-content/uploads/2021/06/logo.svg'
   x-providerName: azure.com
   x-serviceName: semantic-enrichment-processor
 paths:
