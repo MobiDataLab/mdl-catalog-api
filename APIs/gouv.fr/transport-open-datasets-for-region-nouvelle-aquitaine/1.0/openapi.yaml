@@ -1,0 +1,976 @@
+openapi: 3.0.0
+servers: []
+info:
+  title: Transport.data.gouv.fr
+  version: '1.0'
+  x-apisguru-categories:
+    - transport
+    - open_data
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://transport.data.gouv.fr/images/logo-header.svg'
+  x-origin:
+    - format: openapi
+      url: 'https://transport.data.gouv.fr/api/openapi'
+      version: '3.0'
+  x-providerName: gouv.fr
+  x-serviceName: transport-open-datasets-for-region-nouvelle-aquitaine
+security: []
+tags: []
+paths:
+  /api/aoms:
+    get:
+      callbacks: {}
+      deprecated: false
+      description: Show covered regions
+      operationId: API.AOMController.by_coordinates
+      parameters:
+        - description: Longitude
+          in: query
+          name: lon
+          required: false
+          schema:
+            type: number
+        - description: Latitude
+          in: query
+          name: lat
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AOM'
+          description: AOM
+      summary: Show AOM by coordinates
+      tags:
+        - aom
+  /api/aoms/geojson:
+    get:
+      callbacks: {}
+      deprecated: false
+      description: Show covered regions
+      operationId: API.AOMController.geojson_operation
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoJSONResponse'
+          description: GeoJSON
+      summary: Show geojson of AOM
+      tags:
+        - geojson
+  '/api/aoms/{insee}':
+    get:
+      callbacks: {}
+      deprecated: false
+      description: Show covered regions
+      operationId: API.AOMController.by_insee_operation
+      parameters:
+        - description: INSEE
+          in: path
+          name: insee
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AOM'
+          description: AOM
+      summary: Show AOM by INSEE
+      tags:
+        - insee
+  /api/datasets:
+    get:
+      callbacks: {}
+      deprecated: false
+      description: 'For every dataset, show its associated resources, url and validity date'
+      operationId: API.DatasetController.datasets
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+          description: Dataset
+      summary: Show datasets and its resources
+      tags:
+        - datasets
+  '/api/datasets/{id}':
+    get:
+      callbacks: {}
+      deprecated: false
+      description: 'For one dataset, show its associated resources, url and validity date'
+      operationId: API.DatasetController.datasets_by_id
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+          description: Dataset
+      summary: Show given dataset and its resources
+      tags:
+        - datasets
+  '/api/datasets/{id}/geojson':
+    get:
+      callbacks: {}
+      deprecated: false
+      description: 'For one dataset, show its associated geojson'
+      operationId: API.DatasetController.datasets_geojson_by_id
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoJSONResponse'
+          description: Dataset
+      summary: Show given dataset geojson
+      tags:
+        - datasets
+  /api/places:
+    get:
+      callbacks: {}
+      deprecated: false
+      description: 'Given a search input, return potentialy corresponding results with the associated url'
+      operationId: API.DatasetController.datasets_autocomplete
+      parameters:
+        - description: query
+          in: query
+          name: q
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Autocomplete results'
+          description: Dataset
+      summary: Autocomplete search for datasets
+      tags:
+        - datasets
+  /api/stats:
+    get:
+      callbacks: {}
+      deprecated: false
+      description: Show covered french administrative regions
+      operationId: API.StatsController.index
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoJSONResponse'
+          description: GeoJSON
+      summary: Show regions
+      tags:
+        - index
+  /api/stats/bike-scooter-sharing:
+    get:
+      callbacks: {}
+      deprecated: false
+      description: Show bike and scooter sharing stats
+      operationId: API.StatsController.bike_scooter_sharing
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoJSONResponse'
+          description: GeoJSON
+      summary: Show bike and scooter sharing stats
+      tags:
+        - bike-scooter-sharing
+  /api/stats/quality:
+    get:
+      callbacks: {}
+      deprecated: false
+      description: Show data quality stats
+      operationId: API.StatsController.quality
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoJSONResponse'
+          description: GeoJSON
+      summary: Show data quality stats
+      tags:
+        - quality
+  /api/stats/regions:
+    get:
+      callbacks: {}
+      deprecated: false
+      description: Show covered french administrative regions
+      operationId: API.StatsController.regions
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoJSONResponse'
+          description: GeoJSON
+      summary: Show regions
+      tags:
+        - regions
+components:
+  responses: {}
+  schemas:
+    AOM:
+      description: AOM object
+      properties:
+        departement:
+          type: string
+        forme_juridique:
+          type: string
+        insee_commune_principale:
+          type: string
+        nom:
+          type: string
+        siren:
+          type: string
+      title: AOM
+      type: object
+    Autocomplete result:
+      description: One result of the autocomplete
+      properties:
+        name:
+          description: name of the resource
+          type: string
+        type:
+          description: 'type of the resource (commune, region, aom)'
+          type: string
+        url:
+          description: URL of the Resource
+          type: string
+      title: Autocomplete result
+      type: object
+    Autocomplete results:
+      description: An array of matching results
+      items:
+        $ref: '#/components/schemas/Autocomplete result'
+      title: Autocomplete results
+      type: array
+    CommunityResource:
+      description: A single community resource
+      properties:
+        community_resource_publisher:
+          description: Name of the producer of the community resource
+          type: string
+        end_calendar_validity:
+          description: The last day of the validity period of the file (read from the calendars for the GTFS). null if the file couldn’t be read
+          type: string
+        format:
+          description: 'The format of the resource (GTFS, NeTEx, ...)'
+          type: string
+        metadata:
+          description: Some metadata about the resource
+          type: object
+        original_resource_url:
+          description: |
+            some community resources have been generated from another dataset (like the generated NeTEx / GeoJson).
+            Those resources have a `original_resource_url` equals to the original resource's `original_url`
+          type: string
+        original_url:
+          description: Direct URL of the file
+          type: string
+        start_calendar_validity:
+          description: The first day of the validity period of the file (read from the calendars for the GTFS). null if the file couldn’t be read
+          type: string
+        title:
+          description: Title of the resource
+          type: string
+        updated:
+          description: Last update date-time
+          type: string
+        url:
+          description: Stable URL of the file
+          type: string
+      title: CommunityResource
+      type: object
+    Dataset:
+      description: A dataset is a composed of at least one GTFS resource
+      properties:
+        aom:
+          description: Transit authority responsible of this authority
+          type: string
+        community_resources:
+          description: All the community resources (files published by the community) associated with the dataset
+          items:
+            $ref: '#/components/schemas/CommunityResource'
+          type: array
+        created_at:
+          description: Date of creation of the dataset
+          format: date
+          type: string
+        licence:
+          description: The licence of the dataset
+          type: string
+        name:
+          type: string
+        resources:
+          description: All the resources (files) associated with the dataset
+          items:
+            $ref: '#/components/schemas/Resource'
+          type: array
+        updated:
+          description: The last update of any resource of that dataset
+          type: string
+      title: Dataset
+      type: object
+    Feature:
+      description: Feature object
+      properties:
+        geometry:
+          $ref: '#/components/schemas/Geometry'
+        id:
+          oneOf:
+            - type: string
+            - type: number
+        properties:
+          type: object
+        type:
+          enum:
+            - Feature
+          type: string
+      required:
+        - type
+        - geometry
+        - properties
+      title: Feature
+      type: object
+    FeatureCollection:
+      description: FeatureCollection object
+      properties:
+        features:
+          items:
+            $ref: '#/components/schemas/Feature'
+          type: array
+      title: FeatureCollection
+      type: object
+    GeoJSONResponse:
+      description: Response in GeoJSON
+      oneOf:
+        - description: Geometry object
+          oneOf:
+            - allOf:
+                - description: GeoJSon geometry
+                  externalDocs:
+                    url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+                  properties:
+                    type:
+                      enum:
+                        - Point
+                        - LineString
+                        - Polygon
+                        - MultiPoint
+                        - MultiLineString
+                        - MultiPolygon
+                      type: string
+                  required:
+                    - type
+                  title: GeometryBase
+                  type: object
+                - properties:
+                    coordinates:
+                      items:
+                        $ref: '#/components/schemas/Point2D'
+                      type: array
+                  type: object
+              description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#id3'
+              title: LineString
+              type: object
+            - allOf:
+                - description: GeoJSon geometry
+                  externalDocs:
+                    url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+                  properties:
+                    type:
+                      enum:
+                        - Point
+                        - LineString
+                        - Polygon
+                        - MultiPoint
+                        - MultiLineString
+                        - MultiPolygon
+                      type: string
+                  required:
+                    - type
+                  title: GeometryBase
+                  type: object
+                - properties:
+                    coordinates:
+                      items:
+                        items:
+                          $ref: '#/components/schemas/Point2D'
+                        type: array
+                      type: array
+                  type: object
+              description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#id4'
+              title: Polygon
+              type: object
+            - allOf:
+                - description: GeoJSon geometry
+                  externalDocs:
+                    url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+                  properties:
+                    type:
+                      enum:
+                        - Point
+                        - LineString
+                        - Polygon
+                        - MultiPoint
+                        - MultiLineString
+                        - MultiPolygon
+                      type: string
+                  required:
+                    - type
+                  title: GeometryBase
+                  type: object
+                - properties:
+                    coordinates:
+                      items:
+                        $ref: '#/components/schemas/Point2D'
+                      type: array
+                  type: object
+              description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#id5'
+              title: MultiPoint
+              type: object
+            - allOf:
+                - description: GeoJSon geometry
+                  externalDocs:
+                    url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+                  properties:
+                    type:
+                      enum:
+                        - Point
+                        - LineString
+                        - Polygon
+                        - MultiPoint
+                        - MultiLineString
+                        - MultiPolygon
+                      type: string
+                  required:
+                    - type
+                  title: GeometryBase
+                  type: object
+                - properties:
+                    coordinates:
+                      items:
+                        items:
+                          $ref: '#/components/schemas/Point2D'
+                        type: array
+                      type: array
+                  type: object
+              description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#id4'
+              title: MultiLineString
+              type: object
+            - allOf:
+                - description: GeoJSon geometry
+                  externalDocs:
+                    url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+                  properties:
+                    type:
+                      enum:
+                        - Point
+                        - LineString
+                        - Polygon
+                        - MultiPoint
+                        - MultiLineString
+                        - MultiPolygon
+                      type: string
+                  required:
+                    - type
+                  title: GeometryBase
+                  type: object
+                - properties:
+                    coordinates:
+                      items:
+                        items:
+                          items:
+                            $ref: '#/components/schemas/Point2D'
+                          type: array
+                        type: array
+                      type: array
+                  type: object
+              description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#id6'
+              title: MultiPolygon
+              type: object
+          title: Geometry
+          type: object
+        - description: Feature object
+          properties:
+            geometry:
+              $ref: '#/components/schemas/Geometry'
+            id:
+              oneOf:
+                - type: string
+                - type: number
+            properties:
+              type: object
+            type:
+              enum:
+                - Feature
+              type: string
+          required:
+            - type
+            - geometry
+            - properties
+          title: Feature
+          type: object
+        - description: FeatureCollection object
+          properties:
+            features:
+              items:
+                $ref: '#/components/schemas/Feature'
+              type: array
+          title: FeatureCollection
+          type: object
+      title: GeoJSONResponse
+      type: object
+    Geometry:
+      description: Geometry object
+      oneOf:
+        - allOf:
+            - description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+              properties:
+                type:
+                  enum:
+                    - Point
+                    - LineString
+                    - Polygon
+                    - MultiPoint
+                    - MultiLineString
+                    - MultiPolygon
+                  type: string
+              required:
+                - type
+              title: GeometryBase
+              type: object
+            - properties:
+                coordinates:
+                  items:
+                    $ref: '#/components/schemas/Point2D'
+                  type: array
+              type: object
+          description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#id3'
+          title: LineString
+          type: object
+        - allOf:
+            - description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+              properties:
+                type:
+                  enum:
+                    - Point
+                    - LineString
+                    - Polygon
+                    - MultiPoint
+                    - MultiLineString
+                    - MultiPolygon
+                  type: string
+              required:
+                - type
+              title: GeometryBase
+              type: object
+            - properties:
+                coordinates:
+                  items:
+                    items:
+                      $ref: '#/components/schemas/Point2D'
+                    type: array
+                  type: array
+              type: object
+          description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#id4'
+          title: Polygon
+          type: object
+        - allOf:
+            - description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+              properties:
+                type:
+                  enum:
+                    - Point
+                    - LineString
+                    - Polygon
+                    - MultiPoint
+                    - MultiLineString
+                    - MultiPolygon
+                  type: string
+              required:
+                - type
+              title: GeometryBase
+              type: object
+            - properties:
+                coordinates:
+                  items:
+                    $ref: '#/components/schemas/Point2D'
+                  type: array
+              type: object
+          description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#id5'
+          title: MultiPoint
+          type: object
+        - allOf:
+            - description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+              properties:
+                type:
+                  enum:
+                    - Point
+                    - LineString
+                    - Polygon
+                    - MultiPoint
+                    - MultiLineString
+                    - MultiPolygon
+                  type: string
+              required:
+                - type
+              title: GeometryBase
+              type: object
+            - properties:
+                coordinates:
+                  items:
+                    items:
+                      $ref: '#/components/schemas/Point2D'
+                    type: array
+                  type: array
+              type: object
+          description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#id4'
+          title: MultiLineString
+          type: object
+        - allOf:
+            - description: GeoJSon geometry
+              externalDocs:
+                url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+              properties:
+                type:
+                  enum:
+                    - Point
+                    - LineString
+                    - Polygon
+                    - MultiPoint
+                    - MultiLineString
+                    - MultiPolygon
+                  type: string
+              required:
+                - type
+              title: GeometryBase
+              type: object
+            - properties:
+                coordinates:
+                  items:
+                    items:
+                      items:
+                        $ref: '#/components/schemas/Point2D'
+                      type: array
+                    type: array
+                  type: array
+              type: object
+          description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#id6'
+          title: MultiPolygon
+          type: object
+      title: Geometry
+      type: object
+    GeometryBase:
+      description: GeoJSon geometry
+      externalDocs:
+        url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+      properties:
+        type:
+          enum:
+            - Point
+            - LineString
+            - Polygon
+            - MultiPoint
+            - MultiLineString
+            - MultiPolygon
+          type: string
+      required:
+        - type
+      title: GeometryBase
+      type: object
+    LineString:
+      allOf:
+        - description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+          properties:
+            type:
+              enum:
+                - Point
+                - LineString
+                - Polygon
+                - MultiPoint
+                - MultiLineString
+                - MultiPolygon
+              type: string
+          required:
+            - type
+          title: GeometryBase
+          type: object
+        - properties:
+            coordinates:
+              items:
+                $ref: '#/components/schemas/Point2D'
+              type: array
+          type: object
+      description: GeoJSon geometry
+      externalDocs:
+        url: 'http://geojson.org/geojson-spec.html#id3'
+      title: LineString
+      type: object
+    MultiLineString:
+      allOf:
+        - description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+          properties:
+            type:
+              enum:
+                - Point
+                - LineString
+                - Polygon
+                - MultiPoint
+                - MultiLineString
+                - MultiPolygon
+              type: string
+          required:
+            - type
+          title: GeometryBase
+          type: object
+        - properties:
+            coordinates:
+              items:
+                items:
+                  $ref: '#/components/schemas/Point2D'
+                type: array
+              type: array
+          type: object
+      description: GeoJSon geometry
+      externalDocs:
+        url: 'http://geojson.org/geojson-spec.html#id4'
+      title: MultiLineString
+      type: object
+    MultiPoint:
+      allOf:
+        - description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+          properties:
+            type:
+              enum:
+                - Point
+                - LineString
+                - Polygon
+                - MultiPoint
+                - MultiLineString
+                - MultiPolygon
+              type: string
+          required:
+            - type
+          title: GeometryBase
+          type: object
+        - properties:
+            coordinates:
+              items:
+                $ref: '#/components/schemas/Point2D'
+              type: array
+          type: object
+      description: GeoJSon geometry
+      externalDocs:
+        url: 'http://geojson.org/geojson-spec.html#id5'
+      title: MultiPoint
+      type: object
+    MultiPolygon:
+      allOf:
+        - description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+          properties:
+            type:
+              enum:
+                - Point
+                - LineString
+                - Polygon
+                - MultiPoint
+                - MultiLineString
+                - MultiPolygon
+              type: string
+          required:
+            - type
+          title: GeometryBase
+          type: object
+        - properties:
+            coordinates:
+              items:
+                items:
+                  items:
+                    $ref: '#/components/schemas/Point2D'
+                  type: array
+                type: array
+              type: array
+          type: object
+      description: GeoJSon geometry
+      externalDocs:
+        url: 'http://geojson.org/geojson-spec.html#id6'
+      title: MultiPolygon
+      type: object
+    NumberItems:
+      title: NumberItems
+      type: number
+    Point2D:
+      description: Point in 2D space
+      externalDocs:
+        url: 'http://geojson.org/geojson-spec.html#id2'
+      items:
+        $ref: '#/components/schemas/NumberItems'
+      maxItems: 2
+      minItems: 2
+      title: Point2D
+      type: array
+    Polygon:
+      allOf:
+        - description: GeoJSon geometry
+          externalDocs:
+            url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+          properties:
+            type:
+              enum:
+                - Point
+                - LineString
+                - Polygon
+                - MultiPoint
+                - MultiLineString
+                - MultiPolygon
+              type: string
+          required:
+            - type
+          title: GeometryBase
+          type: object
+        - properties:
+            coordinates:
+              items:
+                items:
+                  $ref: '#/components/schemas/Point2D'
+                type: array
+              type: array
+          type: object
+      description: GeoJSon geometry
+      externalDocs:
+        url: 'http://geojson.org/geojson-spec.html#id4'
+      title: Polygon
+      type: object
+    Resource:
+      description: A single resource
+      properties:
+        conversions:
+          description: Available conversions of the resource in other formats
+          properties:
+            GeoJSON:
+              description: Conversion to the GeoJSON format
+              properties:
+                filesize:
+                  description: File size in bytes
+                  type: integer
+                last_check_conversion_is_up_to_date:
+                  description: Last datetime (UTC) it was checked the converted file is still up-to-date with the resource
+                  format: date-time
+                  type: string
+                stable_url:
+                  description: The converted file stable download URL
+                  type: string
+              type: object
+            NeTEx:
+              description: Conversion to the NeTEx format
+              properties:
+                filesize:
+                  description: File size in bytes
+                  type: integer
+                last_check_conversion_is_up_to_date:
+                  description: Last datetime (UTC) it was checked the converted file is still up-to-date with the resource
+                  format: date-time
+                  type: string
+                stable_url:
+                  description: The converted file stable download URL
+                  type: string
+              type: object
+          type: object
+        end_calendar_validity:
+          description: The last day of the validity period of the file (read from the calendars for the GTFS). null if the file couldn’t be read
+          type: string
+        format:
+          description: 'The format of the resource (GTFS, NeTEx, ...)'
+          type: string
+        metadata:
+          description: Some metadata about the resource
+          type: object
+        original_url:
+          description: Direct URL of the file
+          type: string
+        start_calendar_validity:
+          description: The first day of the validity period of the file (read from the calendars for the GTFS). null if the file couldn’t be read
+          type: string
+        title:
+          description: Title of the resource
+          type: string
+        updated:
+          description: Last update date-time
+          type: string
+        url:
+          description: Stable URL of the file
+          type: string
+      title: Resource
+      type: object
