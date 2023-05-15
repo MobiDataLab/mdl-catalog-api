@@ -16,5 +16,5 @@ jobs:
     with:
       api-repo: ${{ github.repository }}
       api-repo-ref: ${{ github.ref }}
-      cache-repo: APIs-guru/openapi-directory
+      cache-repo: ${{ github.repository }}
       deploy-gh-pages: true
