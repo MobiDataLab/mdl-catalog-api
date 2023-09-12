@@ -1,9 +1,9 @@
 openapi: 3.0.1
 servers:
-  - description: Generated server url
-    url: 'https://processor1.francecentral.cloudapp.azure.com'
+  - description: MobiDataLab Geographical enrichment processor
+    url: 'https://processor1.francecentral.cloudapp.azure.com/swagger-ui/index.html'
 info:
-  title: OpenAPI definition
+  title: Geographical enrichment API
   version: v0
   x-apisguru-categories:
     - navigation
