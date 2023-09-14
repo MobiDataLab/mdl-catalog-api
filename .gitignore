@@ -12,6 +12,7 @@ dev/
 new_modules/
 resources/*.cache/
 APIs/**/asyncapi.yaml
+.idea/
 
 # Temp output files
 tmp.yaml
