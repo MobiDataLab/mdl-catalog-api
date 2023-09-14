@@ -1,0 +1,234 @@
+openapi: 3.0.2
+info:
+  contact:
+    url: 'https://github.com/MobiDataLab/mdl-anonymizer'
+  description: MobiDataLab anonymization API
+  title: Anonymization Processor
+  version: 1.0.0
+  x-apisguru-categories:
+    - anonymization
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://mobidatalab.eu/wp-content/uploads/2021/06/logo.svg'
+  x-origin:
+    - format: openapi
+      url: 'https://services.mobidatalab.eu:8443/anonymisation/openapi.json'
+      version: '3.0'
+  x-providerName: mobidatalab.eu
+  x-serviceName: anonymization
+paths:
+  /analyze/:
+    post:
+      description: Compute an aggregation analysis in a private way
+      operationId: post_analyze__post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_post_analyze__post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post
+  /anonymize/:
+    post:
+      description: Anonymize a dataset
+      operationId: post_anonymize__post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_post_anonymize__post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post
+  /compute_measures/:
+    post:
+      description: Compute utility and privacy measure of a dataset
+      operationId: post_compute_measures__post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_post_compute_measures__post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post
+  /filter/:
+    post:
+      description: Filter a dataset
+      operationId: post_filter__post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_post_filter__post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post
+  /task/:
+    get:
+      description: Get the result from a previous requested task
+      operationId: get_task__get
+      parameters:
+        - description: Task ID associated with a previously done POST request.
+          in: query
+          name: task_id
+          required: true
+          schema:
+            description: Task ID associated with a previously done POST request.
+            title: Task Id
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get
+components:
+  schemas:
+    Body_post_analyze__post:
+      properties:
+        config_file:
+          format: binary
+          title: Config File
+          type: string
+        input_dataset:
+          format: binary
+          title: Input Dataset
+          type: string
+      required:
+        - input_dataset
+        - config_file
+      title: Body_post_analyze__post
+      type: object
+    Body_post_anonymize__post:
+      properties:
+        config_file:
+          format: binary
+          title: Config File
+          type: string
+        input_dataset:
+          format: binary
+          title: Input Dataset
+          type: string
+      required:
+        - input_dataset
+        - config_file
+      title: Body_post_anonymize__post
+      type: object
+    Body_post_compute_measures__post:
+      properties:
+        anonymized_dataset:
+          format: binary
+          title: Anonymized Dataset
+          type: string
+        config_file:
+          format: binary
+          title: Config File
+          type: string
+        original_dataset:
+          format: binary
+          title: Original Dataset
+          type: string
+      required:
+        - original_dataset
+        - anonymized_dataset
+        - config_file
+      title: Body_post_compute_measures__post
+      type: object
+    Body_post_filter__post:
+      properties:
+        config_file:
+          format: binary
+          title: Config File
+          type: string
+        input_dataset:
+          format: binary
+          title: Input Dataset
+          type: string
+      required:
+        - input_dataset
+        - config_file
+      title: Body_post_filter__post
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+      type: object
