@@ -15,7 +15,7 @@ info:
       url: 'https://services.mobidatalab.eu:8443/anonymisation/openapi.json'
       version: '3.0'
   x-providerName: mobidatalab.eu
-  x-serviceName: anonymization-processor-api
+  x-serviceName: anonymization
 paths:
   /analyze/:
     post:
