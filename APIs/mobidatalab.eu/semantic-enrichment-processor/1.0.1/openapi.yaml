@@ -22,7 +22,7 @@ info:
   x-logo:
     backgroundColor: '#FFFFFF'
     url: 'https://mobidatalab.eu/wp-content/uploads/2021/06/logo.svg'
-  x-providerName: azure.com
+  x-providerName: mobidatalab.eu
   x-serviceName: semantic-enrichment-processor
 paths:
   /semantic/Enrichment/:

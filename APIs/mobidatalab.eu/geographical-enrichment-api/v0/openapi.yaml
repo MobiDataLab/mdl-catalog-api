@@ -14,7 +14,7 @@ info:
     - format: openapi
       url: 'https://processor1.francecentral.cloudapp.azure.com/v3/api-docs'
       version: '3.0'
-  x-providerName: azure.com
+  x-providerName: mobidatalab.eu
   x-serviceName: geographical-enrichment-api
 paths:
   /api/v1/geojson/enrichGeoJsonApi:

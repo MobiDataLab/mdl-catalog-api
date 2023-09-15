@@ -1,21 +1,4 @@
 openapi: 3.0.2
-info:
-  contact:
-    url: 'https://github.com/MobiDataLab/mdl-semantic-enrichment'
-  description: MobiDataLab semantic enrichment API
-  title: Semantic Enrichment Processor
-  version: 1.0.2
-  x-apisguru-categories:
-    - semantic
-  x-origin:
-    - format: openapi
-      url: 'http://semantic.westeurope.cloudapp.azure.com:8000/openapi.json'
-      version: '3.0'
-  x-providerName: azure.com
-  x-serviceName: semantic-enrichment-processor
-  x-logo:
-    backgroundColor: '#FFFFFF'
-    url: 'https://mobidatalab.eu/wp-content/uploads/2021/06/logo.svg'
 servers:
   - url: 'http://semantic.westeurope.cloudapp.azure.com:8000/'
   - url: '{server}'
@@ -24,11 +7,26 @@ servers:
       server:
         default: http://semantic.westeurope.cloudapp.azure.com:8000/
         description: 'server'
+info:
+  description: MobiDataLab semantic enrichment API
+  title: Semantic Enrichment Processor
+  version: 1.0.0
+  x-apisguru-categories:
+    - semantic
+  x-origin:
+    - format: openapi
+      url: 'http://semantic.westeurope.cloudapp.azure.com:8000/openapi.json'
+      version: '3.0'
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://mobidatalab.eu/wp-content/uploads/2021/06/logo.svg'
+  x-providerName: mobidatalab.eu
+  x-serviceName: semantic-enrichment-processor
 paths:
   /semantic/Enrichment/:
     get:
-      description: This path operation returns a RDF knowledge graph. The result is returned in a Turtle (.ttl) file.
-      operationId: enrich_semantic_Enrichment__get
+      description: This path operation returns a RDF knowledge graph. The result is returned in a Turtle (ttl) file.
+      operationId: preprocess_semantic_Enrichment__get
       parameters:
         - description: Task ID associated with a previously done POST request.
           in: query
@@ -37,6 +35,14 @@ paths:
           schema:
             description: Task ID associated with a previously done POST request.
             title: Task Id
+            type: string
+        - description: Token sent from the client.
+          in: query
+          name: token
+          required: true
+          schema:
+            description: Token sent from the client.
+            title: Token
             type: string
       responses:
         '200':
@@ -56,10 +62,10 @@ paths:
         '500':
           content:
             application/json: {}
-          description: Some error occurred during the semantic enrichment. Check the correctness of the datasets provided in input.
-      summary: Enrich
+          description: Some error occurred during the semantic enrichment. Check the correctnessof the trajectory dataset being provided in input.
+      summary: Preprocess
     post:
-      description: This path operation initiates the semantic enrichment of a dataset of trajectories. It returns a task id that can be later used to retrieve a RDF knowledge graph containing the enriched trajectories.
+      description: 'This path operation returns a task id that can be later used to retrieve a dataset of preprocessed trajectories. The result is returned as a pandas DataFrame, stored in a Parquet file.'
       operationId: enrich_semantic_Enrichment__post
       parameters:
         - description: Boolean value specifying if the move segments should be augmented with the estimated transportation means.
@@ -70,30 +76,27 @@ paths:
             description: Boolean value specifying if the move segments should be augmented with the estimated transportation means.
             title: Move Enrichment
             type: boolean
-        - description: Maximum distance (in meters) beyond which a POI won't be associated with a stop segment.
+        - description: Maximum distance beyond which a POI won't be associated with a stop segment.
           in: query
           name: max_dist
-          required: false
+          required: true
           schema:
-            default: 50
-            description: Maximum distance (in meters) beyond which a POI won't be associated with a stop segment.
+            description: Maximum distance beyond which a POI won't be associated with a stop segment.
             title: Max Dist
             type: integer
-        - description: 'DBSCAN parameter: used to cluster stop segments (and thus find systematic stops). It represents the distance (in meters) below which a stop can be included in an existing cluster.'
+        - description: 'DBSCAN parameter: used to cluster stop segments (and thus find systematic stops). Determines the distance below which a stop can be included in an existing cluster.'
           in: query
           name: dbscan_epsilon
-          required: false
+          required: true
           schema:
-            default: 50
-            description: 'DBSCAN parameter: used to cluster stop segments (and thus find systematic stops). It represents the distance (in meters) below which a stop can be included in an existing cluster.'
+            description: 'DBSCAN parameter: used to cluster stop segments (and thus find systematic stops). Determines the distance below which a stop can be included in an existing cluster.'
             title: Dbscan Epsilon
             type: integer
         - description: 'DBSCAN parameter: minimum size a cluster of stops must have to be considered a cluster of systematic stops.'
           in: query
           name: systematic_threshold
-          required: false
+          required: true
           schema:
-            default: 5
             description: 'DBSCAN parameter: minimum size a cluster of stops must have to be considered a cluster of systematic stops.'
             title: Systematic Threshold
             type: integer
@@ -130,6 +133,14 @@ paths:
             description: Task ID associated with a previously done POST request.
             title: Task Id
             type: string
+        - description: Token sent from the client.
+          in: query
+          name: token
+          required: true
+          schema:
+            description: Token sent from the client.
+            title: Token
+            type: string
       responses:
         '200':
           content:
@@ -151,25 +162,23 @@ paths:
           description: Some error occurred during the preprocessing. Check the correctness of the trajectory dataset being provided in input.
       summary: Preprocess
     post:
-      description: This path operation initiates the preprocessing of a dataset of trajectories. It returns a task id that can be later used to retrieve a dataset of preprocessed trajectories.
+      description: 'This path operation returns a task id that can be later used to retrieve a dataset of preprocessed trajectories. The result is returned as a pandas DataFrame, stored in a Parquet file.'
       operationId: preprocess_semantic_Preprocessing__post
       parameters:
         - description: Minimum number of samples a trajectory must have to be considered.
           in: query
           name: min_num_samples
-          required: false
+          required: true
           schema:
-            default: 1500
             description: Minimum number of samples a trajectory must have to be considered.
             title: Min Num Samples
             type: integer
-        - description: Maximum speed a sample can have in a trajectory (in km/h).
+        - description: Maximum speed a sample can have in a trajectory (km/h).
           in: query
           name: max_speed
-          required: false
+          required: true
           schema:
-            default: 300
-            description: Maximum speed a sample can have in a trajectory (in km/h).
+            description: Maximum speed a sample can have in a trajectory (km/h).
             title: Max Speed
             type: number
         - description: Boolean value determining whether the trajectories should be compressed. This can likely speed up subsequent enrichment steps.
@@ -180,6 +189,14 @@ paths:
             description: Boolean value determining whether the trajectories should be compressed. This can likely speed up subsequent enrichment steps.
             title: Compress Trajectories
             type: boolean
+        - description: Token sent from the client
+          in: query
+          name: token
+          required: true
+          schema:
+            description: Token sent from the client
+            title: Token
+            type: string
       requestBody:
         content:
           multipart/form-data:
@@ -202,7 +219,7 @@ paths:
       summary: Preprocess
   /semantic/Segmentation/:
     get:
-      description: 'If the task execution ended successfully, the operation returns the pandas DataFrames of the stops and the moves, both translated in JSON format.'
+      description: 'If the task execution ended successfully, the operation returns the pandas DataFrames of the stops and the moves translated into the JSON format.'
       operationId: segment_semantic_Segmentation__get
       parameters:
         - description: Task ID associated with a previously done POST request.
@@ -212,6 +229,14 @@ paths:
           schema:
             description: Task ID associated with a previously done POST request.
             title: Task Id
+            type: string
+        - description: Token sent from the client.
+          in: query
+          name: token
+          required: true
+          schema:
+            description: Token sent from the client.
+            title: Token
             type: string
       responses:
         '200':
@@ -236,27 +261,33 @@ paths:
           description: Some error occurred during the trajectory segmentation. Check the correctness of thetrajectory dataset being provided in input.
       summary: Segment
     post:
-      description: This path operation initiates the segmentation of a dataset of trajectories. It returns a task id that can be later used to retrieve the stop and move datasets.
+      description: This path operation initiates a task that segments a dataset of trajectories into stop and move segments.
       operationId: segment_semantic_Segmentation__post
       parameters:
         - description: Minimum duration of a stop (in minutes).
           in: query
           name: min_duration_stop
-          required: false
+          required: true
           schema:
-            default: 10
             description: Minimum duration of a stop (in minutes).
             title: Min Duration Stop
             type: integer
         - description: Maximum radius a stop can have (in kilometers)
           in: query
           name: max_stop_radius
-          required: false
+          required: true
           schema:
-            default: 0.2
             description: Maximum radius a stop can have (in kilometers)
             title: Max Stop Radius
             type: number
+        - description: Token sent from the client
+          in: query
+          name: token
+          required: true
+          schema:
+            description: Token sent from the client
+            title: Token
+            type: string
       requestBody:
         content:
           multipart/form-data:
