@@ -16,6 +16,14 @@ info:
       version: '3.0'
   x-providerName: mobidatalab.eu
   x-serviceName: anonymization-processor
+servers:
+  - url: 'https://services.mobidatalab.eu:8443/anonymisation'
+  - url: '{server}'
+    description: 'Custom server'
+    variables:
+      server:
+        default: http://anonymisation.westeurope.cloudapp.azure.com:8000/anonymisation
+        description: 'server'
 paths:
   /analyze/:
     post:

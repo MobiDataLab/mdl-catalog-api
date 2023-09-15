@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   contact:
     url: 'https://github.com/MobiDataLab/mdl-semantic-enrichment'
-  description: MobiDataLab semantic enrichment API
+  description: MobiDataLab Semantic Enrichment API
   title: Semantic Enrichment Processor
   version: 1.0.2
   x-apisguru-categories:
@@ -17,7 +17,7 @@ info:
     backgroundColor: '#FFFFFF'
     url: 'https://mobidatalab.eu/wp-content/uploads/2021/06/logo.svg'
 servers:
-  - url: 'http://semantic.westeurope.cloudapp.azure.com:8000/'
+  - url: 'https://services.mobidatalab.eu:8443/semantic'
   - url: '{server}'
     description: 'Custom server'
     variables:

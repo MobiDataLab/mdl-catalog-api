@@ -1,10 +1,19 @@
 openapi: 3.0.1
 servers:
-  - description: MobiDataLab Geographical enrichment processor
-    url: 'https://processor1.francecentral.cloudapp.azure.com/swagger-ui/index.html'
+  - description: MobiDataLab Geographical Enrichment Processor
+    url: 'https://processor1.francecentral.cloudapp.azure.com'
+  - url: '{server}'
+    description: 'Custom server'
+    variables:
+      server:
+        default: http://processor1.westeurope.cloudapp.azure.com:8000
+        description: 'server'
 info:
-  title: Geographical enrichment API
+  description: "MobiDataLab Geographical Enrichment Processor \r\n\r\n<https://processor1.francecentral.cloudapp.azure.com/swagger-ui/index.html>\r\n\r\n<https://github.com/MobiDataLab/mdl-geo-enrichment>"
+  title: Geographical Enrichment API
   version: v0
+  contact:
+    url: 'https://github.com/MobiDataLab/mdl-geo-enrichment'
   x-apisguru-categories:
     - navigation
   x-logo:
