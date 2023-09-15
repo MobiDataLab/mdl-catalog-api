@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   contact:
     url: 'https://github.com/MobiDataLab/mdl-anonymizer'
-  description: MobiDataLab anonymization API
+  description: MobiDataLab Anonymization API
   title: Anonymization Processor
   version: 1.0.0
   x-apisguru-categories:
@@ -15,7 +15,7 @@ info:
       url: 'https://services.mobidatalab.eu:8443/anonymisation/openapi.json'
       version: '3.0'
   x-providerName: mobidatalab.eu
-  x-serviceName: anonymization
+  x-serviceName: anonymization-processor
 paths:
   /analyze/:
     post:
