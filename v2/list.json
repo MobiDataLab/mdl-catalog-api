@@ -1,0 +1,1446 @@
+{
+  "carto.com:maps": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "1",
+    "versions": {
+      "1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "name": "Have you found an error? Github issues",
+            "url": "https://github.com/CartoDB/Windshaft-cartodb/issues"
+          },
+          "description": "# Introduction\nThe CARTO Maps API allows you to generate maps based on data hosted in your CARTO account  and apply custom SQL and CartoCSS to the data. The API generates a XYZ-based URL to fetch  Web Mercator projected tiles using web clients such as Leaflet, Google Maps, or OpenLayers.\n# Authorization\nIn order to access Maps API you must provide an API key. The CARTO Authorization guide explains how these keys are sent (TLDR: _HTTP basic auth_ or _query string param_ with the API key token). Depending on the permissions granted to the provided API key, the request will be authorized or not.\n",
+          "title": "Maps",
+          "version": "1",
+          "x-apisguru-categories": [
+            "location",
+            "maps"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_assets-global.website-files.com_6345207a1b18e581fcf67604_636a830d6e0e097a6f760262_logo-desktop-negative.svg"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://carto.com/developers/maps-api/reference/swagger.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "carto.com",
+          "x-serviceName": "maps"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/carto.com/maps/1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/carto.com/maps/1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "eindhoven.nl:eindhoven-open-data": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "v2.0",
+    "versions": {
+      "v2.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "email": "support@opendatasoft.com"
+          },
+          "description": "The Opendatasoft Explore API v2 is organized around REST. It provides access to all the data available through the platform in a coherent, hierarchical way.\n\n- Only the HTTP `GET` method is supported.\n- All API endpoints return JSON.\n- Endpoints are organized in a hierarchical way describing the relative relationship between objects.\n- All responses contain a list of links allowing easy and relevant navigation through the API endpoints.\n- All endpoints use the [Opendatasoft Query Language (ODSQL)](https://help.opendatasoft.com/apis/ods-explore-v2/#section/Opendatasoft-Query-Language-(ODSQL)). This means that, most of the time, parameters work the same way for all endpoints.",
+          "title": "Explore",
+          "version": "v2.0",
+          "x-apisguru-categories": [
+            "open_data"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_s3-eu-west-1.amazonaws.com_aws-ec2-eu-1-opendatasoft-staticfileset_eindhoven_logo.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://data.eindhoven.nl/api/explore/v2.0/swagger.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "eindhoven.nl",
+          "x-serviceName": "eindhoven-open-data"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/eindhoven.nl/eindhoven-open-data/v2.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/eindhoven.nl/eindhoven-open-data/v2.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "europe:copernicus.eu": {
+    "added": "2024-03-19T13:23:49.000Z",
+    "preferred": "1",
+    "updated": "2024-03-19T13:23:49.000Z",
+    "versions": {
+      "1": {
+        "info": {
+          "contact": {
+            "url": "https://www.copernicus.eu/en/access-data"
+          },
+          "description": "",
+          "title": "copernicus.eu",
+          "version": "1",
+          "x-apisguru-categories": [
+            "open_data",
+            "satellite"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://www.copernicus.eu/themes/custom/copernicus/logo.svg"
+          },
+          "x-origin": [
+            {
+              "format": "unknown",
+              "url": "https://www.copernicus.eu/en/access-data"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "graphhopper.io": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "1.0.0",
+    "versions": {
+      "1.0.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "email": "support@graphhopper.com",
+            "name": "API Support",
+            "url": "https://www.graphhopper.com/"
+          },
+          "description": "\nWith the [GraphHopper Directions API](https://www.graphhopper.com/products/) you can integrate A-to-B route planning, turn-by-turn navigation,\nroute optimization, isochrone calculations and other tools in your application.\n\nThe GraphHopper Directions API consists of the following RESTful web services:\n\n * [Routing API](#tag/Routing-API),\n * [Route Optimization API](#tag/Route-Optimization-API),\n * [Isochrone API](#tag/Isochrone-API),\n * [Map Matching API](#tag/Map-Matching-API),\n * [Matrix API](#tag/Matrix-API),\n * [Geocoding API](#tag/Geocoding-API) and\n * [Cluster API](#tag/Cluster-API).\n\n# Explore our APIs\n\n## Get started\n\n1. [Sign up for GraphHopper](https://support.graphhopper.com/a/solutions/articles/44001976025)\n2. [Create an API key](https://support.graphhopper.com/a/solutions/articles/44001976027)\n\nEach API part has its own documentation. Jump to the desired API part and learn about the API through the given examples and tutorials.\n\n## API Client Libraries\n\nTo speed up development and make coding easier, we offer a [JavaScript client](https://github.com/graphhopper/directions-api-js-client) and a \n[Java client](https://github.com/graphhopper/graphhopper/tree/master/client-hc).\n\nYou can also try some [examples on a map](https://graphhopper.com/api/1/examples/)\n\n### Bandwidth reduction\n\nIf you create your own client, make sure it supports http/2 and gzipped responses for best speed.\nIf you use the Matrix, the Route Optimization API or the Cluster API and want to solve large problems, we recommend you to reduce bandwidth\nby [compressing your POST request](https://gist.github.com/karussell/82851e303ea7b3459b2dea01f18949f4)\nand specifying the header as follows: `Content-Encoding: gzip`. This will also avoid the HTTP 413 error \"Request Entity Too Large\".\n\n## Contact Us\n\nIf you have problems or questions, please read the following information:\n\n- [FAQ](https://graphhopper.com/api/1/docs/FAQ/)\n- [Public forum](https://discuss.graphhopper.com/c/directions-api)\n- [Contact us](https://www.graphhopper.com/contact-form/)\n- [GraphHopper Status Page](https://status.graphhopper.com/)\n\nTo stay informed about the latest developments, you can\n\n- follow us on [twitter](https://twitter.com/graphhopper/),\n- read [our blog](https://graphhopper.com/blog/),\n- sign up for our newsletter or\n- [our forum](https://discuss.graphhopper.com/c/directions-api).\n\nSelect the channel you like the most.\n\n\n# Map Data and Routing Profiles\n\nCurrently, our main data source is [OpenStreetMap](https://www.openstreetmap.org). We also integrated other network data providers.\nThis chapter gives an overview about the options you have.\n\n## OpenStreetMap\n\n#### Geographical Coverage\n\n[OpenStreetMap](https://www.openstreetmap.org) covers the whole world. If you want to see for yourself if we can provide data suitable for your region,\nplease visit [GraphHopper Maps](https://graphhopper.com/maps/).\nYou can edit and modify OpenStreetMap data if you find that important information is missing, e.g. a weight limit for a bridge.\n[Here](https://wiki.openstreetmap.org/wiki/Beginners%27_guide) is a beginner's guide that shows how to add data. If you have edited data, we usually consider your data after 1 week at the latest.\n\n#### Supported Routing Profiles\n\nThe Routing, Matrix and Route Optimization APIs support the following profiles:\n\nName             | Description           | Restrictions                        | Icon\n-----------------|:----------------------|:------------------------------------|:---------------------------------------------------------\ncar              | Car mode              | car access, weight=2500kg, width=2m, height=2m           | ![car image](./img/car.png)\ncar_delivery     | Car mode              | car access including delivery and private roads. Use only in case your drivers are allowed to access these roads. | ![car image](./img/car.png)\ncar_avoid_ferry      | Car mode          | car that heavily penalizes ferries          | ![car image](./img/car.png)\ncar_avoid_motorway   | Car mode          | car that heavily penalizes motorways        | ![car image](./img/car.png)\ncar_avoid_toll       | Car mode          | car that heavily penalizes tolls            | ![car image](./img/car.png)\nsmall_truck          | Small truck like a Mercedes Sprinter, Ford Transit or Iveco Daily | height=2.7m, width=2+0.34m, length=5.5m, weight=2080+1400 kg | ![small truck image](./img/small_truck.png)\nsmall_truck_delivery | Small truck                                             | Like small_truck but including delivery and private roads. Use only in case your drivers are allowed to access these roads.           | ![small truck image](./img/small_truck.png)\ntruck                  | Truck like a MAN or Mercedes-Benz Actros              | height=3.7m, width=2.6+0.34m, length=12m, weight=13000+13000 kg, hgv=yes, 3 Axes | ![truck image](./img/truck.png)\nscooter                | Moped mode | Fast inner city, often used for food delivery, is able to ignore certain bollards, maximum speed of roughly 50km/h. weight=300kg, width=1m, height=2m | ![scooter image](./img/scooter.png)\nscooter_delivery       | Moped mode | Like scooter but including delivery and private roads. Use only in case your drivers are allowed to access these roads. | ![scooter image](./img/scooter.png)\nfoot       | Pedestrian or walking without dangerous [SAC-scales](https://wiki.openstreetmap.org/wiki/Key:sac_scale) | foot access         | ![foot image](./img/foot.png)\nhike       | Pedestrian or walking with priority for more beautiful hiking tours and potentially a bit longer than `foot`. Walking duration is influenced by elevation differences.  | foot access         | ![hike image](./img/hike.png)\nbike       | Trekking bike avoiding hills | bike access         | ![Bike image](./img/bike.png)\nmtb        | Mountainbike                 | bike access         | ![Mountainbike image](./img/mtb.png)\nracingbike | Bike preferring roads        | bike access         | ![Racingbike image](./img/racingbike.png)\n\nPlease note:\n\n * the free package supports only the routing profiles `car`, `bike` or `foot`\n * up to 3 different routing profiles can be used in a single request towards the Route Optimization API. The number of vehicles is unaffected and depends on your subscription.\n * we offer custom routing profiles with different properties, different speed profiles or different access options. To find out more about custom profiles, please [contact us](https://www.graphhopper.com/contact-form/).\n * a sophisticated `motorcycle` profile is available up on request. It is powered by the [Kurviger](https://kurviger.de/en) Routing API and favors curves and slopes while avoiding cities and highways.\n \n## TomTom\n\nIf you want to include traffic, you can purchase the TomTom Add-on.\nThis Add-on only uses TomTom's road network and historical traffic information.\nLive traffic is not yet considered. If you are interested to learn how we consider traffic information, we recommend that you read [this article](https://www.graphhopper.com/blog/2017/11/06/time-dependent-optimization/).\n\nPlease note the following:\n\n * Currently we only offer this for our [Route Optimization API](#tag/Route-Optimization-API). [Contact us](https://www.graphhopper.com/contact-form/) if you would like to use it for the Matrix or Routing API.\n * In addition to our terms, you need to accept TomTom's [End User License Aggreement](https://www.graphhopper.com/tomtom-end-user-license-agreement/).\n * We do *not* use TomTom's web services. We only use their data with our software.\n \n[Contact us](https://www.graphhopper.com/contact-form/) if you want to buy this TomTom add-on.\n\n#### Geographical Coverage\n\nWe offer\n\n- Europe including Russia\n- North, Central and South America\n- Saudi Arabia and United Arab Emirates\n- South Africa\n- Southeast Asia\n- Australia\n\n#### Supported Vehicle Profiles\n\nName       | Description           | Restrictions              | Icon\n-----------|:----------------------|:--------------------------|:---------------------------------------------------------\ncar        | Car mode              | car access                | ![car image](./img/car.png)\nsmall_truck| Small truck like a Mercedes Sprinter, Ford Transit or Iveco Daily | height=2.7m, width=2+0.4m, length=5.5m, weight=2080+1400 kg | ![small truck image](./img/small_truck.png)\n\n \n# Custom Model\n\nA custom model allows you to modify the default routing behavior of a vehicle profile by specifying a set of rules in JSON language.\nThere are three JSON properties to change a profile: `priority`, `speed` and `distance_influence` that are described in great detail in the next sections and you can get a quick overview in this [example-driven blog post](https://www.graphhopper.com/blog/2020/05/31/examples-for-customizable-routing/).\n\nBut first we will give an introductory example for each of these JSON properties. Let's start with `speed`:\n\n```json\n{\n  \"speed\": [{\n    \"if\": \"road_class == MOTORWAY\",\n    \"limit_to\": \"90\"\n  }]\n}\n```\n\nAs you might have already guessed this limits the speed on motorways to 90km/h.\nChanging the speed will of course change the travel time, but at the same time this makes other road classes more likely as well, so you can use this model to avoid motorways.\n\nYou can immediately try this out in the Browser [on GraphHopper Maps](https://graphhopper.com/maps/?point=50.856527%2C12.876127&point=51.02952%2C13.295603&profile=car&custom_model=%7B%22speed%22%3A%5B%7B%22if%22%3A%22road_class+=%3D+MOTORWAY%22%2C%22limit_to%22%3A%2290%22%7D%5D%7D).\nGraphHopper Maps offers an interactive text editor to comfortably enter custom models.\nYou can open it by pressing the \"custom\" button. It will check the syntax of your custom model and mark errors in red. You can press\nCtrl+Space or Alt+Enter to retrieve auto-complete suggestions. Pressing Ctrl+Enter will send a routing request for the\ncustom model you entered. To disable the custom model you click the \"custom\" button again.\n\n\nIn the second example we show how to avoid certain road classes without changing the travel time:\n\n```json\n{\n  \"priority\": [{\n    \"if\": \"road_class == LIVING_STREET || road_class == RESIDENTIAL || road_class == UNCLASSIFIED\",\n    \"multiply_by\": \"0.1\"\n  }]\n}\n```\n\nThis example avoids certain smaller streets. [View it in GraphHopper Maps](https://graphhopper.com/maps/?point=51.125708%2C13.067915&point=51.125964%2C13.082271&profile=car&custom_model=%7B%22priority%22%3A%5B%7B%22if%22%3A%22road_class+=%3D+LIVING_STREET+%7C%7C+road_class+%3D%3D+RESIDENTIAL+%7C%7C+road_class+%3D%3D+UNCLASSIFIED%22%2C%22multiply_by%22%3A%220.1%22%7D%5D%7D).\n\nThe third example shows how to prefer shortest paths:\n\n```json\n{\n  \"distance_influence\": 200\n}\n```\n\n[View this example in GraphHopper Maps](https://graphhopper.com/maps/?point=51.04188%2C13.057766&point=51.057527%2C13.068237&profile=car&custom_model=%7B%22distance_influence%22%3A200%7D).\n\nThere is a fourth JSON property `areas` that allows you to define areas that can then be used in the `if` or `else_if` conditions for `speed` and `priority`.\nPlease read more about this and the other properties below and try some examples in\n[GraphHopper Maps](https://graphhopper.com/maps/) with the help of\n[this blog post](https://www.graphhopper.com/blog/2020/05/31/examples-for-customizable-routing/).\n\n\n## Customizing speed\n\nWhen using custom models you do not need to define rules that specify a speed for every road segment, but rather GraphHopper\nassumes a default speed. All you need to do is adjust this default speed to your use-case as you will always use the custom \nmodel in conjunction with a routing profile which is used to determine the default speed.\n\nThe custom model is a JSON object and the first property we will learn about here is the `speed` property. The `speed`\nproperty's value is a list of conditional statements that modify the default speed. Every such statement consists of a\ncondition and an operation. The different statements are applied to the default speed from top to bottom, i.e.\nstatements that come later in the list are applied to the resulting value of previous operations. Each statement is only\nexecuted if the corresponding condition applies for the current road segment. This will become more clear in the following\nexamples.\n\nCurrently the custom model language supports two operators:\n\n- `multiply_by` multiplies the speed value with a given number\n- `limit_to` limits the speed value to a given number\n\n#### `if` statements and the `multiply_by` operation\n\nLet's start with a simple example using `multiply_by`:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"road_class == MOTORWAY\",\n      \"multiply_by\": \"0.5\"\n    }\n  ]\n}\n```\n\nThis custom model reduces the speed of every road segment for which the `road_class` attribute is `MOTORWAY` to\nfifty percent of the default speed (the default speed is multiplied by `0.5`). Again, the default speed is the speed\nthat GraphHopper would normally use for the profile's vehicle. Note the `if` clause which means that the operation\n(`multiply_by`) is only applied *if* the condition `road_class == MOTORWAY` is fulfilled for the road segment under\nconsideration. The `==` indicates equality, i.e. the condition reads \"the road_class equals MOTORWAY\". If you're a bit\nfamiliar with programming note that the condition (the value of the `if` key) is just a boolean condition in Java\nlanguage (other programming languages like C or JavaScript are very similar in this regard). A more complex condition\ncould look like this: `road_class == PRIMARY || road_class == TERTIARY` which uses the **or**\n(`||`) operator and literally means \"road_class equals PRIMARY or road_class equals TERTIARY\".\n\nThere can be multiple such 'if statements' in the speed section, and they are evaluated from top to bottom:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"road_class == MOTORWAY\",\n      \"multiply_by\": \"0.5\"\n    },\n    {\n      \"if\": \"road_class == PRIMARY || road_environment == TUNNEL\",\n      \"multiply_by\": \"0.7\"\n    }\n  ]\n}\n```\n\nIn this example the default speed of road segments with `road_class == MOTORWAY` will be multiplied by `0.5`, the default speed\nof road segments with `road_class == PRIMARY` will be multiplied by `0.7` and for road segments with both `road_class == MOTORWAY` and\n`road_environment == TUNNEL` the default speed will be multiplied first by `0.5` and then by `0.7`. So overall the\ndefault speed will be multiplied by `0.35`. For road segments with `road_class == PRIMARY` and `road_environment == TUNNEL` we\nonly multiply by `0.7`, even though both parts of the second condition apply. It only matters whether the road segment matches\nthe condition or not.\n\n`road_class` and `road_environment` are road attributes of 'enum' type, i.e. their value can only be one of a fixed set of\nvalues, like `MOTORWAY` for `road_class`.\n\nOther road attributes like `get_off_bike` are of `boolean` type. They can be used as conditions directly, for example:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"get_off_bike\",\n      \"multiply_by\": \"0.6\"\n    }\n  ]\n}\n```\n\nwhich means that for road segments with `get_off_bike==true` the speed factor will be `0.6`.\n\nFor attributes with numeric values, like `max_width` you should not use the `==` (equality) or `!=` (\ninequality) operators, but the numerical comparison operators \"bigger\" `>`, \"bigger or equals\" `>=`, \"smaller\" `<`, or\n\"smaller or equals\" `<=`, e.g.:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"max_width < 2.5\",\n      \"multiply_by\": \"0.8\"\n    }\n  ]\n}\n``` \n\nwhich means that for all road segments with `max_width` smaller than `2.5m` the speed is multiplied by `0.8`.\n\n\n### The `limit_to` operation\n\nBesides the `multiply_by` operator there is also the `limit_to` operator. As the name suggests `limit_to` limits the\ncurrent value to the given value. Take this example:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"road_class == MOTORWAY\",\n      \"multiply_by\": \"0.8\"\n    },\n    {\n      \"if\": \"surface == GRAVEL\",\n      \"limit_to\": \"60\"\n    }\n  ]\n}\n```\n\nThis implies that on all road segments with the `GRAVEL` value for `surface` the speed will be at most `60km/h`,\nregardless of the default speed and the previous rules. So for a road segment with `road_class == MOTORWAY`,\n`surface == GRAVEL` and default speed `100` the first statement reduces the speed from `100` to `80` and the second\nstatement further reduces the speed from `80` to `60`. If the `road_class` was `PRIMARY` and the default speed was `50`\nthe first rule would not apply and the second rule would do nothing, because limiting `50` to `60` still yields `50`.\n\nA common use-case for the `limit_to` operation is the following pattern:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"true\",\n      \"limit_to\": \"90\"\n    }\n  ]\n}\n```\n\nwhich means that the speed is limited to `90km/h` for all road segments regardless of its properties. The condition\n\"`true`\" is always fulfilled.\n\n### `else` and `else_if` statements\n\nThe `else` statement allows you to define that some operations should be applied if an road segment does **not** match a\ncondition. So this example:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"road_class == MOTORWAY\",\n      \"multiply_by\": \"0.5\"\n    },\n    {\n      \"else\": \"\",\n      \"limit_to\": \"50\"\n    }\n  ]\n}\n```\n\nmeans that for all road segments with `road_class == MOTORWAY` we multiply the default speed by `0.5` and for all others we\nlimit the default speed to `50` (but never both).\n\nIn case you want to distinguish more than two cases (road segments that match or match not a condition) you can use `else_if`\nstatements which are only evaluated in case the previous `if` or `else_if` statement did **not** match:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"road_class == MOTORWAY\",\n      \"multiply_by\": \"0.5\"\n    },\n    {\n      \"else_if\": \"road_environment == TUNNEL\",\n      \"limit_to\": \"70\"\n    },\n    {\n      \"else\": \"\",\n      \"multiply_by\": \"0.9\"\n    }\n  ]\n}\n```\n\nSo if the first condition matches (`road_class == MOTORWAY`) the default speed is multiplied by `0.5`, but the other two\nstatements are ignored. Only if the first statement does not match (e.g. `road_class == PRIMARY`) the second statement\nis even considered and only if it matches (`road_environment == TUNNEL`) the default speed is limited to 70. The last\noperation (`multiply_by: \"0.9\"`) is only applied if both previous conditions did not match.\n\n`else` and `else_if` statements always require a preceding `if` or `else_if` statement. However, there can be multiple\n'blocks' of subsequent `if/else_if/else` statements in the list of rules for `speed`.\n\n`else_if` is useful for example in case you have multiple `multiply_by` operations, but you do not want that the speed\ngets reduced by all of them. For the following model\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"road_class == MOTORWAY\",\n      \"multiply_by\": \"0.5\"\n    },\n    {\n      \"else_if\": \"road_environment == TUNNEL\",\n      \"multiply_by\": \"0.8\"\n    }\n  ]\n}\n```\n\nonly the first factor (`0.5`) will be applied even for road segments that fulfill both conditions.\n\n## Limit rules to certain areas\n\nYou can not only modify the speed of road segments based on properties, like we saw in the previous examples, but you\ncan also modify the speed of road segments based on their location. To do this you need to first create and add some\nareas to the `areas` section of the custom model. You can then use the name of these areas in the conditions of your\n`if/else/else_if` statements.\n\nIn the following example we multiply the speed of all road segments in an area called `custom1` with `0.7` and also limit it\nto `50km/h`. Note that each area's name needs to be prefixed with `in_`:\n\n```json\n{\n  \"speed\": [\n    {\n      \"if\": \"in_custom1\",\n      \"multiply_by\": \"0.7\"\n    },\n    {\n      \"if\": \"in_custom1\",\n      \"limit_to\": \"50\"\n    }\n  ],\n  \"areas\": {\n    \"type\": \"FeatureCollection\",\n    \"features\": [{\n      \"type\": \"Feature\",\n      \"id\": \"custom1\",\n      \"geometry\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n          [\n            [\n              1.525,\n              42.511\n            ],\n            [\n              1.510,\n              42.503\n            ],\n            [\n              1.531,\n              42.495\n            ],\n            [\n              1.542,\n              42.505\n            ],\n            [\n              1.525,\n              42.511\n            ]\n          ]\n        ]\n      }\n    }]\n  }\n}\n```\n\nAreas are given in GeoJson format (FeatureCollection). Currently a member of this collection must be a `Feature` with a\ngeometry type `Polygon`. Note that the coordinates array of `Polygon` is an array of arrays that\neach must describe a closed ring, i.e. the first point must be equal to the last, identical to the GeoJSON specs.\nEach point is given as an array [longitude, latitude], so the `coordinates` array has three dimensions total.\n\nUsing the `areas` feature you can also block entire areas i.e. by multiplying the speed with `0`, but for this you\nshould rather use the `priority` section that we will explain next.\n\n## Customizing priority\n\nMake sure you read the introductory section of this document to learn what the `priority` factor means. In short it\nallows similar modifications as `speed`, but instead of modifying the road segment weights *and* travel times it will only\naffect the weights. By default, the priority is `1` for every road segment, so it does not affect the weight. However,\nchanging the priority of a road can yield a relative weight difference in comparison to other roads.\n\nCustomizing the `priority` works very much like changing the `speed`, so in case you did not read the section about\n`speed` you should go back there and read it now. The only real difference is that there is no `limit_to` operator for\n`priority`. As a quick reminder here is an example for priority:\n\n```json\n{\n  \"priority\": [\n    {\n      \"if\": \"road_class == MOTORWAY\",\n      \"multiply_by\": \"0.5\"\n    },\n    {\n      \"else_if\": \"road_class == SECONDARY\",\n      \"multiply_by\": \"0.9\"\n    },\n    {\n      \"if\": \"road_environment == TUNNEL\",\n      \"multiply_by\": \"0.1\"\n    }\n  ]\n}\n```\n\nmeans that road segments with `road_class==MOTORWAY` and `road_environment==TUNNEL` get priority `0.5*0.1=0.05` and\nthose with `road_class==SECONDARY` and no TUNNEL, get priority `0.9` and so on.\n\nEdges with lower priority values will be less likely part of the optimal route calculated by GraphHopper, higher values\nmean that these road segments shall be preferred. If you do not want to state which road segments shall be avoided, but\nrather which ones shall be preferred, you need to **decrease** the priority of others:\n\n```json\n{\n  \"priority\": [\n    {\n      \"if\": \"road_class != CYCLEWAY\",\n      \"multiply_by\": \"0.8\"\n    }\n  ]\n}\n```\n\nmeans decreasing the priority for all road_classes *except* cycleways.\n\nJust like we saw for `speed` you can also adjust the priority for road segments in a certain area. It works exactly the\nsame way:\n\n```json\n{\n  \"priority\": [\n    {\n      \"if\": \"in_custom1\",\n      \"multiply_by\": \"0.7\"\n    }\n  ]\n}\n```\n\nTo block an entire area set the priority value to `0`. You can even set the priority only for certain roads in an area\nlike this:\n\n```json\n{\n  \"priority\": [\n    {\n      \"if\": \"road_class == MOTORWAY && in_custom1\",\n      \"multiply_by\": \"0.1\"\n    }\n  ]\n}\n```\n\nSome other useful attributes to restrict access to certain roads depending on your vehicle dimensions are the\nfollowing:\n\n```json\n{\n  \"priority\": [\n    {\n      \"if\": \"max_width < 2.5\",\n      \"multiply_by\": \"0\"\n    },\n    {\n      \"if\": \"max_length < 10\",\n      \"multiply_by\": \"0\"\n    },\n    {\n      \"if\": \"max_weight < 3.5\",\n      \"multiply_by\": \"0\"\n    }\n  ]\n}\n```\n\nwhich means that the priority for all road segments that allow a maximum vehicle width of `2.5m`, a maximum vehicle\nlength of `10m` or a maximum vehicle weight of `3.5tons`, or less, is zero, i.e. these \"narrow\" road segments are\nblocked.\n\n## Customizing distance_influence\n\nThe `distance_influence` property allows you to control the trade-off between a fast route (minimum time) and a short route\n(minimum distance). The larger `distance_influence` is the more GraphHopper will prioritize routes with a small\ntotal distance. More precisely, the `distance_influence` is the time you need to save on a detour (a longer distance\nroute option) such that you prefer taking the detour compared to a shorter route. Please note that this value is a number, not a string.\n\nA value of `100` means that one extra kilometer of detour must save you `100s` of travelling time or else you are not \nwilling to take the detour. Or to put it another way, if a reference route takes `600s` and is `10km` long, \n`distance_influence=100` means that you are willing to take an alternative route that is `11km` long only if \nit takes no longer than `500s` (saves `100s`). Things get a bit more complicated when `priority` is not `1`, but the \neffect stays the same: The larger `distance_influence` is, the more GraphHopper will focus on finding short routes.\n\n\n## Road attributes\n\nGraphHopper stores different attributes for every road segment. Some frequently used are the following (some of their possible values are given in brackets):\n\n- road_class: (OTHER, MOTORWAY, TRUNK, PRIMARY, SECONDARY, TRACK, STEPS, CYCLEWAY, FOOTWAY, ...)\n- road_environment: (ROAD, FERRY, BRIDGE, TUNNEL, ...)\n- road_access: (DESTINATION, DELIVERY, PRIVATE, NO, ...)\n- surface: (PAVED, DIRT, SAND, GRAVEL, ...)\n- smoothness: (EXCELLENT, GOOD, INTERMEDIATE, ...)\n- toll: (MISSING, NO, HGV, ALL)\n- bike_network, foot_network: (MISSING, INTERNATIONAL, NATIONAL, REGIONAL, LOCAL, OTHER)\n- country: (`MISSING` or the country as a `ISO3166-1:alpha3` code e.g. `DEU`)\n- hazmat: (YES, NO), hazmat_tunnel: (A, B, .., E), hazmat_water: (YES, PERMISSIVE, NO)\n- hgv: (MISSING, YES, DESIGNATED, ...)\n- track_type: (MISSING, GRADE1, GRADE2, ..., GRADE5)\n- urban_density: (RURAL, RESIDENTIAL, CITY)\n\n\nTo learn about all available encoded values you can query the `/info` endpoint\n\nBesides this kind of categories, which can take multiple different string values, there are also some that represent a\nboolean value (they are either true or false for a given road segment), like:\n\n- get_off_bike\n- road_class_link\n- roundabout\n\nThere are also some that take on a numeric value, like:\n\n- average_slope: a number for 100 * \"elevation change\" / edge_distance for a road segment; it changes the sign in reverse direction; see also max_slope\n- curvature: \"beeline distance\" / edge_distance (0..1) e.g. a curvy road is smaller than 1\n- hike_rating, horse_rating, mtb_rating: a number from 0 to 6 for the `sac_scale` in OSM, e.g. 0 means \"missing\", 1 means \"hiking\", 2 means \"mountain_hiking\" and so on\n- lanes: number of lanes\n- max_slope: an unsigned decimal for the maximum slope (100 * \"elevation change / distance_i\") of an edge with `sum(distance_i)=edge_distance`. Important for longer road segments where ups (or downs) can be much bigger than the average_slope.\n- max_speed: the speed limit from a sign (km/h)\n- max_height (meter), max_width (meter), max_length (meter)\n- max_weight (ton), max_axle_load (in tons)\n\n\n## Limitations\n\nCustom models are currently:\n\n1. only available for the [POST Route Endpoint](#operation/postRoute).\nIf you are interested in using this for the Matrix or Route Optimization API please [contact us](https://www.graphhopper.com/contact-form/) to get access to an early alpha version.\nFor the Isochrone API it is also planned.\n2. only available for the following parent profiles: `foot`, `bike`, `scooter`, `car` and `small_truck`.\n3. only available for OpenStreetMap.\n\nThis feature will strongly benefit from feedback, so do not hesitate to share your experience, your favorite custom\nmodel or some of the problems you ran into when you tried building your own with custom model.\n\n## Troubleshooting\n\n### Recommendations\n\nFor debugging you can use the custom model editor in [GraphHopper Maps](https://graphhopper.com/maps/) (click the 'custom' button).\n\nWhen debugging problems with custom models you should first try if your request goes through without an error using an empty custom model.\n\nFor production you should avoid to include road_access and toll in the profile as we will change their values in the next weeks which could cause unexpected problems.\n\n### Route calculation is slower\n\nThe route calculation with custom_models will be slower as a different algorithm has to be used. The more the result deviates from the optimum the slower the response can get.\nStill for certain use cases you can make the calculation if you tune the custom_model and e.g. exclude certain ways via `{ \"if\": \"road_class == TRACK || road_class == RESIDENTIAL\", \"multiply_by\": \"0\" }`.\n\n### All routes for my custom model fail\n\nThis could mean that either your custom model made some of the roads near the start and destination inaccessible, \nthen usually we return a PointNotFoundException with the point_index with the \"location snap\" problem.\n\nOr, the custom model made all roads between your start and destination inaccessible, then we return a ConnectionNotFoundException. This happens e.g. when you exclude tunnels, \nferries or motorways but all routes between start and destination have these road attributes satisfied, i.e. we cannot find a route.\n\n**Solution**: relax your custom model and e.g. instead of excluding certain road attributes via `\"multiply_by\": \"0\"` you should try to use `\"0.01\"`.\n",
+          "termsOfService": "https://www.graphhopper.com/terms/",
+          "title": "GraphHopper Directions",
+          "version": "1.0.0",
+          "x-apisguru-categories": [
+            "location",
+            "routing"
+          ],
+          "x-logo": {
+            "altText": "GraphHopper",
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_docs.graphhopper.com_graphhopper-logo.svg"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://docs.graphhopper.com/",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "graphhopper.io"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/graphhopper.io/1.0.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/graphhopper.io/1.0.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:fleet-telematics": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.0.7",
+    "versions": {
+      "8.0.7": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "HERE Fleet Telematics API comprises the 4 HERE Location Services 'Geofencing', 'Map Attributes', 'Route Matching' and 'Waypoints Sequence'. It supersedes the services CLE, CRE, GFE, GFE on Maps, PDE, RME, TCE, WSE and Advanced Datasets.",
+          "title": "HERE Fleet Telematics",
+          "version": "8.0.7",
+          "x-apisguru-categories": [
+            "location",
+            "geofencing",
+            "route_matching",
+            "routing",
+            "poi"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2022 HERE Europe B.V.",
+            "date-created": "2022-11-17T06:59:11+00:00",
+            "document-id": "b32600bf-0b8f-4a13-9488-3640dd4def2c"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/fleet-telematics/swagger/swagger.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "fleet-telematics"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/fleet-telematics/8.0.7/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/fleet-telematics/8.0.7/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:geocoding-search": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "7.99",
+    "versions": {
+      "7.99": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "This document describes the Geocoding and Search API.\n\n### \"ALPHA\" & \"BETA\" tags\n\n- API requests parameters and response fields can be tagged with one of the following maturity qualifiers: alpha, beta\n- \"ALPHA\" tagged features are in mid-stage development. They can change or in rare cases be removed.\n  No backward compatibility is guaranteed nor bug service level agreement (SLA) do apply.\n  Customers using ALPHA features are advised not use them in production.\n- \"BETA\" tagged features are in end-stage development. They are backward compatible and can not be removed.\n  They have no major bug, but coverage, quality, performance, or test coverage is not considered final.\n  customers can safely use BETA features in their applications if they accept those limitations and potential behavior refinements.\n\n### \"RESTRICTED\" tag\n\nAPI requests parameters and response fields can be tagged with the privilege qualifier \"RESTRICTED\".\nSuch features are only available to customers having a specific contract with HERE.\nUnauthorized usages are typically leading to a http status code 403.\n\n\n",
+          "title": "Geocoding and Search API v7",
+          "version": "7.99",
+          "x-apisguru-categories": [
+            "location",
+            "geocoding",
+            "poi"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-03-02T11:21:34+00:00",
+            "document-id": "d1c92711-d0c1-41a0-a317-15a7fcec2830"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/geocoding-search-api/swagger/open-search-v7-external-spec.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "geocoding-search"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/geocoding-search/7.99/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/geocoding-search/7.99/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:geofencing": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.2.1",
+    "versions": {
+      "8.2.1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "Geofence asset positions against HERE Map objects or custom fence objects",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Geofencing",
+          "version": "8.2.1",
+          "x-apisguru-categories": [
+            "location",
+            "geofencing"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-03-01T14:04:34+00:00",
+            "document-id": "90d80899-505f-4735-ab91-4bfd2ee6df04"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/geofencing/swagger/geofencing.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "geofencing"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/geofencing/8.2.1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/geofencing/8.2.1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:intermodal-routing": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.0.1",
+    "versions": {
+      "8.0.1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "Intermodal Routing is a REST API that offers an innovative and smart routing\nexperience in urban areas to navigate between a given pair of locations.\nThis is possible when the consolidated public transit offer is intertwined\nwith external mobility services dynamically scattered in urban areas.\n",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Intermodal Routing",
+          "version": "8.0.1",
+          "x-apisguru-categories": [
+            "location",
+            "routing"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2022 HERE Europe B.V.",
+            "date-created": "2022-12-22T15:10:20+00:00",
+            "document-id": "df1124f9-1f8e-46d2-8298-d1a999a00e30"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/intermodal-routing/swagger/intermodal_api.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "intermodal-routing"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/intermodal-routing/8.0.1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/intermodal-routing/8.0.1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:isoline-routing": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.18.0",
+    "versions": {
+      "8.18.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "Isoline Routing is a service that offers to answer the question,\n\"What area is within the approximate reachable range of a given location?\",\nwhere range can be defined either in time, distance or consumption.\n",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Isoline Routing API v8",
+          "version": "8.18.0",
+          "x-apisguru-categories": [
+            "location",
+            "routing"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-02-15T16:13:39+00:00",
+            "document-id": "b8fd1223-4cd6-46ae-9ceb-6d75aaa2d314"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/isoline-routing-api/swagger/v8.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "isoline-routing"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/isoline-routing/8.18.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/isoline-routing/8.18.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:map-attributes": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.2.1",
+    "versions": {
+      "8.2.1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "Simple and fast access to the rich HERE Map content, seamlessly extensible by your own map data",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Map Attributes",
+          "version": "8.2.1",
+          "x-apisguru-categories": [
+            "location",
+            "maps",
+            "poi"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-02-21T17:34:15+00:00",
+            "document-id": "8f33cec8-754d-4a52-b02c-991661e09256"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/content-map-attributes/swagger/advanceddatasets.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "map-attributes"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/map-attributes/8.2.1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/map-attributes/8.2.1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:matrix-routing": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.21.1",
+    "versions": {
+      "8.21.1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "externalDocs": {
+          "description": "Developer Guide and Release Notes",
+          "url": "https://developer.here.com/documentation/matrix-routing-api"
+        },
+        "info": {
+          "description": "HERE Matrix Routing service calculates the travel duration and/or distances among multiple origins and destinations through both synchronous and asynchronous API calls.\n",
+          "title": "Matrix Routing API v8",
+          "version": "8.21.1",
+          "x-apisguru-categories": [
+            "location",
+            "routing"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-02-22T05:37:31+00:00",
+            "document-id": "b72049fc-f0e1-4ead-9c24-915d3f451fd3"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/matrix-routing-api/swagger/spec.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "matrix-routing"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/matrix-routing/8.21.1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/matrix-routing/8.21.1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:positioning": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "2.1.1",
+    "versions": {
+      "2.1.1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "x-twitter": "HERE"
+          },
+          "description": "Positioning API accepts requests with radio network measurements and replies with corresponding location estimate. For more details and examples, see [Developer's Guide](https://developer.here.com/documentation/positioning). Cellular measurements are given in terms defined in 3GPP and 3GGP2 specifications, see the corresponsing documentation at http://www.3gpp.org.\n\nBreaking changes from v1:\n  - JSON fields\n    `altaccuracy`, `baselat`, `baselng`, `cellparams`, `pilotpower`, `pnoffset`, `powrx`, `rxlevel`,\n    have been deprecated and replaced with\n    `altAccuracy`, `baseLat`, `baseLng`, `cellParams`, `pilotPower`, `pnOffset`, `rss`, `rxLevel`\n    respectively.\n  - Dependent parameters combined as a subobject.\n    - CDMA, GSM, WCDMA, TD-SCDMA and LTE local identification parameters for serving cell moved under `localId` property.\n    - GSM neighbor global ID: `lac` and `cid` for neighbor cell moved under `globalIdentity` property.\n",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license",
+            "x-copyright": "Copyright (C) 2017-2021 HERE Europe B.V."
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "HERE Network Positioning API v2",
+          "version": "2.1.1",
+          "x-apisguru-categories": [
+            "location",
+            "positioning"
+          ],
+          "x-comment": "This API definition uses custom keywords for specifying rules not defined in OAS 3.0.x. They convey machine-readable information on additional requirements on the request message and are used for request validation by Positioning servers.\nFollowing custom keywords are used:\n  - x-comment - text\n      For comments, to be only visible in the specification, not in documentation.\n  - x-anyRequired - array of property names\n      Requires at least one of listed properties in the object.\n  - x-dependencies - object mapping from dependent properties to their dependencies\n      Same as 'dependencies' keyword in JSON Schema\n\nAlso, custom formats are used:\n  - uuid - UUID, supported by Ajv library\n  - version - requires version in X.Y.Z or X.Y format,\n      where X is [0..255], Y is [0..255] and Z is [0..65535].\n  - eddystoneId - A combination of 10-byte Namespace component and a 6-byte Instance component, as base64 string\n  - iBeaconId - A combination of 16-byte UUID + 2-byte major + 2-byte minor, as base64 string\n",
+          "x-document-meta-data": {
+            "copyright": "© 2021 HERE Europe B.V.",
+            "date-created": "2021-04-01T13:14:37+00:00",
+            "document-id": "0dd4683d-c62d-4da6-915a-942de9c3fb4b"
+          },
+          "x-logo": {
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-olp-service": {
+            "name": "positioning",
+            "version": "v2"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/positioning-api/swagger/positioning-v2-external-spec.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "positioning"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/positioning/2.1.1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/positioning/2.1.1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:rastertiles": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "3.0.0",
+    "versions": {
+      "3.0.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "The HERE Raster Tile v3 is a REST API that allows you to request map tile images for all regions in the world.\nThese map tiles, when combined in a grid, form a complete map of the world.\n",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "https://legal.here.com/en-gb/terms/here-platform",
+          "title": "HERE Raster Tile API v3",
+          "version": "3.0.0",
+          "x-apisguru-categories": [
+            "location",
+            "raster_tiles"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-03-06T14:27:34+00:00",
+            "document-id": "5923a537-c16c-41f4-a9a8-e55f2589a092"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/raster-tile-api/swagger/rastertiles-v3-openapi.yml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "rastertiles"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/rastertiles/3.0.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/rastertiles/3.0.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:routing": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.58.3",
+    "versions": {
+      "8.58.3": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "A location service providing customizable route calculations for a variety of vehicle types as well as pedestrian modes.",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Routing API v8",
+          "version": "8.58.3",
+          "x-apisguru-categories": [
+            "location",
+            "routing"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-02-21T15:56:22+00:00",
+            "document-id": "290a7d22-6810-4e1b-8ba5-a35537f64a94"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/routing-api/swagger/v8.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "routing"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/routing/8.58.3/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/routing/8.58.3/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:tracking": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "2.1.58",
+    "versions": {
+      "2.1.58": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "x-twitter": "HERE"
+          },
+          "description": "HERE Tracking is a cloud product designed to address location tracking problems for a wide range of Location IoT industry verticals.\n\nHERE Tracking also includes end-user mobile and web applications that can be used to demonstrate the product.",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "title": "HERE Tracking",
+          "version": "2.1.58",
+          "x-apisguru-categories": [
+            "location",
+            "tracking"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2021 HERE Europe B.V.",
+            "date-created": "2021-03-23T07:09:46+00:00",
+            "document-id": "2570a397-343f-4e48-a977-7768ea75c130"
+          },
+          "x-logo": {
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/tracking/swagger/swagger.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "tracking"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/tracking/2.1.58/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/tracking/2.1.58/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:traffic": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "7.2.0",
+    "versions": {
+      "7.2.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "The HERE Traffic API is a REST API that provides traffic flow and incidents information.",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Traffic API v7",
+          "version": "7.2.0",
+          "x-apisguru-categories": [
+            "location",
+            "traffic"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-02-28T16:09:10+00:00",
+            "document-id": "0befb769-5605-4b81-8107-9e6aee9904fa"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/traffic-api/swagger/traffic-v7-openapi.yml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "traffic"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/traffic/7.2.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/traffic/7.2.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:transit": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.0.1",
+    "versions": {
+      "8.0.1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "Public Transit is a set of three REST APIs that provides public transit\nrouting information and public transit stations information available within\nan area or for a given station.\n",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Public Transit",
+          "version": "8.0.1",
+          "x-apisguru-categories": [
+            "location",
+            "routing",
+            "traffic"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2022 HERE Europe B.V.",
+            "date-created": "2022-12-22T15:09:49+00:00",
+            "document-id": "06f47a61-0fdf-43c0-9d84-88066d6fa2c6"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/public-transit/swagger/transit_api.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "transit"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/transit/8.0.1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/transit/8.0.1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:vectortiles": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "2.2.0",
+    "versions": {
+      "2.2.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "The Vector Tile API allows you to request tiles containing vector data using content from the HERE platform. Our vector tiles use Web Mercator projection and follow the Vector Tile Specification. This format contains geometries, such as points and lines, that define polygons, labels, such as road names or city names, and other kinds of data that are typically passed to a renderer to draw a map. The tiles are optimized to be visualized as 512 screen pixels per tile. The Vector Tile API supports the standard [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4)\n## CORS Support\nThe server supports [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). The following headers are included in every response.\n```http\nAccess-Control-Allow-Headers: Authorization, Origin, Referer, User-Agent, If-None-Match\nAccess-Control-Allow-Methods: GET, OPTIONS\nAccess-Control-Allow-Origin: *\n``` ",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Vector Tile",
+          "version": "2.2.0",
+          "x-apisguru-categories": [
+            "location",
+            "vector_tiles"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-02-07T12:25:54+00:00",
+            "document-id": "6719e6cc-5a07-45ff-b783-08f4a778f97d"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-olp-service": {
+            "name": "Vector Tile API",
+            "version": "v2"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/vector-tiles-api/swagger/vectortiles-v2-openapi.yml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "vectortiles"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/vectortiles/2.2.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/vectortiles/2.2.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "here.com:waypoints-routing": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "8.2.1",
+    "versions": {
+      "8.2.1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "Compute the best Sequence for Waypoints (Travelling Salesman Problem)",
+          "license": {
+            "name": "HERE Documentation License",
+            "url": "https://legal.here.com/en-gb/terms/documentation-license"
+          },
+          "termsOfService": "http://developer.here.com/terms-conditions",
+          "title": "Waypoints Sequence",
+          "version": "8.2.1",
+          "x-apisguru-categories": [
+            "location",
+            "routing"
+          ],
+          "x-document-meta-data": {
+            "copyright": "© 2023 HERE Europe B.V.",
+            "date-created": "2023-02-28T17:34:58+00:00",
+            "document-id": "8a6b95a2-4983-433b-9afb-3c2fb2c33005"
+          },
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://developer.here.com/documentation/routing-waypoints/swagger/waypointssequence.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "here.com",
+          "x-serviceName": "waypoints-routing"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/waypoints-routing/8.2.1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/here.com/waypoints-routing/8.2.1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "italy:milan:amat-mi.it": {
+    "added": "2024-03-19T13:23:49.000Z",
+    "preferred": "1",
+    "updated": "2024-03-19T13:23:49.000Z",
+    "versions": {
+      "1": {
+        "info": {
+          "contact": {
+            "url": "https://www.amat-mi.it/it/servizi/pubblicazione-orari-trasporto-pubblico-locale-formato-gtfs/"
+          },
+          "description": "",
+          "title": "www.amat-mi.it",
+          "version": "1",
+          "x-apisguru-categories": [
+            "open_data"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://www.amat-mi.it/moduli/output_immagine.php?id=75"
+          },
+          "x-origin": [
+            {
+              "format": "unknown",
+              "url": "https://www.amat-mi.it/it/servizi/pubblicazione-orari-trasporto-pubblico-locale-formato-gtfs/"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "italy:milan:dati.comune.milano.it": {
+    "added": "2024-03-19T13:23:49.000Z",
+    "preferred": "1",
+    "updated": "2024-03-19T13:23:49.000Z",
+    "versions": {
+      "1": {
+        "info": {
+          "contact": {
+            "url": "https://dati.comune.milano.it/callgroup/32bbfe8c-ca16-4ec3-bd6f-c12380ca3a11"
+          },
+          "description": "",
+          "title": "dati.comune.milano.it",
+          "version": "1",
+          "x-apisguru-categories": [
+            "open_data"
+          ],
+          "x-logo": {
+            "backgroundColor": "#d6012e",
+            "url": "https://dati.comune.milano.it/base/images/logo_milano.png"
+          },
+          "x-origin": [
+            {
+              "format": "unknown",
+              "url": "https://dati.comune.milano.it/callgroup/32bbfe8c-ca16-4ec3-bd6f-c12380ca3a11"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "italy:milan:dati.mit.gov.it": {
+    "added": "2024-03-19T13:23:49.000Z",
+    "preferred": "1",
+    "updated": "2024-03-19T13:23:49.000Z",
+    "versions": {
+      "1": {
+        "info": {
+          "contact": {
+            "url": "https://dati.mit.gov.it/catalog/dataset/"
+          },
+          "description": "",
+          "title": "dati.mit.gov.it",
+          "version": "1",
+          "x-apisguru-categories": [
+            "open_data"
+          ],
+          "x-logo": {
+            "backgroundColor": "#005d7a",
+            "url": "http://dati.mit.gov.it/catalog/uploads/admin/2022-12-19-103459.915797logomit20221219.png"
+          },
+          "x-origin": [
+            {
+              "format": "unknown",
+              "url": "https://dati.mit.gov.it/catalog/dataset/"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "italy:milan:opendata-milano": {
+    "added": "2024-03-19T13:23:49.000Z",
+    "preferred": "1",
+    "updated": "2024-03-19T13:23:49.000Z",
+    "versions": {
+      "1": {
+        "info": {
+          "contact": {
+            "url": "https://abahgat.github.io/opendata-milano/"
+          },
+          "description": "",
+          "title": "opendata-milano",
+          "version": "1",
+          "x-apisguru-categories": [
+            "open_data"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": ""
+          },
+          "x-origin": [
+            {
+              "format": "unknown",
+              "url": "https://abahgat.github.io/opendata-milano/"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "mobidatalab.eu:anonymization-processor": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "1.0.0",
+    "versions": {
+      "1.0.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "url": "https://github.com/MobiDataLab/mdl-anonymizer"
+          },
+          "description": "MobiDataLab Anonymization API",
+          "title": "Anonymization Processor",
+          "version": "1.0.0",
+          "x-apisguru-categories": [
+            "anonymization"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://services.mobidatalab.eu:8443/anonymisation/openapi.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "mobidatalab.eu",
+          "x-serviceName": "anonymization-processor"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/anonymization-processor/1.0.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/anonymization-processor/1.0.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "mobidatalab.eu:geographical-enrichment-api": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "v0",
+    "versions": {
+      "v0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "url": "https://github.com/MobiDataLab/mdl-geo-enrichment"
+          },
+          "description": "MobiDataLab Geographical Enrichment Processor \r\n\r\n<https://processor1.francecentral.cloudapp.azure.com/swagger-ui/index.html>\r\n\r\n<https://github.com/MobiDataLab/mdl-geo-enrichment>",
+          "title": "Geographical Enrichment API",
+          "version": "v0",
+          "x-apisguru-categories": [
+            "navigation"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://processor1.francecentral.cloudapp.azure.com/v3/api-docs",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "mobidatalab.eu",
+          "x-serviceName": "geographical-enrichment-api"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/geographical-enrichment-api/v0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/geographical-enrichment-api/v0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "mobidatalab.eu:semantic-enrichment-processor": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "1.0.2",
+    "versions": {
+      "1.0.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "MobiDataLab semantic enrichment API",
+          "title": "Semantic Enrichment Processor",
+          "version": "1.0.0",
+          "x-apisguru-categories": [
+            "semantic"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "http://semantic.westeurope.cloudapp.azure.com:8000/openapi.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": false,
+          "x-providerName": "mobidatalab.eu",
+          "x-serviceName": "semantic-enrichment-processor"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/semantic-enrichment-processor/1.0.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/semantic-enrichment-processor/1.0.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      },
+      "1.0.1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "url": "https://github.com/MobiDataLab/mdl-semantic-enrichment"
+          },
+          "description": "MobiDataLab semantic enrichment API",
+          "title": "Semantic Enrichment Processor",
+          "version": "1.0.1",
+          "x-apisguru-categories": [
+            "semantic"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "http://semantic.westeurope.cloudapp.azure.com:8000/openapi.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": false,
+          "x-providerName": "mobidatalab.eu",
+          "x-serviceName": "semantic-enrichment-processor"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/semantic-enrichment-processor/1.0.1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/semantic-enrichment-processor/1.0.1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      },
+      "1.0.2": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "url": "https://github.com/MobiDataLab/mdl-semantic-enrichment"
+          },
+          "description": "MobiDataLab Semantic Enrichment API",
+          "title": "Semantic Enrichment Processor",
+          "version": "1.0.2",
+          "x-apisguru-categories": [
+            "semantic"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "http://semantic.westeurope.cloudapp.azure.com:8000/openapi.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "mobidatalab.eu",
+          "x-serviceName": "semantic-enrichment-processor"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/semantic-enrichment-processor/1.0.2/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/mobidatalab.eu/semantic-enrichment-processor/1.0.2/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "navitia.io": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "v15.27.0",
+    "versions": {
+      "v15.27.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "email": "navitia@googlegroups.com",
+            "name": "Navitia",
+            "url": "https://www.navitia.io/"
+          },
+          "description": "\n    navitia.io is the open API for building cool stuff with mobility data. It provides the following services\n\n    * journeys computation\n    * line schedules\n    * next departures\n    * exploration of public transport data / search places\n    * and sexy things such as isochrones\n\n    navitia is a HATEOAS API that returns JSON formated results\n    ",
+          "license": {
+            "name": "license",
+            "url": "https://www.navitia.io/api-term-of-use"
+          },
+          "title": "navitia",
+          "version": "v15.27.0",
+          "x-apisguru-categories": [
+            "location",
+            "routing",
+            "poi",
+            "geocoding"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_doc.navitia.io_images_logo-97f24197.png"
+          },
+          "x-origin": [
+            {
+              "format": "swagger",
+              "url": "https://api.navitia.io/v1/schema",
+              "version": "2.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "navitia.io"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/navitia.io/v15.27.0/swagger.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/navitia.io/v15.27.0/swagger.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "openrouteservice.org": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "v2",
+    "versions": {
+      "v2": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "email": "support@smartmobility.heigit.org",
+            "name": "Openrouteservice",
+            "url": "https://github.com/GIScience/openrouteservice"
+          },
+          "description": "This is the openrouteservice API documentation for ORS Core-Version 7.1.1. Documentations for [older Core-Versions](https://github.com/GIScience/openrouteservice-docs/releases) can be rendered with the [Swagger-Editor](https://editor-next.swagger.io/).",
+          "license": {
+            "name": "GNU General Public License v3.0",
+            "url": "https://github.com/GIScience/openrouteservice/blob/main/LICENSE"
+          },
+          "title": "Openrouteservice",
+          "version": "v2",
+          "x-apisguru-categories": [
+            "location"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_openrouteservice.org_dev_static_img_logo@2x.1368651.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://openrouteservice.org/wp-json/ors-api/v1/api-doc/source/V2",
+              "version": "3.0"
+            }
+          ],
+          "x-ors-version": "7.1.1",
+          "x-preferred": true,
+          "x-providerName": "openrouteservice.org"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/openrouteservice.org/v2/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/openrouteservice.org/v2/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "openstreetmap.de:valhalla": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "3.4.0",
+    "versions": {
+      "3.4.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "description": "Valhalla is an open source routing engine and accompanying libraries for use with OpenStreetMap data. Valhalla also includes tools like time+distance matrix computation, isochrones, elevation sampling, map matching and tour optimization (Travelling Salesman).",
+          "title": "Valhalla",
+          "version": "3.4.0",
+          "x-apisguru-categories": [
+            "routing",
+            "route_matching"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_valhalla.github.io_valhalla_images_valhalla.png"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://valhalla.github.io/valhalla/",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "openstreetmap.de",
+          "x-serviceName": "valhalla"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/openstreetmap.de/valhalla/3.4.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/openstreetmap.de/valhalla/3.4.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "tomtom.com:maps": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "1.0.0",
+    "versions": {
+      "1.0.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "x-twitter": "TomTom"
+          },
+          "description": "The Maps API web services suite offers the following APIs:\n  - Raster\n  The Maps Raster API renders map data that is divided into gridded sections called tiles. Tiles are square images (png or jpg format) in various sizes which are available at 19 different zoom levels, ranging from 0 to 20. For zoom level 0, the entire earth is displayed on one single tile, while at zoom level 20, the world is divided into 2<sup>40</sup> tiles.\n  - Vector\n  Similar to Maps Raster API, the Maps Vector API serves data on different zoom level ranging from 0 to 22. For zoom level 0, the entire earth is displayed on one single tile, while at zoom level 22, the world is divided into 2<sup>44</sup> tiles.\n  The Maps Vector Service delivers geographic map data packaged in a vector representation of squared sections called vector tiles. Each tile includes pre-defined collections of map features (points, lines, road shapes, water polygons, building footprints, ect.) delivered in one of the specified vector formats. Format of the tile is formally described using protobuf schema.",
+          "title": "Maps",
+          "version": "1.0.0",
+          "x-apisguru-categories": [
+            "location",
+            "maps",
+            "raster_tiles"
+          ],
+          "x-logo": {
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_twitter.com_TomTom_profile_image.jpeg"
+          },
+          "x-origin": [
+            {
+              "converter": {
+                "url": "https://github.com/lucybot/api-spec-converter",
+                "version": "2.7.31"
+              },
+              "format": "openapi",
+              "url": "https://developer.tomtom.com/system/files/swagger_models/maps_api_0.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "tomtom.com",
+          "x-serviceName": "maps"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/tomtom.com/maps/1.0.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/tomtom.com/maps/1.0.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "tomtom.com:routing": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "1.0.0",
+    "versions": {
+      "1.0.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "name": "Contact Us",
+            "url": "https://developer.tomtom.com/contact-us",
+            "x-twitter": "TomTom"
+          },
+          "description": "Routing consists of the following service:\n<b>Calculate Route</b>\nCalculates a route between an origin and a destination, passing through waypoints (if specified). Additional routing parameters like traffic, avoidance conditions, departure/arrival time etc. can be taken into account.\n<b>Calculate Reachable Range</b>\nCalculates a set of locations that can be reached from the origin point, subject to the available fuel or energy budget that is specified in the request.",
+          "title": "Routing",
+          "version": "1.0.0",
+          "x-apisguru-categories": [
+            "location",
+            "routing"
+          ],
+          "x-logo": {
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_twitter.com_TomTom_profile_image.jpeg"
+          },
+          "x-origin": [
+            {
+              "converter": {
+                "url": "https://github.com/lucybot/api-spec-converter",
+                "version": "2.7.31"
+              },
+              "format": "openapi",
+              "url": "https://developer.tomtom.com/system/files/swagger_models/routing_api.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "tomtom.com",
+          "x-serviceName": "routing"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/tomtom.com/routing/1.0.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/tomtom.com/routing/1.0.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "tomtom.com:search": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "1.0.0",
+    "versions": {
+      "1.0.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "name": "Contact Us",
+            "url": "https://developer.tomtom.com/contact-us",
+            "x-twitter": "TomTom"
+          },
+          "description": "Search API is a RESTful API that allows developers to run a single line fuzzy search for addresses and POIs. Search API returns the latitude/longitude of a specific address, cross street, geographic feature, or point of interest (POI).",
+          "title": "Search",
+          "version": "1.0.0",
+          "x-apisguru-categories": [
+            "location",
+            "poi",
+            "geocoding"
+          ],
+          "x-logo": {
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_twitter.com_TomTom_profile_image.jpeg"
+          },
+          "x-origin": [
+            {
+              "converter": {
+                "url": "https://github.com/lucybot/api-spec-converter",
+                "version": "2.7.31"
+              },
+              "format": "openapi",
+              "url": "https://developer.tomtom.com/system/files/swagger_models/search_api.yaml",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "tomtom.com",
+          "x-serviceName": "search"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/tomtom.com/search/1.0.0/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/tomtom.com/search/1.0.0/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "transitfeeds.com": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "1.0.0",
+    "versions": {
+      "1.0.0": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "contact": {
+            "email": "support@transitfeeds.com",
+            "name": "TransitFeeds.com",
+            "url": "https://transitfeeds.com/issues"
+          },
+          "description": "API to view feed information and download feeds from TransitFeeds.com\n",
+          "title": "TransitFeeds",
+          "version": "1.0.0",
+          "x-apisguru-categories": [
+            "open_data",
+            "transport"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_transitfeeds.com_img_openmobilitydata_logo.png"
+          },
+          "x-origin": [
+            {
+              "format": "swagger",
+              "url": "https://transitfeeds.com/api/transitfeeds-api.yaml",
+              "version": "2.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "transitfeeds.com"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/transitfeeds.com/1.0.0/swagger.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/transitfeeds.com/1.0.0/swagger.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  },
+  "vlaanderen.be": {
+    "added": "2024-03-19T13:51:04.000Z",
+    "preferred": "v1",
+    "versions": {
+      "v1": {
+        "added": "2024-03-19T13:51:04.000Z",
+        "info": {
+          "title": "Datavindplaats",
+          "version": "v1",
+          "x-apisguru-categories": [
+            "open_data"
+          ],
+          "x-logo": {
+            "backgroundColor": "#FFFFFF",
+            "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_assets.vlaanderen.be_image_upload_widgets_vlaamse-overheid.svg"
+          },
+          "x-origin": [
+            {
+              "format": "openapi",
+              "url": "https://datavindplaats.api.vlaanderen.be/docs/v1/swagger.json",
+              "version": "3.0"
+            }
+          ],
+          "x-preferred": true,
+          "x-providerName": "vlaanderen.be"
+        },
+        "swaggerUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/vlaanderen.be/v1/openapi.json",
+        "swaggerYamlUrl": "https://mobidatalab.github.io/mdl-catalog-api/v2/specs/vlaanderen.be/v1/openapi.yaml",
+        "updated": "2024-03-19T13:51:04.000Z"
+      }
+    }
+  }
+}

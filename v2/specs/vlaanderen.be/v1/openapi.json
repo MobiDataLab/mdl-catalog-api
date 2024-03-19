@@ -1,0 +1,1481 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "https://datavindplaats.api.vlaanderen.be"
+    }
+  ],
+  "info": {
+    "title": "Datavindplaats",
+    "version": "v1",
+    "x-apisguru-categories": [
+      "open_data"
+    ],
+    "x-logo": {
+      "backgroundColor": "#FFFFFF",
+      "url": "https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_assets.vlaanderen.be_image_upload_widgets_vlaamse-overheid.svg"
+    },
+    "x-origin": [
+      {
+        "format": "openapi",
+        "url": "https://datavindplaats.api.vlaanderen.be/docs/v1/swagger.json",
+        "version": "3.0"
+      }
+    ],
+    "x-preferred": true,
+    "x-providerName": "vlaanderen.be"
+  },
+  "security": [
+    {
+      "x-api-key": []
+    }
+  ],
+  "paths": {
+    "/buildinfo": {
+      "get": {
+        "operationId": "BuildInfo_Index",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "api-version",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "BuildInfo"
+        ]
+      }
+    },
+    "/v1/catalogrecords": {
+      "get": {
+        "operationId": "CatalogRecords_GetCatalogRecords",
+        "parameters": [
+          {
+            "description": "keyword",
+            "in": "query",
+            "name": "q",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "description": "sort the results by relevance, title or modified (default = relevance) ascending or descending: eg title:asc / title:desc (default = desc)",
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 2
+          },
+          {
+            "description": "taxonomy filter",
+            "explode": true,
+            "in": "query",
+            "name": "taxonomy",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "nullable": true,
+              "type": "array"
+            },
+            "style": "form",
+            "x-position": 3
+          },
+          {
+            "description": "search field, possible values: any, title (default = any).",
+            "in": "query",
+            "name": "searchfield",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 4
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "x-position": 5
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "x-position": 6
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HydraCollectionOfCatalogListRecordLdAndCatalogFacetLd"
+                }
+              }
+            },
+            "description": "Hydra Collection https://www.hydra-cg.com/spec/latest/core/#collections of matching catalog records."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseBody"
+                }
+              }
+            },
+            "description": "Invalid search criteria"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            },
+            "description": "Unexpected error."
+          }
+        },
+        "summary": "Get catalog records",
+        "tags": [
+          "CatalogRecords"
+        ]
+      }
+    },
+    "/v1/catalogrecords/suggestions": {
+      "get": {
+        "operationId": "CatalogRecords_GetSuggestions",
+        "parameters": [
+          {
+            "description": "keyword",
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "description": "max number of suggestions",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "int32",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuggestionListLd"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseBody"
+                }
+              }
+            },
+            "description": "Validation errors."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            },
+            "description": "Unexpected error."
+          }
+        },
+        "summary": "Get suggestions",
+        "tags": [
+          "CatalogRecords"
+        ]
+      }
+    },
+    "/v1/catalogrecords/{id}": {
+      "get": {
+        "operationId": "CatalogRecords_GetCatalogRecord",
+        "parameters": [
+          {
+            "description": "Catalog record id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogRecordWithContextLd"
+                }
+              }
+            },
+            "description": "Catalog record Metadata DCAT 2.0 format."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseBody"
+                }
+              }
+            },
+            "description": "Validation errors."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponseBody"
+                }
+              }
+            },
+            "description": "Not found."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            },
+            "description": "Unexpected error."
+          }
+        },
+        "summary": "Get catalog record",
+        "tags": [
+          "CatalogRecords"
+        ]
+      }
+    },
+    "/v1/catalogrecords/{id}/related": {
+      "get": {
+        "operationId": "CatalogRecords_GetRelatedResources",
+        "parameters": [
+          {
+            "description": "Catalog record id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "description": "Related resource type",
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ResourceType"
+            },
+            "x-position": 2
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "x-position": 3
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HydraCollectionOfRelatedResourceLd"
+                }
+              }
+            },
+            "description": "Hydra Collection https://www.hydra-cg.com/spec/latest/core/#collections of related resources."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseBody"
+                }
+              }
+            },
+            "description": "Invalid criteria"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            },
+            "description": "Unexpected error."
+          }
+        },
+        "summary": "Get related resources for catalog record",
+        "tags": [
+          "CatalogRecords"
+        ]
+      }
+    },
+    "/v1/taxonomies/suggestions": {
+      "get": {
+        "operationId": "Taxonomies_GetSuggestionsForTaxonomy",
+        "parameters": [
+          {
+            "description": "keyword",
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "description": "taxonomy",
+            "in": "query",
+            "name": "taxonomy",
+            "required": true,
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            },
+            "x-position": 2
+          },
+          {
+            "description": "max number of suggestions",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "int32",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuggestionListLd"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseBody"
+                }
+              }
+            },
+            "description": "Validation errors."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            },
+            "description": "Unexpected error."
+          }
+        },
+        "summary": "Get suggestions for taxonomy",
+        "tags": [
+          "Taxonomies"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddressLd": {
+        "additionalProperties": false,
+        "properties": {
+          "countryName": {
+            "nullable": true,
+            "type": "string"
+          },
+          "locality": {
+            "nullable": true,
+            "type": "string"
+          },
+          "postalCode": {
+            "nullable": true,
+            "type": "string"
+          },
+          "streetAddress": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "AgentLd": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "AgentWithIdLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AgentLd"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "@id": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BadRequestResponseBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemDetails"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "errors": {
+                "items": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "nullable": true,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BaseLd": {
+        "additionalProperties": false,
+        "properties": {
+          "@context": {
+            "items": {},
+            "nullable": true,
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "x-abstract": true
+      },
+      "BaseResourceLd": {
+        "additionalProperties": false,
+        "type": "object",
+        "x-abstract": true
+      },
+      "CatalogFacetCategoryLd": {
+        "additionalProperties": false,
+        "properties": {
+          "@type": {
+            "type": "string"
+          },
+          "count": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "@type",
+          "label",
+          "value",
+          "count"
+        ],
+        "type": "object"
+      },
+      "CatalogFacetLd": {
+        "additionalProperties": false,
+        "properties": {
+          "@type": {
+            "type": "string"
+          },
+          "children": {
+            "items": {
+              "$ref": "#/components/schemas/CatalogFacetCategoryLd"
+            },
+            "type": "array"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "@type",
+          "label",
+          "value",
+          "children"
+        ],
+        "type": "object"
+      },
+      "CatalogListRecordLd": {
+        "additionalProperties": false,
+        "properties": {
+          "@id": {
+            "type": "string"
+          },
+          "@type": {
+            "type": "string"
+          },
+          "accessRights": {
+            "nullable": true,
+            "type": "string"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "format": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "modified": {
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "@id",
+          "@type",
+          "identifier",
+          "title",
+          "format"
+        ],
+        "type": "object"
+      },
+      "CatalogRecordLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseResourceLd"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "modified": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "primaryTopic": {
+                "$ref": "#/components/schemas/CatalogResourceLd"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "identifier",
+              "url",
+              "modified",
+              "primaryTopic"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "CatalogRecordWithContextLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseLd"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "catalogRecord": {
+                "$ref": "#/components/schemas/CatalogRecordLd"
+              }
+            },
+            "required": [
+              "catalogRecord"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "CatalogResourceLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseResourceLd"
+          },
+          {
+            "additionalProperties": false,
+            "discriminator": {
+              "mapping": {
+                "DataService": "#/components/schemas/DataServiceLd",
+                "Dataset": "#/components/schemas/DataSetLd"
+              },
+              "propertyName": "discriminator"
+            },
+            "properties": {
+              "@type": {
+                "type": "string"
+              },
+              "accessRights": {
+                "$ref": "#/components/schemas/ConceptLd",
+                "nullable": true
+              },
+              "conformsTo": {
+                "items": {
+                  "$ref": "#/components/schemas/StandardLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "contactInfo": {
+                "$ref": "#/components/schemas/ContactInfoLd",
+                "nullable": true
+              },
+              "discriminator": {
+                "type": "string"
+              },
+              "hasQualityMeasurement": {
+                "items": {
+                  "$ref": "#/components/schemas/QualityMeasurementLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "keyword": {
+                "items": {
+                  "type": "string"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "landingPage": {
+                "items": {
+                  "format": "uri",
+                  "type": "string"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "modified": {
+                "format": "date-time",
+                "nullable": true,
+                "type": "string"
+              },
+              "owner": {
+                "items": {
+                  "$ref": "#/components/schemas/AgentLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "publisher": {
+                "$ref": "#/components/schemas/AgentWithIdLd",
+                "nullable": true
+              },
+              "subject": {
+                "items": {
+                  "$ref": "#/components/schemas/ConceptLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "themeCategory": {
+                "items": {
+                  "$ref": "#/components/schemas/ConceptLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "title": {
+                "type": "string"
+              },
+              "version": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "@type",
+              "title",
+              "discriminator"
+            ],
+            "type": "object",
+            "x-abstract": true
+          }
+        ]
+      },
+      "ConceptLd": {
+        "additionalProperties": false,
+        "properties": {
+          "@type": {
+            "nullable": true,
+            "type": "string"
+          },
+          "inscheme": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "label": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ContactInfoLd": {
+        "additionalProperties": false,
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/AddressLd",
+            "nullable": true
+          },
+          "email": {
+            "nullable": true,
+            "type": "string"
+          },
+          "fullName": {
+            "nullable": true,
+            "type": "string"
+          },
+          "telephone": {
+            "nullable": true,
+            "type": "string"
+          },
+          "url": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "DataServiceLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CatalogResourceLd"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "authenticationLandingPage": {
+                "format": "uri",
+                "nullable": true,
+                "type": "string"
+              },
+              "description": {
+                "nullable": true,
+                "type": "string"
+              },
+              "developmentStage": {
+                "$ref": "#/components/schemas/ConceptLd",
+                "nullable": true
+              },
+              "endpointDescription": {
+                "format": "uri",
+                "nullable": true,
+                "type": "string"
+              },
+              "endpointUrl": {
+                "format": "uri",
+                "nullable": true,
+                "type": "string"
+              },
+              "license": {
+                "$ref": "#/components/schemas/LicenseLd",
+                "nullable": true
+              },
+              "lifeCycle": {
+                "$ref": "#/components/schemas/ConceptLd",
+                "nullable": true
+              },
+              "rights": {
+                "items": {
+                  "$ref": "#/components/schemas/RightsLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "servesDataset": {
+                "items": {
+                  "format": "uri",
+                  "type": "string"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "statusInformationLandingPage": {
+                "format": "uri",
+                "nullable": true,
+                "type": "string"
+              },
+              "userInformationLandingPage": {
+                "format": "uri",
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "DataSetLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CatalogResourceLd"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "description": {
+                "nullable": true,
+                "type": "string"
+              },
+              "distribution": {
+                "items": {
+                  "$ref": "#/components/schemas/DistributionLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "frequency": {
+                "$ref": "#/components/schemas/ConceptLd",
+                "nullable": true
+              },
+              "inspireTheme": {
+                "items": {
+                  "$ref": "#/components/schemas/ConceptLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "sample": {
+                "items": {
+                  "$ref": "#/components/schemas/SampleLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "spatial": {
+                "items": {
+                  "$ref": "#/components/schemas/LocationLd"
+                },
+                "nullable": true,
+                "type": "array"
+              },
+              "status": {
+                "$ref": "#/components/schemas/ConceptLd",
+                "nullable": true
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "DistributionLd": {
+        "additionalProperties": false,
+        "properties": {
+          "accessService": {
+            "items": {
+              "format": "uri",
+              "type": "string"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "accessUrl": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "conformsTo": {
+            "items": {
+              "$ref": "#/components/schemas/StandardLd"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "downloadUrl": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "format": {
+            "$ref": "#/components/schemas/ConceptLd",
+            "nullable": true
+          },
+          "license": {
+            "$ref": "#/components/schemas/LicenseLd",
+            "nullable": true
+          },
+          "modified": {
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "rights": {
+            "items": {
+              "$ref": "#/components/schemas/RightsLd"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Error": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "nullable": true,
+            "type": "string"
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          },
+          "type": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "HydraCollectionOfCatalogListRecordLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/HydraCollectionOfCatalogListRecordLd2"
+          },
+          {
+            "additionalProperties": false,
+            "description": "HydraCollection",
+            "properties": {
+              "@context": {
+                "items": {},
+                "nullable": true,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "HydraCollectionOfCatalogListRecordLd2": {
+        "additionalProperties": false,
+        "properties": {
+          "@context": {
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "@id": {
+            "nullable": true,
+            "type": "string"
+          },
+          "@type": {
+            "nullable": true,
+            "type": "string"
+          },
+          "member": {
+            "items": {
+              "$ref": "#/components/schemas/CatalogListRecordLd"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "totalItems": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "view": {
+            "$ref": "#/components/schemas/HydraPartialCollectionView",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      },
+      "HydraCollectionOfCatalogListRecordLdAndCatalogFacetLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/HydraCollectionOfCatalogListRecordLd"
+          },
+          {
+            "additionalProperties": false,
+            "description": "HydraCollection with facets (inherit from HydraCollection to add facet collection)",
+            "properties": {
+              "facet": {
+                "description": "Facets",
+                "items": {
+                  "$ref": "#/components/schemas/CatalogFacetLd"
+                },
+                "nullable": true,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "HydraCollectionOfRelatedResourceLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/HydraCollectionOfRelatedResourceLd2"
+          },
+          {
+            "additionalProperties": false,
+            "description": "HydraCollection",
+            "properties": {
+              "@context": {
+                "items": {},
+                "nullable": true,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "HydraCollectionOfRelatedResourceLd2": {
+        "additionalProperties": false,
+        "properties": {
+          "@context": {
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "@id": {
+            "nullable": true,
+            "type": "string"
+          },
+          "@type": {
+            "nullable": true,
+            "type": "string"
+          },
+          "member": {
+            "items": {
+              "$ref": "#/components/schemas/RelatedResourceLd"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "totalItems": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "view": {
+            "$ref": "#/components/schemas/HydraPartialCollectionView",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      },
+      "HydraPartialCollectionView": {
+        "additionalProperties": false,
+        "properties": {
+          "@id": {
+            "nullable": true,
+            "type": "string"
+          },
+          "@type": {
+            "nullable": true,
+            "type": "string"
+          },
+          "first": {
+            "nullable": true,
+            "type": "string"
+          },
+          "last": {
+            "nullable": true,
+            "type": "string"
+          },
+          "next": {
+            "nullable": true,
+            "type": "string"
+          },
+          "previous": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "InternalServerErrorResponseBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemDetails"
+          },
+          {
+            "additionalProperties": false,
+            "type": "object"
+          }
+        ]
+      },
+      "LicenseLd": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "licenseType": {
+            "items": {
+              "$ref": "#/components/schemas/ConceptLd"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          },
+          "url": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "LocationLd": {
+        "additionalProperties": false,
+        "properties": {
+          "geographicName": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "MetricLd": {
+        "additionalProperties": false,
+        "properties": {
+          "@type": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "expectedDataType": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "inDimension": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "label": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "NotFoundResponseBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProblemDetails"
+          },
+          {
+            "additionalProperties": false,
+            "type": "object"
+          }
+        ]
+      },
+      "ProblemDetails": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": "string"
+          },
+          "status": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail"
+        ],
+        "type": "object",
+        "x-abstract": true
+      },
+      "QualityMeasurementLd": {
+        "additionalProperties": false,
+        "properties": {
+          "isMeasurementOf": {
+            "$ref": "#/components/schemas/MetricLd",
+            "nullable": true
+          },
+          "unitMeasure": {
+            "$ref": "#/components/schemas/ConceptLd",
+            "nullable": true
+          },
+          "value": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "RelatedResourceLd": {
+        "additionalProperties": false,
+        "properties": {
+          "@id": {
+            "type": "string"
+          },
+          "@type": {
+            "type": "string"
+          },
+          "accessRights": {
+            "nullable": true,
+            "type": "string"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "format": {
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "type": "array"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "@id",
+          "@type",
+          "identifier"
+        ],
+        "type": "object"
+      },
+      "ResourceType": {
+        "description": "Related resource type",
+        "enum": [
+          "Datasets",
+          "Services"
+        ],
+        "type": "string",
+        "x-enumNames": [
+          "Datasets",
+          "Services"
+        ]
+      },
+      "RightsLd": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "SampleLd": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "downloadUrl": {
+            "format": "uri",
+            "type": "string"
+          },
+          "mediaType": {
+            "$ref": "#/components/schemas/ConceptLd",
+            "nullable": true
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "downloadUrl"
+        ],
+        "type": "object"
+      },
+      "StandardLd": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "identifier": {
+            "nullable": true,
+            "type": "string"
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          },
+          "type": {
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "SuggestionListLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseLd"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "itemListElement": {
+                "items": {
+                  "type": "string"
+                },
+                "nullable": true,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "x-api-key": {
+        "in": "header",
+        "name": "x-api-key",
+        "type": "apiKey"
+      }
+    }
+  },
+  "x-generator": "NSwag v13.10.9.0 (NJsonSchema v10.4.1.0 (Newtonsoft.Json v12.0.0.0))"
+}

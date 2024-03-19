@@ -1,0 +1,927 @@
+openapi: 3.0.3
+servers:
+  - url: 'https://valhalla1.openstreetmap.de'
+  - description: Custom server
+    url: '{server}'
+    variables:
+      server:
+        default: 'https://valhalla1.openstreetmap.de'
+        description: server
+info:
+  description: 'Valhalla is an open source routing engine and accompanying libraries for use with OpenStreetMap data. Valhalla also includes tools like time+distance matrix computation, isochrones, elevation sampling, map matching and tour optimization (Travelling Salesman).'
+  title: Valhalla
+  version: 3.4.0
+  x-apisguru-categories:
+    - routing
+    - route_matching
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_valhalla.github.io_valhalla_images_valhalla.png'
+  x-origin:
+    - format: openapi
+      url: 'https://valhalla.github.io/valhalla/'
+      version: '3.0'
+  x-preferred: true
+  x-providerName: openstreetmap.de
+  x-serviceName: valhalla
+tags:
+  - description: "Valhalla's routing service (a.k.a. turn-by-turn), is an open-source routing service that lets you integrate routing and navigation into a web or mobile application.\r\n\r\n[View an interactive demo](http://valhalla.github.io/demos/routing)\r\n\r\nThe default logic for the OpenStreetMap tags, keys, and values used when routing are documented on an [OSM wiki page](http://wiki.openstreetmap.org/wiki/OSM_tags_for_routing/Valhalla).\r\n\r\n<https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/>"
+    name: Turn-by-Turn Route API
+  - description: "The Optimized Route service provides a quick computation of time and distance between a set of location sources and location targets and returns them in an optimized route order, along with the shape.\r\n\r\n[View an interactive demo](http://valhalla.github.io/demos/optimized_route)\r\n\r\n<https://valhalla.github.io/valhalla/api/optimized/api-reference/>"
+    name: Optimized Route API
+  - description: "Valhalla's time-distance matrix service provides a quick computation of time and distance between a set of locations and returns them to you in the resulting matrix table.\r\n\r\n<https://valhalla.github.io/valhalla/api/matrix/api-reference/>"
+    name: Matrix API
+  - description: "An isochrone is a line that connects points of equal travel time about a given location, from the Greek roots of iso for equal and chrone for time. Valhalla's isochrone service computes areas that are reachable within specified time intervals from a location, and returns the reachable regions as contours of polygons or lines that you can display on a map.\r\n\r\nIsodistances follow the same concept, but instead of time one specifies distance intervals.\r\n\r\nIsochrone maps share some of the same concepts and terminology with familiar topographic maps, which depict contour lines for points of equal elevation. For this reason other terms common in topography apply, such as contours or isolines.\r\n\r\n<https://valhalla.github.io/valhalla/api/isochrone/api-reference/>"
+    name: Isochrone API
+  - description: "With Valhalla's Map Matching service, you can match coordinates, such as GPS locations, to roads and paths that have been mapped in OpenStreetMap. By doing this, you can turn a path into a route with narrative instructions and also get the attribute values from that matched line.\r\n\r\n[View an interactive demo](http://valhalla.github.io/demos/map_matching/)\r\n\r\nThere are two separate Map Matching calls that perform different operations on an input set of latitude,longitude coordinates. The trace_route action returns the shape snapped to the road network and narrative directions, while trace_attributes returns detailed attribution along the portion of the route.\r\n\r\nIt is important to note that all service requests should be POST because shape or encoded_polyline can be fairly large.\r\n\r\n<https://valhalla.github.io/valhalla/api/map-matching/api-reference/>"
+    name: Map Matching API
+  - description: "Valhalla's locate service, is an open-source service that provides detailed information about streets and intersections close to an input point with some added matching criteria. This allows for tight integration in routing and navigation applications on web or mobile.\r\n\r\n[View an interactive demo](http://valhalla.github.io/demos/locate)\r\n\r\nThe default logic for the OpenStreetMap tags, keys, and values used when routing are documented on an [OSM wiki page](http://wiki.openstreetmap.org/wiki/OSM_tags_for_routing/Valhalla).\r\n\r\n<https://valhalla.github.io/valhalla/api/locate/api-reference/>"
+    name: Locate API
+  - description: "Valhalla's elevation lookup service provides digital elevation model (DEM) data as the result of a query. The elevation service data has many applications when combined with other routing and navigation data, including computing the steepness of roads and paths or generating an elevation profile chart along a route.\r\n\r\nFor example, you can get elevation data for a point, a trail, or a trip. You might use the results to consider hills for your bicycle trip, or when estimating battery usage for trips in electric vehicles.\r\n\r\n[View an interactive demo here](http://valhalla.github.io/demos/elevation)\r\n\r\n<https://valhalla.github.io/valhalla/api/elevation/api-reference/>"
+    name: Elevation API
+  - description: "Routing algorithms find the best path by expanding their search from start nodes/edges across the routing network until the destination is reached (unidirectional) or both search branches meet (bidirectional). This service could be subject to change in terms of API until we remove the BETA label.\r\n\r\nThe expansion service wraps the route, isochrone and sources_to_targets services and returns a GeoJSON with all network edges (way segments) the underlying routing algorithm visited during the expansion, with relevant properties for each edge (e.g. duration & distance). A top-level algorithm propertry informs about the used algorithm: unidirectional & bidirectional A* (for route) and unidirectional Dijkstra (for isochrone).\r\n\r\n<https://valhalla.github.io/valhalla/api/expansion/api-reference/>"
+    name: Expansion API
+  - description: "By default the /status endpoint will return a HTTP status code of 200 with version and tileset_last_modified (as UNIX timestamp) info, which can also be used as a health endpoint for the HTTP API.\r\n\r\nHowever, if \"verbose\": true is passed as a request parameter it will return additional information about the loaded tileset. Note that gathering this additional information can be computationally expensive, hence the verbose flag can be disallowed in the configuration JSON (service_limits.status.allow_verbose, default false).\r\n\r\n<https://valhalla.github.io/valhalla/api/status/api-reference/>"
+    name: Status API
+paths:
+  /expansion:
+    post:
+      description: expansion
+      operationId: expansion
+      requestBody:
+        content:
+          application/json:
+            example:
+              action: isochrone
+              contours:
+                - time: 1
+              costing: auto
+              expansion_properties:
+                - distances
+                - durations
+                - costs
+              locations:
+                - lat: -0.00017966240895360996
+                  lon: 0.00026949361342338066
+            schema:
+              properties:
+                action:
+                  example: isochrone
+                  type: string
+                contours:
+                  example:
+                    - time: 1
+                  items:
+                    properties:
+                      time:
+                        example: 1
+                        type: number
+                    type: object
+                  type: array
+                costing:
+                  example: auto
+                  type: string
+                expansion_properties:
+                  example:
+                    - distances
+                    - durations
+                    - costs
+                  items:
+                    example: distances
+                    type: string
+                  type: array
+                locations:
+                  example:
+                    - lat: -0.00017966240895360996
+                      lon: 0.00026949361342338066
+                  items:
+                    properties:
+                      lat:
+                        example: -0.00017966240895360996
+                        type: number
+                      lon:
+                        example: 0.00026949361342338066
+                        type: number
+                    type: object
+                  type: array
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: expansion
+      tags:
+        - Expansion API
+  /height:
+    post:
+      description: height
+      operationId: height
+      requestBody:
+        content:
+          application/json:
+            example:
+              id: Pottsville
+              range: true
+              shape:
+                - lat: 40.712431
+                  lon: -76.504916
+                - lat: 40.712275
+                  lon: -76.605259
+                - lat: 40.712122
+                  lon: -76.805694
+                - lat: 40.722431
+                  lon: -76.884916
+                - lat: 40.812275
+                  lon: -76.905259
+                - lat: 40.912122
+                  lon: -76.965694
+            schema:
+              properties:
+                id:
+                  example: Pottsville
+                  type: string
+                range:
+                  example: true
+                  type: boolean
+                shape:
+                  example:
+                    - lat: 40.712431
+                      lon: -76.504916
+                    - lat: 40.712275
+                      lon: -76.605259
+                    - lat: 40.712122
+                      lon: -76.805694
+                    - lat: 40.722431
+                      lon: -76.884916
+                    - lat: 40.812275
+                      lon: -76.905259
+                    - lat: 40.912122
+                      lon: -76.965694
+                  items:
+                    properties:
+                      lat:
+                        example: 40.712431
+                        type: number
+                      lon:
+                        example: -76.504916
+                        type: number
+                    type: object
+                  type: array
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: height
+      tags:
+        - Elevation API
+  /isochrone:
+    post:
+      description: isochrone
+      operationId: isochrone
+      parameters:
+        - description: name request
+          in: query
+          name: id
+          schema:
+            example: my_work_route
+            type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              contours:
+                - color: ff0000
+                  time: 15
+              costing: pedestrian
+              locations:
+                - lat: 40.744014
+                  lon: -73.990508
+            schema:
+              properties:
+                contours:
+                  example:
+                    - color: ff0000
+                      time: 15
+                  items:
+                    properties:
+                      color:
+                        example: ff0000
+                        type: string
+                      time:
+                        example: 15
+                        type: number
+                    type: object
+                  type: array
+                costing:
+                  example: pedestrian
+                  type: string
+                locations:
+                  example:
+                    - lat: 40.744014
+                      lon: -73.990508
+                  items:
+                    properties:
+                      lat:
+                        example: 40.744014
+                        type: number
+                      lon:
+                        example: -73.990508
+                        type: number
+                    type: object
+                  type: array
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: isochrone
+      tags:
+        - Isochrone API
+  /locate:
+    post:
+      description: locate
+      operationId: locate
+      requestBody:
+        content:
+          application/json:
+            example:
+              costing: bicycle
+              costing_options:
+                bicycle:
+                  bicycle_type: road
+              directions_options:
+                units: miles
+              id: 12abc3afe23984fe
+              locations:
+                - lat: 42.358528
+                  lon: -83.2714
+                - lat: 42.996613
+                  lon: -78.749855
+              verbose: true
+            schema:
+              properties:
+                costing:
+                  example: bicycle
+                  type: string
+                costing_options:
+                  properties:
+                    bicycle:
+                      properties:
+                        bicycle_type:
+                          example: road
+                          type: string
+                      type: object
+                  type: object
+                directions_options:
+                  properties:
+                    units:
+                      example: miles
+                      type: string
+                  type: object
+                id:
+                  example: 12abc3afe23984fe
+                  type: string
+                locations:
+                  example:
+                    - lat: 42.358528
+                      lon: -83.2714
+                    - lat: 42.996613
+                      lon: -78.749855
+                  items:
+                    properties:
+                      lat:
+                        example: 42.358528
+                        type: number
+                      lon:
+                        example: -83.2714
+                        type: number
+                    type: object
+                  type: array
+                verbose:
+                  example: true
+                  type: boolean
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: locate
+      tags:
+        - Locate API
+  /optimized_route:
+    post:
+      description: optimized_route
+      operationId: optimizedRoute
+      parameters:
+        - description: name request
+          in: query
+          name: id
+          schema:
+            example: my_work_route
+            type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              costing: auto
+              directions_options:
+                units: miles
+              locations:
+                - lat: 40.042072
+                  lon: -76.306572
+                - lat: 39.992115
+                  lon: -76.781559
+                - lat: 39.984519
+                  lon: -76.6956
+                - lat: 39.996586
+                  lon: -76.769028
+                - lat: 39.984322
+                  lon: -76.706672
+            schema:
+              properties:
+                costing:
+                  example: auto
+                  type: string
+                directions_options:
+                  properties:
+                    units:
+                      example: miles
+                      type: string
+                  type: object
+                locations:
+                  example:
+                    - lat: 40.042072
+                      lon: -76.306572
+                    - lat: 39.992115
+                      lon: -76.781559
+                    - lat: 39.984519
+                      lon: -76.6956
+                    - lat: 39.996586
+                      lon: -76.769028
+                    - lat: 39.984322
+                      lon: -76.706672
+                  items:
+                    properties:
+                      lat:
+                        example: 40.042072
+                        type: number
+                      lon:
+                        example: -76.306572
+                        type: number
+                    type: object
+                  type: array
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: optimized_route
+      tags:
+        - Optimized Route API
+  /route:
+    post:
+      description: route
+      operationId: route
+      parameters:
+        - description: name request
+          in: query
+          name: id
+          schema:
+            example: my_work_route
+            type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              costing: auto
+              costing_options:
+                auto:
+                  country_crossing_penalty: 2000
+              id: my_work_route
+              locations:
+                - lat: 42.358528
+                  lon: -83.2714
+                  street: Appleton
+                - lat: 42.996613
+                  lon: -78.749855
+                  street: Ranch Trail
+              units: miles
+            schema:
+              properties:
+                costing:
+                  example: auto
+                  type: string
+                costing_options:
+                  properties:
+                    auto:
+                      properties:
+                        country_crossing_penalty:
+                          example: 2000
+                          type: number
+                      type: object
+                  type: object
+                id:
+                  example: my_work_route
+                  type: string
+                locations:
+                  example:
+                    - lat: 42.358528
+                      lon: -83.2714
+                      street: Appleton
+                    - lat: 42.996613
+                      lon: -78.749855
+                      street: Ranch Trail
+                  items:
+                    properties:
+                      lat:
+                        example: 42.358528
+                        type: number
+                      lon:
+                        example: -83.2714
+                        type: number
+                      street:
+                        example: Appleton
+                        type: string
+                    type: object
+                  type: array
+                units:
+                  example: miles
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: route
+      tags:
+        - Turn-by-Turn Route API
+  /sources_to_targets:
+    post:
+      description: sources_to_targets
+      operationId: sourcesToTargets
+      parameters:
+        - description: name request
+          in: query
+          name: id
+          schema:
+            example: my_work_route
+            type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              costing: pedestrian
+              sources:
+                - lat: 40.744014
+                  lon: -73.990508
+              targets:
+                - lat: 40.744014
+                  lon: -73.990508
+                - lat: 40.739735
+                  lon: -73.979713
+                - lat: 40.752522
+                  lon: -73.985015
+                - lat: 40.750117
+                  lon: -73.983704
+                - lat: 40.750552
+                  lon: -73.993519
+            schema:
+              properties:
+                costing:
+                  example: pedestrian
+                  type: string
+                sources:
+                  example:
+                    - lat: 40.744014
+                      lon: -73.990508
+                  items:
+                    properties:
+                      lat:
+                        example: 40.744014
+                        type: number
+                      lon:
+                        example: -73.990508
+                        type: number
+                    type: object
+                  type: array
+                targets:
+                  example:
+                    - lat: 40.744014
+                      lon: -73.990508
+                    - lat: 40.739735
+                      lon: -73.979713
+                    - lat: 40.752522
+                      lon: -73.985015
+                    - lat: 40.750117
+                      lon: -73.983704
+                    - lat: 40.750552
+                      lon: -73.993519
+                  items:
+                    properties:
+                      lat:
+                        example: 40.744014
+                        type: number
+                      lon:
+                        example: -73.990508
+                        type: number
+                    type: object
+                  type: array
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: sources_to_targets
+      tags:
+        - Matrix API
+  /status:
+    get:
+      description: status
+      operationId: status
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                status:
+                  value:
+                    available_actions:
+                      - expansion
+                      - height
+                      - status
+                      - trace_attributes
+                      - trace_route
+                      - optimized_route
+                      - sources_to_targets
+                      - isochrone
+                      - route
+                      - locate
+                    tileset_last_modified: 1694573330
+                    version: 3.4.0
+              schema:
+                properties:
+                  available_actions:
+                    example:
+                      - expansion
+                      - height
+                      - status
+                      - trace_attributes
+                      - trace_route
+                      - optimized_route
+                      - sources_to_targets
+                      - isochrone
+                      - route
+                      - locate
+                    items:
+                      example: expansion
+                      type: string
+                    type: array
+                  tileset_last_modified:
+                    example: 1694573330
+                    type: number
+                  version:
+                    example: 3.4.0
+                    type: string
+                type: object
+          description: status
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                example: '*'
+                type: string
+            Connection:
+              schema:
+                example: keep-alive
+                type: string
+            Content-Length:
+              schema:
+                example: '207'
+                type: string
+            Date:
+              schema:
+                example: 'Wed, 13 Sep 2023 22:36:59 GMT'
+                type: string
+            Server:
+              schema:
+                example: nginx/1.18.0 (Ubuntu)
+                type: string
+      summary: status
+      tags:
+        - Status API
+    post:
+      description: status verbose
+      operationId: statusVerbose
+      requestBody:
+        content:
+          application/json:
+            example:
+              verbose: true
+            schema:
+              properties:
+                verbose:
+                  example: true
+                  type: boolean
+              type: object
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                status verbose:
+                  value:
+                    available_actions:
+                      - expansion
+                      - height
+                      - status
+                      - trace_attributes
+                      - trace_route
+                      - optimized_route
+                      - sources_to_targets
+                      - isochrone
+                      - route
+                      - locate
+                    bbox:
+                      features: []
+                      type: FeatureCollection
+                    has_admins: true
+                    has_live_traffic: false
+                    has_tiles: true
+                    has_timezones: true
+                    has_transit_tiles: false
+                    osm_changeset: 141085153
+                    tileset_last_modified: 1694573330
+                    version: 3.4.0
+              schema:
+                properties:
+                  available_actions:
+                    example:
+                      - expansion
+                      - height
+                      - status
+                      - trace_attributes
+                      - trace_route
+                      - optimized_route
+                      - sources_to_targets
+                      - isochrone
+                      - route
+                      - locate
+                    items:
+                      example: expansion
+                      type: string
+                    type: array
+                  bbox:
+                    properties:
+                      features:
+                        example: []
+                        items: {}
+                        type: array
+                      type:
+                        example: FeatureCollection
+                        type: string
+                    type: object
+                  has_admins:
+                    example: true
+                    type: boolean
+                  has_live_traffic:
+                    example: false
+                    type: boolean
+                  has_tiles:
+                    example: true
+                    type: boolean
+                  has_timezones:
+                    example: true
+                    type: boolean
+                  has_transit_tiles:
+                    example: false
+                    type: boolean
+                  osm_changeset:
+                    example: 141085153
+                    type: number
+                  tileset_last_modified:
+                    example: 1694573330
+                    type: number
+                  version:
+                    example: 3.4.0
+                    type: string
+                type: object
+          description: status verbose
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                example: '*'
+                type: string
+            Connection:
+              schema:
+                example: keep-alive
+                type: string
+            Content-Length:
+              schema:
+                example: '1308755'
+                type: string
+            Date:
+              schema:
+                example: 'Wed, 13 Sep 2023 22:38:15 GMT'
+                type: string
+            Server:
+              schema:
+                example: nginx/1.18.0 (Ubuntu)
+                type: string
+      summary: status verbose
+      tags:
+        - Status API
+  /trace_attributes:
+    post:
+      description: trace_attributes
+      operationId: traceAttributes
+      requestBody:
+        content:
+          application/json:
+            example:
+              costing: auto
+              filters:
+                action: include
+                attributes:
+                  - edge.names
+                  - edge.id
+                  - edge.weighted_grade
+                  - edge.speed
+              shape:
+                - lat: 39.983841
+                  lon: -76.735741
+                - lat: 39.983704
+                  lon: -76.735298
+                - lat: 39.983578
+                  lon: -76.734848
+                - lat: 39.983551
+                  lon: -76.734253
+                - lat: 39.983555
+                  lon: -76.734116
+                - lat: 39.983589
+                  lon: -76.733315
+                - lat: 39.983719
+                  lon: -76.732445
+                - lat: 39.983818
+                  lon: -76.731712
+                - lat: 39.983776
+                  lon: -76.731506
+                - lat: 39.983696
+                  lon: -76.731369
+              shape_match: walk_or_snap
+            schema:
+              properties:
+                costing:
+                  example: auto
+                  type: string
+                filters:
+                  properties:
+                    action:
+                      example: include
+                      type: string
+                    attributes:
+                      example:
+                        - edge.names
+                        - edge.id
+                        - edge.weighted_grade
+                        - edge.speed
+                      items:
+                        example: edge.names
+                        type: string
+                      type: array
+                  type: object
+                shape:
+                  example:
+                    - lat: 39.983841
+                      lon: -76.735741
+                    - lat: 39.983704
+                      lon: -76.735298
+                    - lat: 39.983578
+                      lon: -76.734848
+                    - lat: 39.983551
+                      lon: -76.734253
+                    - lat: 39.983555
+                      lon: -76.734116
+                    - lat: 39.983589
+                      lon: -76.733315
+                    - lat: 39.983719
+                      lon: -76.732445
+                    - lat: 39.983818
+                      lon: -76.731712
+                    - lat: 39.983776
+                      lon: -76.731506
+                    - lat: 39.983696
+                      lon: -76.731369
+                  items:
+                    properties:
+                      lat:
+                        example: 39.983841
+                        type: number
+                      lon:
+                        example: -76.735741
+                        type: number
+                    type: object
+                  type: array
+                shape_match:
+                  example: walk_or_snap
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: trace_attributes
+      tags:
+        - Map Matching API
+  /trace_route:
+    post:
+      description: trace_route
+      operationId: traceRoute
+      requestBody:
+        content:
+          application/json:
+            example:
+              costing: auto
+              shape:
+                - lat: 39.983841
+                  lon: -76.735741
+                  type: break
+                - lat: 39.983704
+                  lon: -76.735298
+                  type: via
+                - lat: 39.983578
+                  lon: -76.734848
+                  type: via
+                - lat: 39.983551
+                  lon: -76.734253
+                  type: break
+                - lat: 39.983555
+                  lon: -76.734116
+                  type: via
+                - lat: 39.983589
+                  lon: -76.733315
+                  type: via
+                - lat: 39.983719
+                  lon: -76.732445
+                  type: via
+                - lat: 39.983818
+                  lon: -76.731712
+                  type: via
+                - lat: 39.983776
+                  lon: -76.731506
+                  type: via
+                - lat: 39.983696
+                  lon: -76.731369
+                  type: break
+              shape_match: map_snap
+            schema:
+              properties:
+                costing:
+                  example: auto
+                  type: string
+                shape:
+                  example:
+                    - lat: 39.983841
+                      lon: -76.735741
+                      type: break
+                    - lat: 39.983704
+                      lon: -76.735298
+                      type: via
+                    - lat: 39.983578
+                      lon: -76.734848
+                      type: via
+                    - lat: 39.983551
+                      lon: -76.734253
+                      type: break
+                    - lat: 39.983555
+                      lon: -76.734116
+                      type: via
+                    - lat: 39.983589
+                      lon: -76.733315
+                      type: via
+                    - lat: 39.983719
+                      lon: -76.732445
+                      type: via
+                    - lat: 39.983818
+                      lon: -76.731712
+                      type: via
+                    - lat: 39.983776
+                      lon: -76.731506
+                      type: via
+                    - lat: 39.983696
+                      lon: -76.731369
+                      type: break
+                  items:
+                    properties:
+                      lat:
+                        example: 39.983841
+                        type: number
+                      lon:
+                        example: -76.735741
+                        type: number
+                      type:
+                        example: break
+                        type: string
+                    type: object
+                  type: array
+                shape_match:
+                  example: map_snap
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: ''
+      summary: trace_route
+      tags:
+        - Map Matching API

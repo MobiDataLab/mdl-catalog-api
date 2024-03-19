@@ -1,0 +1,655 @@
+openapi: 3.0.1
+servers:
+  - description: MobiDataLab Geographical Enrichment Processor
+    url: 'https://processor1.francecentral.cloudapp.azure.com'
+  - description: Custom server
+    url: '{server}'
+    variables:
+      server:
+        default: 'http://processor1.westeurope.cloudapp.azure.com:8000'
+        description: server
+info:
+  contact:
+    url: 'https://github.com/MobiDataLab/mdl-geo-enrichment'
+  description: "MobiDataLab Geographical Enrichment Processor \r\n\r\n<https://processor1.francecentral.cloudapp.azure.com/swagger-ui/index.html>\r\n\r\n<https://github.com/MobiDataLab/mdl-geo-enrichment>"
+  title: Geographical Enrichment API
+  version: v0
+  x-apisguru-categories:
+    - navigation
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg'
+  x-origin:
+    - format: openapi
+      url: 'https://processor1.francecentral.cloudapp.azure.com/v3/api-docs'
+      version: '3.0'
+  x-preferred: true
+  x-providerName: mobidatalab.eu
+  x-serviceName: geographical-enrichment-api
+paths:
+  /api/v1/geojson/enrichGeoJsonApi:
+    get:
+      operationId: enrichGeoJsonApi
+      parameters:
+        - description: 'Attributes to be enriched on the target api, separated with commas'
+          example: 'wheelchair, shelter, tactile_paving, bench, bin, lit'
+          in: query
+          name: enrichAttributes
+          required: true
+          schema:
+            type: string
+        - description: Url of the target API to be enriched
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](48.8345631,2.2433581,48.8775033,2.4400646);out%20meta;'
+          in: query
+          name: targetApiUrl
+          required: true
+          schema:
+            type: string
+        - description: Url of the source API to be used for enrichment
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](48.8345631,2.2433581,48.8775033,2.4400646);out%20meta;'
+          in: query
+          name: sourceApiUrl
+          required: true
+          schema:
+            type: string
+        - description: source API format
+          in: query
+          name: apiFormat
+          required: true
+          schema:
+            default: OSM
+            description: var 1
+            enum:
+              - GeoJson
+              - OSM
+              - GTFS
+            type: string
+        - description: Target API authorization token
+          in: query
+          name: targetToken
+          required: false
+          schema:
+            type: string
+        - description: Source API authorization token
+          in: query
+          name: sourceToken
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - geo-json-controller
+  /api/v1/gtfs/convertGtfsApiToGeoJson:
+    get:
+      operationId: convertGtfsApiToGeoJson
+      parameters:
+        - description: URL of GTFS zip file
+          example: 'https://transitfeeds.com/p/tisseo/595/latest/download'
+          in: query
+          name: gtfsApiUrl
+          required: true
+          schema:
+            type: string
+        - description: Authorization token
+          in: query
+          name: targetToken
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - gtfs-controller
+  /api/v1/gtfs/convertGtfsFileToGeoJson:
+    post:
+      operationId: convertGtfsFileToGeoJson
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                GTFS file:
+                  format: binary
+                  type: string
+              required:
+                - GTFS file
+              type: object
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - gtfs-controller
+  /api/v1/gtfs/enrichGtfsApi:
+    get:
+      operationId: enrichGtfsApi
+      parameters:
+        - description: 'Attributes to be enriched on the target api, separated with commas'
+          example: 'wheelchair, shelter, tactile_paving, bench, bin, lit'
+          in: query
+          name: enrichAttributes
+          required: true
+          schema:
+            type: string
+        - description: Url of the target API to be enriched
+          example: 'https://transitfeeds.com/p/tisseo/595/latest/download'
+          in: query
+          name: targetApiUrl
+          required: true
+          schema:
+            type: string
+        - description: Url of the source API to be used for enrichment
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](43.5740109,1.3833413,43.6073069,1.4512363);out%20meta;'
+          in: query
+          name: sourceApiUrl
+          required: true
+          schema:
+            type: string
+        - description: source API format
+          in: query
+          name: apiFormat
+          required: true
+          schema:
+            default: OSM
+            description: var 1
+            enum:
+              - GeoJson
+              - OSM
+              - GTFS
+            type: string
+        - description: Target API authorization token
+          in: query
+          name: targetToken
+          required: false
+          schema:
+            type: string
+        - description: Source API authorization token
+          in: query
+          name: sourceToken
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - gtfs-controller
+  /api/v1/here/getNearStations:
+    get:
+      operationId: getNearStations
+      parameters:
+        - description: Here API authorization key
+          example: 0PMpb1W_5iihYGu7UrBWsR8fI6Utopf52hFBKOwl7Xc
+          in: query
+          name: apiKey
+          required: false
+          schema:
+            type: string
+        - description: 'Coordinates of the location: latitude, longitude'
+          example: '48.876892,2.352623'
+          in: query
+          name: coordinates
+          required: true
+          schema:
+            type: string
+        - description: 'Attributes to be enriched on the target api, separated with commas'
+          example: 'wheelchair, shelter, tactile_paving, bench, bin, lit'
+          in: query
+          name: enrichAttributes
+          required: true
+          schema:
+            type: string
+        - description: API format
+          in: query
+          name: apiFormat
+          required: true
+          schema:
+            default: OSM
+            description: var 1
+            enum:
+              - GeoJson
+              - OSM
+              - GTFS
+            type: string
+        - description: API full url
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway](48.856892, 2.332623,48.896892, 2.372623);node[railway](48.856892, 2.332623,48.896892, 2.372623);out%20meta;'
+          in: query
+          name: apiUrl
+          required: true
+          schema:
+            type: string
+        - description: Source API authorization token
+          in: query
+          name: sourceToken
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - here-controller
+  /api/v1/here/getRoutes:
+    get:
+      operationId: getRoutes
+      parameters:
+        - description: Here API authorization key
+          example: 0PMpb1W_5iihYGu7UrBWsR8fI6Utopf52hFBKOwl7Xc
+          in: query
+          name: apiKey
+          required: false
+          schema:
+            type: string
+        - description: 'Coordinates of starting point: latitude, longitude'
+          example: '48.8345631,2.2433581'
+          in: query
+          name: fromCoordinates
+          required: true
+          schema:
+            type: string
+        - description: 'Coordinates of the arrival point: latitude, longitude'
+          example: '48.8775033,2.4400646'
+          in: query
+          name: toCoordinates
+          required: true
+          schema:
+            type: string
+        - description: 'Attributes to be enriched on the target api, separated with commas'
+          example: 'wheelchair, shelter, tactile_paving, bench, bin, lit'
+          in: query
+          name: enrichAttributes
+          required: true
+          schema:
+            type: string
+        - description: API format
+          in: query
+          name: apiFormat
+          required: true
+          schema:
+            default: OSM
+            description: var 1
+            enum:
+              - GeoJson
+              - OSM
+              - GTFS
+            type: string
+        - description: API full url
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](48.8345631,2.2433581,48.8775033,2.4400646);out%20meta;'
+          in: query
+          name: apiUrl
+          required: true
+          schema:
+            type: string
+        - description: Source API authorization token
+          in: query
+          name: sourceToken
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - here-controller
+  /api/v1/json/enrichJsonApi:
+    get:
+      operationId: enrichJsonApi
+      parameters:
+        - description: 'Attributes to be enriched on the target api, separated with commas'
+          example: 'wheelchair, shelter, tactile_paving, bench, bin, lit'
+          in: query
+          name: enrichmentAttributes
+          required: true
+          schema:
+            type: string
+        - description: 'Target attributes root path of the point using [Jsonpath expressions](https://goessner.net/articles/JsonPath/index.html#e2)'
+          example: $..stop_point
+          in: query
+          name: targetAttributesRootPath
+          required: true
+          schema:
+            type: string
+        - description: 'Source attributes root path of the point using [Jsonpath expressions](https://goessner.net/articles/JsonPath/index.html#e2)'
+          example: $..elements
+          in: query
+          name: sourceAttributesRootPath
+          required: true
+          schema:
+            type: string
+        - description: 'The parent path of the enrichment attributes on the source api, using [Jsonpath expressions](https://goessner.net/articles/JsonPath/index.html#e2)'
+          example: $..elements.tags
+          in: query
+          name: enrichmentAttributesPath
+          required: true
+          schema:
+            type: string
+        - description: Url of the target API to be enriched
+          example: 'https://api.navitia.io/v1/journeys?from=4.3398019;50.8439547&to=4.3056933;50.8396064&allowed_id[]=physical_mode:Bus'
+          in: query
+          name: targetApiUrl
+          required: true
+          schema:
+            type: string
+        - description: Url of the source API to be used for enrichment
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](50.8396064,4.3056933,50.8439547,4.3398019);out%20meta;'
+          in: query
+          name: sourceApiUrl
+          required: true
+          schema:
+            type: string
+        - description: Target API authorization token
+          example: 55af740c-e0e9-4f2b-9387-3bb81a8c7bd4
+          in: query
+          name: targetToken
+          required: true
+          schema:
+            type: string
+        - description: Source API authorization token
+          in: query
+          name: sourceToken
+          required: false
+          schema:
+            type: string
+        - description: 'The path of the coordinates node on the target api using [Jsonpath expressions](https://goessner.net/articles/JsonPath/index.html#e2)'
+          example: $..stop_point.coord
+          in: query
+          name: targetCoordsPath
+          required: true
+          schema:
+            type: string
+        - description: 'The path of the coordinates node on the source api using [Jsonpath expressions](https://goessner.net/articles/JsonPath/index.html#e2)'
+          example: $..elements
+          in: query
+          name: sourceCoordsPath
+          required: true
+          schema:
+            type: string
+        - description: 'The path of the point name on the target api using [Jsonpath expressions](https://goessner.net/articles/JsonPath/index.html#e2)'
+          example: $..stop_point.name
+          in: query
+          name: targetNamePath
+          required: true
+          schema:
+            type: string
+        - description: 'The path of the point name on the source api using [Jsonpath expressions](https://goessner.net/articles/JsonPath/index.html#e2)'
+          example: $..elements.tags.name
+          in: query
+          name: sourceNamePath
+          required: true
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - generic-json-controller
+  /api/v1/navitia/getJourneys:
+    get:
+      operationId: getJourneys
+      parameters:
+        - description: Navitia API authorization token
+          example: 55af740c-e0e9-4f2b-9387-3bb81a8c7bd4
+          in: query
+          name: targetToken
+          required: false
+          schema:
+            type: string
+        - description: 'Coordinates of starting point: latitude, longitude'
+          example: '41.822902,12.4057903'
+          in: query
+          name: fromCoordinates
+          required: true
+          schema:
+            type: string
+        - description: 'Coordinates of the arrival point: latitude, longitude'
+          example: '41.939445,12.5472503'
+          in: query
+          name: toCoordinates
+          required: true
+          schema:
+            type: string
+        - description: 'Attributes to be enriched on the target api, separated with commas'
+          example: 'wheelchair, shelter, tactile_paving, bench, bin, lit'
+          in: query
+          name: enrichAttributes
+          required: true
+          schema:
+            type: string
+        - description: API format
+          in: query
+          name: apiFormat
+          required: true
+          schema:
+            default: OSM
+            description: var 1
+            enum:
+              - GeoJson
+              - OSM
+              - GTFS
+            type: string
+        - description: API full url
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](41.822902,12.4057903,41.939445,12.5472503);out%20meta;'
+          in: query
+          name: apiUrl
+          required: true
+          schema:
+            type: string
+        - description: Source API authorization token
+          in: query
+          name: sourceToken
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - navitia-controller
+  /api/v1/navitia/getLines:
+    get:
+      operationId: getLines
+      parameters:
+        - description: Navitia API authorization token
+          example: 55af740c-e0e9-4f2b-9387-3bb81a8c7bd4
+          in: query
+          name: targetToken
+          required: false
+          schema:
+            type: string
+        - description: 'Coordinates of starting point: latitude, longitude'
+          example: '41.822902,12.4057903'
+          in: query
+          name: fromCoordinates
+          required: true
+          schema:
+            type: string
+        - description: 'Coordinates of the arrival point: latitude, longitude'
+          example: '41.939445,12.5472503'
+          in: query
+          name: toCoordinates
+          required: true
+          schema:
+            type: string
+        - description: 'Attributes to be enriched on the target api, separated with commas'
+          example: 'wheelchair, shelter, tactile_paving, bench, bin, lit'
+          in: query
+          name: enrichAttributes
+          required: true
+          schema:
+            type: string
+        - description: API format
+          in: query
+          name: apiFormat
+          required: true
+          schema:
+            default: OSM
+            description: var 1
+            enum:
+              - GeoJson
+              - OSM
+              - GTFS
+            type: string
+        - description: API full url
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](41.822902,12.4057903,41.939445,12.5472503);out%20meta;'
+          in: query
+          name: apiUrl
+          required: true
+          schema:
+            type: string
+        - description: Source API authorization token
+          in: query
+          name: sourceToken
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - navitia-controller
+  /api/v1/osm/convertOsmApiToGeoJson:
+    get:
+      operationId: convertOsmApiToGeoJson
+      parameters:
+        - description: Target api url (Only OSM api format is supported!)
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](48.8345631,2.2433581,48.8775033,2.4400646);out%20meta;'
+          in: query
+          name: osmApiUrl
+          required: true
+          schema:
+            type: string
+        - description: API authorization token
+          in: query
+          name: token
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - osm-controller
+  /api/v1/osm/convertOsmFileToGeoJson:
+    post:
+      operationId: convertOsmFileToGeoJson
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                OSM file:
+                  format: binary
+                  type: string
+              required:
+                - OSM file
+              type: object
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - osm-controller
+  /api/v1/osm/enrichOsmApi:
+    get:
+      operationId: enrichOsmApi
+      parameters:
+        - description: 'Attributes to be enriched on the target api, separated with commas'
+          example: 'wheelchair, shelter, tactile_paving, bench, bin, lit'
+          in: query
+          name: enrichAttributes
+          required: true
+          schema:
+            type: string
+        - description: Url of the target API to be enriched
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](48.8345631,2.2433581,48.8775033,2.4400646);out%20meta;'
+          in: query
+          name: targetApiUrl
+          required: true
+          schema:
+            type: string
+        - description: Url of the source API to be used for enrichment
+          example: 'https://overpass.kumi.systems/api/interpreter?data=[out:json];node[highway=bus_stop](48.8345631,2.2433581,48.8775033,2.4400646);out%20meta;'
+          in: query
+          name: sourceApiUrl
+          required: true
+          schema:
+            type: string
+        - description: source API format
+          in: query
+          name: apiFormat
+          required: true
+          schema:
+            default: OSM
+            description: var 1
+            enum:
+              - GeoJson
+              - OSM
+              - GTFS
+            type: string
+        - description: Target API authorization token
+          in: query
+          name: targetToken
+          required: false
+          schema:
+            type: string
+        - description: Source API authorization token
+          in: query
+          name: sourceToken
+          required: false
+          schema:
+            type: string
+      responses:
+        '429':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Too Many Requests
+      tags:
+        - osm-controller
+components: {}

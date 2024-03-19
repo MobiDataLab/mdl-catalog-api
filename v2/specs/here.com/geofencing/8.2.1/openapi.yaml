@@ -1,0 +1,317 @@
+openapi: 3.0.3
+servers:
+  - url: 'https://geofencing.hereapi.com'
+info:
+  description: Geofence asset positions against HERE Map objects or custom fence objects
+  license:
+    name: HERE Documentation License
+    url: 'https://legal.here.com/en-gb/terms/documentation-license'
+  termsOfService: 'http://developer.here.com/terms-conditions'
+  title: Geofencing
+  version: 8.2.1
+  x-apisguru-categories:
+    - location
+    - geofencing
+  x-document-meta-data:
+    copyright: © 2023 HERE Europe B.V.
+    date-created: '2023-03-01T14:04:34+00:00'
+    document-id: 90d80899-505f-4735-ab91-4bfd2ee6df04
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png'
+  x-origin:
+    - format: openapi
+      url: 'https://developer.here.com/documentation/geofencing/swagger/geofencing.json'
+      version: '3.0'
+  x-preferred: true
+  x-providerName: here.com
+  x-serviceName: geofencing
+tags:
+  - description: The HERE Geofencing API can geofence asset positions against HERE Map objects or custom fence objects
+    name: Geofencing V8
+paths:
+  /v8/geofence:
+    get:
+      description: 'Simple and fast search for geometries on HERE Map Content layers, extensible with custom geometry layers'
+      operationId: geofenceUsingGET_1
+      parameters:
+        - description: app_id
+          in: query
+          name: app_id
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: app_code
+          in: query
+          name: app_code
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Comma separated list of layers to be searched. Layer names are not case sensitive. Both custom layers and Map Attribute layers are supported. Map Attribute layers divided by functional class, like ROAD_GEOM_FC1 ... FC5 can be selected by N, e.g. ROAD_GEOM_FCN. The maximum length of a layer name and the permitted characters can be looked up up in the service via /serviceconfiguration.json"'
+          in: query
+          name: layers
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: "Spatial filtering for multi layer search, supported is 'assetPositions'. Each assset 'point' should have attributes 'lat', 'lon', 'layer' and 'searchRadius'. The format is json structure with these attributes for each asset 'point'. It should be URL encoded when specified as part of GET request, else in json format for POST request. \r\n Example: assetPositions:{\"point\": [{ \"lat\" : 41.9101, \"lon\" : 12.5021, \"layer\" : \"ROAD_GEOM_FC3\", \"searchRadius\" : 100 },{ \"lat\" : 42.0299, \"lon\" : 12.6932, \"layer\" : \"ROAD_GEOM_FC5\", \"searchRadius\" : 200 }]}"
+          in: query
+          name: in
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: "A SQL expression being evaluated for each geometry matching search query.\r\nColumns value for the geometry are available as defined variables.\r\nWhen specified, only geometries where expression evaluates to true will be returned.\r\nSupport SQL filter operators are: '=', '!=', '>', '<', 'AND', 'OR', 'LIKE'.\r\nExample: filter=RATING > 3 AND NAME != 'MyPlace23' AND NAME LIKE 'FOOD%' \r\nParameter value must be url encoded when using special characters.\r\nThis filter expression is applied to all geometries, so it can become slow for big layers.\r\nTo avoid service overload, filter expressions must not exceed 100 characters of text."
+          in: query
+          name: filter
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: When set to 1 then meta info is returned in the response. The default value is 1.
+          in: query
+          name: meta
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Semicolon separated list of column names (in uppercase) to specify which attributes shall appear in the result. If the request specifies several layers, then pass this for each layer as a comma separated list. Default = all.'
+          in: query
+          name: attributes
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Optional. Map within to look for the layer. Default: Look into the default map.'
+          in: query
+          name: map_name
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MapAttributesV8Response'
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Search for geometries on HERE Map Content layers
+      tags:
+        - Geofencing V8
+    post:
+      description: 'Simple and fast search for geometries on HERE Map Content layers, extensible with custom geometry layers'
+      operationId: geofencePostUsingPOST_1
+      parameters:
+        - description: app_id
+          in: query
+          name: app_id
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: app_code
+          in: query
+          name: app_code
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: Comma separated list of layer names to be searched. Layer names are not case sensitive. The maximum length of a layer name and the permitted characters can be looked up up in the service via /serviceconfiguration.json
+          in: query
+          name: layers
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: "Spatial filtering for multi layer search, supported is 'assetPositions'. Each assset 'point' should have attributes 'lat', 'lon', 'layer' and 'searchRadius'. The format is json structure with these attributes for each asset 'point'. It should be URL encoded when specified as part of GET request, else in json format for POST request. \r\n Example: assetPositions:{\"point\": [{ \"lat\" : 41.9101, \"lon\" : 12.5021, \"layer\" : \"ROAD_GEOM_FC3\", \"searchRadius\" : 100 },{ \"lat\" : 42.0299, \"lon\" : 12.6932, \"layer\" : \"ROAD_GEOM_FC5\", \"searchRadius\" : 200 }]}"
+          in: query
+          name: in
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: "A SQL expression being evaluated for each geometry matching search query.\r\nColumns value for the geometry are available as defined variables.\r\nWhen specified, only geometries where expression evaluates to true will be returned.\r\nSupport SQL filter operators are: '=', '!=', '>', '<', 'AND', 'OR', 'LIKE'.\r\nExample: filter=RATING > 3 AND NAME != 'MyPlace23' AND NAME LIKE 'FOOD%' \r\nParameter value must be url encoded when using special characters.\r\nThis filter expression is applied to all geometries, so it can become slow for big layers.\r\nTo avoid service overload, filter expressions must not exceed 100 characters of text."
+          in: query
+          name: filter
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: When set to 1 then meta info is returned in the response. The default value is 1.
+          in: query
+          name: meta
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Semicolon separated list of column names (in uppercase) to specify which attributes shall appear in the result. If the request specifies several layers, then pass this for each layer as a comma separated list. Default = all.'
+          in: query
+          name: attributes
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: 'Optional. Map within to look for the layer. Default: Look into the default map.'
+          in: query
+          name: map_name
+          required: false
+          schema:
+            type: string
+          style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: byte
+              type: string
+          application/json;charset=UTF-8:
+            schema:
+              format: byte
+              type: string
+          text/plain;charset=UTF-8:
+            schema:
+              format: byte
+              type: string
+      responses:
+        '200':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MapAttributesV8Response'
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '415':
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MapAttributesV8Response'
+          description: 'Bad mediatype. Supported values: application/json, text/plain'
+      security:
+        - apiKey: []
+        - bearerTokenAuth: []
+      summary: Search for geometries on HERE Map Content layers
+      tags:
+        - Geofencing V8
+components:
+  schemas:
+    Geometry:
+      properties:
+        attributes:
+          additionalProperties:
+            type: string
+          description: Attribute/value map
+          type: object
+        distance:
+          format: double
+          type: number
+        geometry:
+          description: WKT string
+          type: string
+        id:
+          type: string
+        nearestLat:
+          format: double
+          type: number
+        nearestLon:
+          format: double
+          type: number
+      title: Geometry
+      type: object
+    MapAttributesV8Response:
+      properties:
+        Tiles:
+          items:
+            $ref: '#/components/schemas/TileResponseV8'
+          type: array
+        geometries:
+          items:
+            $ref: '#/components/schemas/Geometry'
+          type: array
+        meta:
+          items:
+            $ref: '#/components/schemas/SearchMetaResponse'
+          type: array
+      title: MapAttributesV8Response
+      type: object
+    MetaResponseV8:
+      properties:
+        layerName:
+          type: string
+        level:
+          format: int32
+          type: integer
+        mapRegion:
+          type: string
+        mapRelease:
+          type: string
+        tileId:
+          format: int32
+          type: integer
+      title: MetaResponseV8
+      type: object
+    SearchMetaResponse:
+      properties:
+        lastUpdateTimeStamp:
+          description: last modification milli second timestamp
+          format: int64
+          type: integer
+        layerId:
+          description: the layername the geometry belongs to
+          type: string
+        search:
+          description: the search id in the request where these result geometries belong to
+          type: string
+      title: SearchMetaResponse
+      type: object
+    TileResponseV8:
+      properties:
+        meta:
+          $ref: '#/components/schemas/MetaResponseV8'
+        rows:
+          items:
+            $ref: '#/components/schemas/TileRow'
+          type: array
+      title: TileResponseV8
+      type: object
+    TileRow:
+      properties:
+        columns:
+          items:
+            type: string
+          type: array
+      title: TileRow
+      type: object
+  securitySchemes:
+    apiKey:
+      in: query
+      name: apiKey
+      type: apiKey
+    bearerTokenAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http

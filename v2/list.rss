@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>APIs.guru OpenAPI directory RSS feed</title>
+    <link>https://mobidatalab.github.io/mdl-catalog-api/v2/list.rss</link>
+    <atom:link rel="self" href="https://mobidatalab.github.io/mdl-catalog-api/v2/list.rss" type="application/rss+xml"/>
+    <description>APIs.guru OpenAPI directory RSS feed</description>
+    <webMaster>huyminh.nguyen@here.com (Mike Ralphson)</webMaster>
+    <pubDate>Tue, 19 Mar 2024 13:51:50 GMT</pubDate>
+    <generator>openapi-directory https://github.com/apis-guru/openapi-directory</generator>
+    <item>
+      <title>Maps</title>
+      <link>https://carto.com/developers/maps-api/reference/swagger.yaml</link>
+      <description>Introduction</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">carto.com:maps</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_assets-global.website-files.com_6345207a1b18e581fcf67604_636a830d6e0e097a6f760262_logo-desktop-negative.svg" length="15026" type="image/svg+xml"/>
+    </item>
+    <item>
+      <title>Explore</title>
+      <link>https://data.eindhoven.nl/api/explore/v2.0/swagger.json</link>
+      <description>The Opendatasoft Explore API v2 is organized around REST. It provides access to all the data available through the platform in a coherent, hierarchical way.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">eindhoven.nl:eindhoven-open-data</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_s3-eu-west-1.amazonaws.com_aws-ec2-eu-1-opendatasoft-staticfileset_eindhoven_logo.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>copernicus.eu</title>
+      <link>https://www.copernicus.eu/en/access-data</link>
+      <description>copernicus.eu</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">europe:copernicus.eu</guid>
+      <pubDate>Invalid Date</pubDate>
+      <enclosure url="https://www.copernicus.eu/themes/custom/copernicus/logo.svg" length="15026" type="image/svg+xml"/>
+    </item>
+    <item>
+      <title>GraphHopper Directions</title>
+      <link>https://docs.graphhopper.com/</link>
+      <description>With the GraphHopper Directions API you can integrate A-to-B route planning, turn-by-turn navigation,</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">graphhopper.io</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_docs.graphhopper.com_graphhopper-logo.svg" length="15026" type="image/svg+xml"/>
+    </item>
+    <item>
+      <title>HERE Fleet Telematics</title>
+      <link>https://developer.here.com/documentation/fleet-telematics/swagger/swagger.json</link>
+      <description>HERE Fleet Telematics API comprises the 4 HERE Location Services &apos;Geofencing&apos;, &apos;Map Attributes&apos;, &apos;Route Matching&apos; and &apos;Waypoints Sequence&apos;. It supersedes the services CLE, CRE, GFE, GFE on Maps, PDE, RME, TCE, WSE and Advanced Datasets.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:fleet-telematics</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Geocoding and Search API v7</title>
+      <link>https://developer.here.com/documentation/geocoding-search-api/swagger/open-search-v7-external-spec.json</link>
+      <description>This document describes the Geocoding and Search API.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:geocoding-search</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Geofencing</title>
+      <link>https://developer.here.com/documentation/geofencing/swagger/geofencing.json</link>
+      <description>Geofence asset positions against HERE Map objects or custom fence objects</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:geofencing</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Intermodal Routing</title>
+      <link>https://developer.here.com/documentation/intermodal-routing/swagger/intermodal_api.yaml</link>
+      <description>Intermodal Routing is a REST API that offers an innovative and smart routing</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:intermodal-routing</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Isoline Routing API v8</title>
+      <link>https://developer.here.com/documentation/isoline-routing-api/swagger/v8.yaml</link>
+      <description>Isoline Routing is a service that offers to answer the question,</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:isoline-routing</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Map Attributes</title>
+      <link>https://developer.here.com/documentation/content-map-attributes/swagger/advanceddatasets.json</link>
+      <description>Simple and fast access to the rich HERE Map content, seamlessly extensible by your own map data</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:map-attributes</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Matrix Routing API v8</title>
+      <link>https://developer.here.com/documentation/matrix-routing-api/swagger/spec.yaml</link>
+      <description>HERE Matrix Routing service calculates the travel duration and/or distances among multiple origins and destinations through both synchronous and asynchronous API calls.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:matrix-routing</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>HERE Network Positioning API v2</title>
+      <link>https://developer.here.com/documentation/positioning-api/swagger/positioning-v2-external-spec.yaml</link>
+      <description>Positioning API accepts requests with radio network measurements and replies with corresponding location estimate. For more details and examples, see Developer&apos;s Guide. Cellular measurements are given in terms defined in 3GPP and 3GGP2 specifications, see the corresponsing documentation at http://www.3gpp.org.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:positioning</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>HERE Raster Tile API v3</title>
+      <link>https://developer.here.com/documentation/raster-tile-api/swagger/rastertiles-v3-openapi.yml</link>
+      <description>The HERE Raster Tile v3 is a REST API that allows you to request map tile images for all regions in the world.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:rastertiles</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Routing API v8</title>
+      <link>https://developer.here.com/documentation/routing-api/swagger/v8.yaml</link>
+      <description>A location service providing customizable route calculations for a variety of vehicle types as well as pedestrian modes.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:routing</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>HERE Tracking</title>
+      <link>https://developer.here.com/documentation/tracking/swagger/swagger.json</link>
+      <description>HERE Tracking is a cloud product designed to address location tracking problems for a wide range of Location IoT industry verticals.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:tracking</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Traffic API v7</title>
+      <link>https://developer.here.com/documentation/traffic-api/swagger/traffic-v7-openapi.yml</link>
+      <description>The HERE Traffic API is a REST API that provides traffic flow and incidents information.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:traffic</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Public Transit</title>
+      <link>https://developer.here.com/documentation/public-transit/swagger/transit_api.yaml</link>
+      <description>Public Transit is a set of three REST APIs that provides public transit</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:transit</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Vector Tile</title>
+      <link>https://developer.here.com/documentation/vector-tiles-api/swagger/vectortiles-v2-openapi.yml</link>
+      <description>The Vector Tile API allows you to request tiles containing vector data using content from the HERE platform. Our vector tiles use Web Mercator projection and follow the Vector Tile Specification. This format contains geometries, such as points and lines, that define polygons, labels, such as road names or city names, and other kinds of data that are typically passed to a renderer to draw a map. The tiles are optimized to be visualized as 512 screen pixels per tile. The Vector Tile API supports the standard HTTP status codes</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:vectortiles</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Waypoints Sequence</title>
+      <link>https://developer.here.com/documentation/routing-waypoints/swagger/waypointssequence.json</link>
+      <description>Compute the best Sequence for Waypoints (Travelling Salesman Problem)</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">here.com:waypoints-routing</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>www.amat-mi.it</title>
+      <link>https://www.amat-mi.it/it/servizi/pubblicazione-orari-trasporto-pubblico-locale-formato-gtfs/</link>
+      <description>www.amat-mi.it</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">italy:milan:amat-mi.it</guid>
+      <pubDate>Invalid Date</pubDate>
+      <enclosure url="https://www.amat-mi.it/moduli/output_immagine.php?id=75" length="15026" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>dati.comune.milano.it</title>
+      <link>https://dati.comune.milano.it/callgroup/32bbfe8c-ca16-4ec3-bd6f-c12380ca3a11</link>
+      <description>dati.comune.milano.it</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">italy:milan:dati.comune.milano.it</guid>
+      <pubDate>Invalid Date</pubDate>
+      <enclosure url="https://dati.comune.milano.it/base/images/logo_milano.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>dati.mit.gov.it</title>
+      <link>https://dati.mit.gov.it/catalog/dataset/</link>
+      <description>dati.mit.gov.it</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">italy:milan:dati.mit.gov.it</guid>
+      <pubDate>Invalid Date</pubDate>
+      <enclosure url="http://dati.mit.gov.it/catalog/uploads/admin/2022-12-19-103459.915797logomit20221219.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>opendata-milano</title>
+      <link>https://abahgat.github.io/opendata-milano/</link>
+      <description>opendata-milano</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">italy:milan:opendata-milano</guid>
+      <pubDate>Invalid Date</pubDate>
+      <enclosure url="" length="15026" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>Anonymization Processor</title>
+      <link>https://services.mobidatalab.eu:8443/anonymisation/openapi.json</link>
+      <description>MobiDataLab Anonymization API</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">mobidatalab.eu:anonymization-processor</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg" length="15026" type="image/svg+xml"/>
+    </item>
+    <item>
+      <title>Geographical Enrichment API</title>
+      <link>https://processor1.francecentral.cloudapp.azure.com/v3/api-docs</link>
+      <description>MobiDataLab Geographical Enrichment Processor</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">mobidatalab.eu:geographical-enrichment-api</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg" length="15026" type="image/svg+xml"/>
+    </item>
+    <item>
+      <title>Semantic Enrichment Processor</title>
+      <link>http://semantic.westeurope.cloudapp.azure.com:8000/openapi.json</link>
+      <description>MobiDataLab Semantic Enrichment API</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">mobidatalab.eu:semantic-enrichment-processor</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg" length="15026" type="image/svg+xml"/>
+    </item>
+    <item>
+      <title>navitia</title>
+      <link>https://api.navitia.io/v1/schema</link>
+      <description>navitia.io is the open API for building cool stuff with mobility data. It provides the following services</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">navitia.io</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_doc.navitia.io_images_logo-97f24197.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Openrouteservice</title>
+      <link>https://openrouteservice.org/wp-json/ors-api/v1/api-doc/source/V2</link>
+      <description>This is the openrouteservice API documentation for ORS Core-Version 7.1.1. Documentations for older Core-Versions can be rendered with the Swagger-Editor.</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">openrouteservice.org</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_openrouteservice.org_dev_static_img_logo@2x.1368651.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Valhalla</title>
+      <link>https://valhalla.github.io/valhalla/</link>
+      <description>Valhalla is an open source routing engine and accompanying libraries for use with OpenStreetMap data. Valhalla also includes tools like time+distance matrix computation, isochrones, elevation sampling, map matching and tour optimization (Travelling Salesman).</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">openstreetmap.de:valhalla</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_valhalla.github.io_valhalla_images_valhalla.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Maps</title>
+      <link>https://developer.tomtom.com/system/files/swagger_models/maps_api_0.yaml</link>
+      <description>The Maps API web services suite offers the following APIs:</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">tomtom.com:maps</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_twitter.com_TomTom_profile_image.jpeg" length="15026" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>Routing</title>
+      <link>https://developer.tomtom.com/system/files/swagger_models/routing_api.yaml</link>
+      <description>Routing consists of the following service:</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">tomtom.com:routing</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_twitter.com_TomTom_profile_image.jpeg" length="15026" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>Search</title>
+      <link>https://developer.tomtom.com/system/files/swagger_models/search_api.yaml</link>
+      <description>Search API is a RESTful API that allows developers to run a single line fuzzy search for addresses and POIs. Search API returns the latitude/longitude of a specific address, cross street, geographic feature, or point of interest (POI).</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">tomtom.com:search</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_twitter.com_TomTom_profile_image.jpeg" length="15026" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>TransitFeeds</title>
+      <link>https://transitfeeds.com/api/transitfeeds-api.yaml</link>
+      <description>API to view feed information and download feeds from TransitFeeds.com</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">transitfeeds.com</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_transitfeeds.com_img_openmobilitydata_logo.png" length="15026" type="image/png"/>
+    </item>
+    <item>
+      <title>Datavindplaats</title>
+      <link>https://datavindplaats.api.vlaanderen.be/docs/v1/swagger.json</link>
+      <description>Datavindplaats</description>
+      <category>APIs</category>
+      <guid isPermaLink="false">vlaanderen.be</guid>
+      <pubDate>Tue, 19 Mar 2024 13:51:04 GMT</pubDate>
+      <enclosure url="https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_assets.vlaanderen.be_image_upload_widgets_vlaamse-overheid.svg" length="15026" type="image/svg+xml"/>
+    </item>
+  </channel>
+</rss>

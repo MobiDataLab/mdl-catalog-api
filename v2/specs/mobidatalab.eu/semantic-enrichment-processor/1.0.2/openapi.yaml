@@ -1,0 +1,405 @@
+openapi: 3.0.2
+servers:
+  - url: 'https://services.mobidatalab.eu:8443/semantic'
+  - description: Custom server
+    url: '{server}'
+    variables:
+      server:
+        default: 'http://semantic.westeurope.cloudapp.azure.com:8000/'
+        description: server
+info:
+  contact:
+    url: 'https://github.com/MobiDataLab/mdl-semantic-enrichment'
+  description: MobiDataLab Semantic Enrichment API
+  title: Semantic Enrichment Processor
+  version: 1.0.2
+  x-apisguru-categories:
+    - semantic
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_mobidatalab.eu_wp-content_uploads_2021_06_logo.svg'
+  x-origin:
+    - format: openapi
+      url: 'http://semantic.westeurope.cloudapp.azure.com:8000/openapi.json'
+      version: '3.0'
+  x-preferred: true
+  x-providerName: mobidatalab.eu
+  x-serviceName: semantic-enrichment-processor
+paths:
+  /semantic/Enrichment/:
+    get:
+      description: This path operation returns a RDF knowledge graph. The result is returned in a Turtle (.ttl) file.
+      operationId: enrich_semantic_Enrichment__get
+      parameters:
+        - description: Task ID associated with a previously done POST request.
+          in: query
+          name: task_id
+          required: true
+          schema:
+            description: Task ID associated with a previously done POST request.
+            title: Task Id
+            type: string
+      responses:
+        '200':
+          content:
+            application/octet-stream: {}
+          description: Returns a RDF knowledge graph stored in Turtle (.ttl) format.
+        '404':
+          content:
+            application/json: {}
+          description: Task is currently being processed or does not exist.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+        '500':
+          content:
+            application/json: {}
+          description: Some error occurred during the semantic enrichment. Check the correctness of the datasets provided in input.
+      summary: Enrich
+    post:
+      description: This path operation initiates the semantic enrichment of a dataset of trajectories. It returns a task id that can be later used to retrieve a RDF knowledge graph containing the enriched trajectories.
+      operationId: enrich_semantic_Enrichment__post
+      parameters:
+        - description: Boolean value specifying if the move segments should be augmented with the estimated transportation means.
+          in: query
+          name: move_enrichment
+          required: true
+          schema:
+            description: Boolean value specifying if the move segments should be augmented with the estimated transportation means.
+            title: Move Enrichment
+            type: boolean
+        - description: Maximum distance (in meters) beyond which a POI won't be associated with a stop segment.
+          in: query
+          name: max_dist
+          required: false
+          schema:
+            default: 50
+            description: Maximum distance (in meters) beyond which a POI won't be associated with a stop segment.
+            title: Max Dist
+            type: integer
+        - description: 'DBSCAN parameter: used to cluster stop segments (and thus find systematic stops). It represents the distance (in meters) below which a stop can be included in an existing cluster.'
+          in: query
+          name: dbscan_epsilon
+          required: false
+          schema:
+            default: 50
+            description: 'DBSCAN parameter: used to cluster stop segments (and thus find systematic stops). It represents the distance (in meters) below which a stop can be included in an existing cluster.'
+            title: Dbscan Epsilon
+            type: integer
+        - description: 'DBSCAN parameter: minimum size a cluster of stops must have to be considered a cluster of systematic stops.'
+          in: query
+          name: systematic_threshold
+          required: false
+          schema:
+            default: 5
+            description: 'DBSCAN parameter: minimum size a cluster of stops must have to be considered a cluster of systematic stops.'
+            title: Systematic Threshold
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_enrich_semantic_Enrichment__post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePost'
+          description: A task has been successfully queued.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Enrich
+  /semantic/Preprocessing/:
+    get:
+      description: 'This path operation returns a dataset of preprocessed trajectories.If ready, the result is returned as a pandas DataFrame, stored in a Parquet file.'
+      operationId: preprocess_semantic_Preprocessing__get
+      parameters:
+        - description: Task ID associated with a previously done POST request.
+          in: query
+          name: task_id
+          required: true
+          schema:
+            description: Task ID associated with a previously done POST request.
+            title: Task Id
+            type: string
+      responses:
+        '200':
+          content:
+            application/octet-stream: {}
+          description: 'Return a pandas DataFrame, stored in Parquet, containing the preprocessed trajectory dataset.'
+        '404':
+          content:
+            application/json: {}
+          description: Task is currently being processed or does not exist.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+        '500':
+          content:
+            application/json: {}
+          description: Some error occurred during the preprocessing. Check the correctness of the trajectory dataset being provided in input.
+      summary: Preprocess
+    post:
+      description: This path operation initiates the preprocessing of a dataset of trajectories. It returns a task id that can be later used to retrieve a dataset of preprocessed trajectories.
+      operationId: preprocess_semantic_Preprocessing__post
+      parameters:
+        - description: Minimum number of samples a trajectory must have to be considered.
+          in: query
+          name: min_num_samples
+          required: false
+          schema:
+            default: 1500
+            description: Minimum number of samples a trajectory must have to be considered.
+            title: Min Num Samples
+            type: integer
+        - description: Maximum speed a sample can have in a trajectory (in km/h).
+          in: query
+          name: max_speed
+          required: false
+          schema:
+            default: 300
+            description: Maximum speed a sample can have in a trajectory (in km/h).
+            title: Max Speed
+            type: number
+        - description: Boolean value determining whether the trajectories should be compressed. This can likely speed up subsequent enrichment steps.
+          in: query
+          name: compress_trajectories
+          required: true
+          schema:
+            description: Boolean value determining whether the trajectories should be compressed. This can likely speed up subsequent enrichment steps.
+            title: Compress Trajectories
+            type: boolean
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_preprocess_semantic_Preprocessing__post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePost'
+          description: A task has been successfully queued.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Preprocess
+  /semantic/Segmentation/:
+    get:
+      description: 'If the task execution ended successfully, the operation returns the pandas DataFrames of the stops and the moves, both translated in JSON format.'
+      operationId: segment_semantic_Segmentation__get
+      parameters:
+        - description: Task ID associated with a previously done POST request.
+          in: query
+          name: task_id
+          required: true
+          schema:
+            description: Task ID associated with a previously done POST request.
+            title: Task Id
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentationResults'
+          description: 'Returns the two pandas DataFrames containing the stop and move segments, in JSON format.'
+        '404':
+          content:
+            application/json: {}
+          description: Task is still being processed or does not exist.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+        '500':
+          content:
+            application/json: {}
+          description: Some error occurred during the trajectory segmentation. Check the correctness of thetrajectory dataset being provided in input.
+      summary: Segment
+    post:
+      description: This path operation initiates the segmentation of a dataset of trajectories. It returns a task id that can be later used to retrieve the stop and move datasets.
+      operationId: segment_semantic_Segmentation__post
+      parameters:
+        - description: Minimum duration of a stop (in minutes).
+          in: query
+          name: min_duration_stop
+          required: false
+          schema:
+            default: 10
+            description: Minimum duration of a stop (in minutes).
+            title: Min Duration Stop
+            type: integer
+        - description: Maximum radius a stop can have (in kilometers)
+          in: query
+          name: max_stop_radius
+          required: false
+          schema:
+            default: 0.2
+            description: Maximum radius a stop can have (in kilometers)
+            title: Max Stop Radius
+            type: number
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_segment_semantic_Segmentation__post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePost'
+          description: A task has been successfully queued.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Segment
+components:
+  schemas:
+    Body_enrich_semantic_Enrichment__post:
+      properties:
+        file_moves:
+          description: 'pandas DataFrame, stored in Parquet format, containing the move segment dataset.'
+          format: binary
+          title: File Moves
+          type: string
+        file_pois:
+          description: 'GeoPandas DataFrame, stored in Parquet format, containing the POI dataset. Its content must be structured according to the GeoPandas DataFrames downloaded from OpenStreetMap via the OSMnx library.'
+          format: binary
+          title: File Pois
+          type: string
+        file_social:
+          description: 'pandas DataFrame, stored in Parquet format, containing the social media post dataset.'
+          format: binary
+          title: File Social
+          type: string
+        file_stops:
+          description: 'pandas DataFrame, stored in Parquet format, containing the stop segment dataset.'
+          format: binary
+          title: File Stops
+          type: string
+        file_trajectories:
+          description: 'pandas DataFrame, stored in Parquet format, containing the trajectory dataset.'
+          format: binary
+          title: File Trajectories
+          type: string
+        file_weather:
+          description: 'pandas DataFrame, stored in Parquet format, containing the historical weather dataset.'
+          format: binary
+          title: File Weather
+          type: string
+      required:
+        - file_trajectories
+        - file_moves
+        - file_stops
+        - file_pois
+        - file_social
+        - file_weather
+      title: Body_enrich_semantic_Enrichment__post
+      type: object
+    Body_preprocess_semantic_Preprocessing__post:
+      properties:
+        file_trajectories:
+          description: 'pandas DataFrame, stored in a Parquet file, containing a dataset of trajectories.'
+          format: binary
+          title: File Trajectories
+          type: string
+      required:
+        - file_trajectories
+      title: Body_preprocess_semantic_Preprocessing__post
+      type: object
+    Body_segment_semantic_Segmentation__post:
+      properties:
+        file_trajectories:
+          description: 'pandas DataFrame, stored in a Parquet file, containing a dataset of trajectories.'
+          format: binary
+          title: File Trajectories
+          type: string
+      required:
+        - file_trajectories
+      title: Body_segment_semantic_Segmentation__post
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    ResponsePost:
+      properties:
+        message:
+          description: Message returned by the server.
+          title: Message
+          type: string
+        task_id:
+          description: Task ID associated with the request (if response is successful).
+          title: Task Id
+          type: string
+      required:
+        - message
+        - task_id
+      title: ResponsePost
+      type: object
+    SegmentationResults:
+      properties:
+        moves:
+          description: pandas DataFrame (translated in JSON) containing the move segments.
+          title: Moves
+          type: object
+        stops:
+          description: pandas DataFrame (translated in JSON) containing the stop segments.
+          title: Stops
+          type: object
+      required:
+        - stops
+        - moves
+      title: SegmentationResults
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+      type: object

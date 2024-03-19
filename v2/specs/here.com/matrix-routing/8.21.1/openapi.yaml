@@ -1,0 +1,1645 @@
+openapi: 3.0.2
+servers:
+  - url: 'https://matrix.router.hereapi.com/v8'
+info:
+  description: |
+    HERE Matrix Routing service calculates the travel duration and/or distances among multiple origins and destinations through both synchronous and asynchronous API calls.
+  title: Matrix Routing API v8
+  version: 8.21.1
+  x-apisguru-categories:
+    - location
+    - routing
+  x-document-meta-data:
+    copyright: © 2023 HERE Europe B.V.
+    date-created: '2023-02-22T05:37:31+00:00'
+    document-id: b72049fc-f0e1-4ead-9c24-915d3f451fd3
+  x-logo:
+    backgroundColor: '#FFFFFF'
+    url: 'https://mobidatalab.github.io/mdl-catalog-api/v2/cache/logo/https_avatars.githubusercontent.com_u_2835506.png'
+  x-origin:
+    - format: openapi
+      url: 'https://developer.here.com/documentation/matrix-routing-api/swagger/spec.yaml'
+      version: '3.0'
+  x-preferred: true
+  x-providerName: here.com
+  x-serviceName: matrix-routing
+externalDocs:
+  description: Developer Guide and Release Notes
+  url: 'https://developer.here.com/documentation/matrix-routing-api'
+security:
+  - Bearer: []
+  - ApiKey: []
+tags:
+  - description: |
+      Calculation of routing matrices in one of the following modes:
+      * Flexible
+      * Region
+      * Profile
+
+      The values of the `regionDefinition` and `profile` parameters determine which mode is used.
+      The following table describes the capabilities and limitations of each mode.
+
+      | Mode     | regionDefinition parameter   | profile parameter provided?   | Custom Options & Time Awareness<br>(incl. live traffic) | Unlimited region                                                              | Matrix size limit<br>(synchronous) | Matrix size limit<br>(asynchronous) |
+      |----------|------------------------------|-------------------------------|---------------------------------------------------------|-------------------------------------------------------------------------------|------------------------------------|-------------------------------------|
+      | Flexible | `world`                      | no                            | yes                                                     | yes                                                                           | 15 x 100 or 100 x 1                | 15 x 100 or 100 x 1                 |
+      | Region   | one of:<ul><li>`circle`<li>`boundingBox`<li>`polygon`<li>`autoCircle`| no | yes                                        | no<br>origins and destinations must be within a region of max 400 km diameter | 500 x 500                          | 10,000 x 10,000                     |
+      | Profile  | `world`                      | yes                           | no                                                      | yes                                                                           | 500 x 500 or 1 x 2000 or 2000 x 1  | 10,000 x 10,000                     |
+
+      Note that the combination of specifying a `profile` along with a `regionDefinition` not equal to `world` is not allowed.
+
+      ### Synchronous vs. Asynchronous Requests
+      Matrix requests can be sychronous or asynchronous.
+      Use the `async` query parameter to indicate the request type. All 3 modes
+      are compatible with both sychronous and asynchronous requests.
+
+      Synchronous requests impose additional limitations on maximum matrix sizes (see table above).
+    name: matrix
+  - description: |
+      Supported predefined profiles for calculating matrices with routes of arbitrary length.
+    name: profile
+  - description: Status information and metadata about the service
+    name: service
+paths:
+  /health:
+    get:
+      description: Returns HTTP status code describing the health of the service.
+      operationId: getHealth
+      responses:
+        '200':
+          description: Service is healthy
+        '503':
+          description: Service is unhealthy
+      security: []
+      summary: Health status of the service
+      tags:
+        - service
+  /matrix:
+    post:
+      description: |
+        Calculates a routing matrix based on provided `origins` and `destinations`.
+
+        Response will be provided synchronously (see `200` response) or asynchronously (see `202` response)
+        depending on the `async` query parameter.
+
+        Travel times will be included by default i.e., when `matrixAttributes` parameter is
+        not specified. To return only distances or both of them, specify the
+        corresponding flags in `matrixAttributes`.
+
+        Maximum request size is 10 MiB (uncompressed).
+      operationId: postMatrix
+      parameters:
+        - in: query
+          name: async
+          schema:
+            default: true
+            description: |
+              Specifies whether the response will be provided synchronously (`false`) or asynchronously (`true`).
+              See Synchronous vs. Asynchronous Requests.
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Flexible mode (default transport mode):
+                value:
+                  destinations:
+                    - lat: 52.522
+                      lng: 13.4133
+                    - lat: 52.5163
+                      lng: 13.3777
+                  origins:
+                    - lat: 52.5309
+                      lng: 13.3849
+                    - lat: 52.5202
+                      lng: 13.373
+                  regionDefinition:
+                    type: world
+              Flexible mode (truck with poisonous goods):
+                value:
+                  destinations:
+                    - lat: 52.522
+                      lng: 13.4133
+                    - lat: 52.5163
+                      lng: 13.3777
+                  origins:
+                    - lat: 52.5309
+                      lng: 13.3849
+                    - lat: 52.5202
+                      lng: 13.373
+                  regionDefinition:
+                    type: world
+                  transportMode: truck
+                  truck:
+                    shippedHazardousGoods:
+                      - poison
+              Profile mode (car fastest):
+                value:
+                  destinations:
+                    - lat: 51.3397
+                      lng: 12.3731
+                    - lat: 51.0504
+                      lng: 13.7373
+                  origins:
+                    - lat: 52.5309
+                      lng: 13.3849
+                    - lat: 54.0924
+                      lng: 12.0991
+                  profile: carFast
+                  regionDefinition:
+                    type: world
+              Region mode (auto-circle with 25 km margin):
+                value:
+                  destinations:
+                    - lat: 52.522
+                      lng: 13.4133
+                    - lat: 52.5163
+                      lng: 13.3777
+                  origins:
+                    - lat: 52.5309
+                      lng: 13.3849
+                    - lat: 52.5202
+                      lng: 13.373
+                  regionDefinition:
+                    margin: 25000
+                    type: autoCircle
+              Region mode (circle with traffic departure time):
+                value:
+                  departureTime: '2020-10-19T08:00:00-01:00'
+                  destinations:
+                    - lat: 52.522
+                      lng: 13.4133
+                    - lat: 52.5163
+                      lng: 13.3777
+                  origins:
+                    - lat: 52.5309
+                      lng: 13.3849
+                    - lat: 52.5202
+                      lng: 13.373
+                  regionDefinition:
+                    center:
+                      lat: 52.5309
+                      lng: 13.3849
+                    radius: 25000
+                    type: circle
+            schema:
+              $ref: '#/components/schemas/MatrixRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/MatrixResponse'
+        '202':
+          content:
+            application/json:
+              example:
+                matrixId: bc79a808-dbac-4e49-88f2-27ec66a473ef
+                status: accepted
+                statusUrl: /v8/matrix/bc79a808-dbac-4e49-88f2-27ec66a473ef/status
+              schema:
+                $ref: '#/components/schemas/MatrixStatus'
+          description: Matrix calculation was successfully submitted.
+        '400':
+          content:
+            application/json:
+              example:
+                action: Reduce region diameter to maximum of 400000 m.
+                cause: Region size exceeds limit of maximum diameter 400000 m
+                code: E601202
+                correlationId: bc79a808-dbac-4e49-88f2-27ec66a473ef
+                status: 400
+                title: Input data failed validation
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Matrix request contains invalid parameters.
+        '401':
+          content:
+            application/json:
+              example:
+                error: Unauthorized
+                error_description: Token Validation Failure - invalid time in token
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Authentication failed.
+        '403':
+          content:
+            application/json:
+              example:
+                error: Forbidden
+                error_description: Insufficient permissions
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Access denied.
+        '413':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Payload too large. We support max. 10 MB (uncompressed).
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Rate limit exceeded.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Unexpected service error.
+      summary: Submit matrix for calculation
+      tags:
+        - matrix
+  '/matrix/{matrixId}':
+    get:
+      operationId: getMatrix
+      parameters:
+        - description: This header should be set as the result will always be a compressed stream.
+          in: header
+          name: Accept-Encoding
+          required: true
+          schema:
+            enum:
+              - gzip
+            type: string
+        - description: Matrix ID obtained upon successful submission
+          in: path
+          name: matrixId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/MatrixResponse'
+        '303':
+          description: |
+            Redirect to a self-signed URL of an AWS S3 resource containing the same content as
+            described in the `200` response.
+        '400':
+          content:
+            application/json:
+              example:
+                action: Check that the provided matrix ID is in the UUID v4 format.
+                cause: invalid matrix ID
+                code: E601106
+                correlationId: 0b3b6c47-6d1b-4641-ab22-4144454cd584
+                status: 400
+                title: invalid HTTP request
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              example:
+                error: Unauthorized
+                error_description: Token Validation Failure - invalid time in token
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Authentication failed.
+        '403':
+          content:
+            application/json:
+              example:
+                error: Forbidden
+                error_description: |
+                  These credentials do not authorize access. Please contact your customer representative or submit a request here https://developer.here.com/contact-us to upgrade your account. You can also get valid credentials by registering for a free trial license on https://developer.here.com. For details, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html.
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Access denied.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Result not found for given matrix ID.
+        '406':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: |
+            Request is not acceptable. The client needs to provide the proactive
+            content negotiation `Accept-Encoding` header to signal that it supports `gzip`.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Unexpected service error.
+      summary: Result of successfully completed calculation.
+      tags:
+        - matrix
+  '/matrix/{matrixId}/status':
+    get:
+      operationId: getMatrixStatus
+      parameters:
+        - description: Matrix ID obtained upon successful submission
+          in: path
+          name: matrixId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                matrixId: bc79a808-dbac-4e49-88f2-27ec66a473ef
+                status: inProgress
+              schema:
+                $ref: '#/components/schemas/MatrixStatus'
+          description: Matrix calculation is either in progress or completed with an error.
+        '303':
+          content:
+            application/json:
+              example:
+                matrixId: bc79a808-dbac-4e49-88f2-27ec66a473ef
+                resultUrl: /v8/matrix/bc79a808-dbac-4e49-88f2-27ec66a473ef
+                status: completed
+              schema:
+                $ref: '#/components/schemas/MatrixStatus'
+          description: |
+            Matrix calculation completed successfully.
+
+            To get the result of the calculation, follow the redirect or use the `resultUrl` field
+            in the response.
+
+            Note: Most HTTP client libraries will follow redirects automatically. You might want to
+            configure your client to handle forwarding redirects differently.
+          headers:
+            Location:
+              schema:
+                type: string
+        '401':
+          content:
+            application/json:
+              example:
+                error: Unauthorized
+                error_description: Token Validation Failure - invalid time in token
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Authentication failed.
+        '403':
+          content:
+            application/json:
+              example:
+                error: Forbidden
+                error_description: |
+                  These credentials do not authorize access. Please contact your customer representative or submit a request here https://developer.here.com/contact-us to upgrade your account. You can also get valid credentials by registering for a free trial license on https://developer.here.com. For details, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html.
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Access denied.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Status not found for given matrix ID.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Unexpected service error.
+      summary: Status of submitted matrix calculation
+      tags:
+        - matrix
+  /openapi:
+    get:
+      description: Returns this API specification in YAML format.
+      operationId: getOpenapi
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Open API specification of this service in YAML format
+      security: []
+      summary: This API specification
+      tags:
+        - service
+  /profiles:
+    get:
+      description: |
+        It is guaranteed that with each minor API change profiles are only added to this list,
+        but are never removed or modified.
+      operationId: getProfiles
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Profile'
+                type: array
+                uniqueItems: true
+          description: List of supported predefined profiles.
+      security: []
+      summary: List supported predefined profiles.
+      tags:
+        - profile
+  '/profiles/{profileId}':
+    get:
+      operationId: getProfile
+      parameters:
+        - in: path
+          name: profileId
+          required: true
+          schema:
+            description: |
+              Profile ID.
+
+              This parameter is case-sensitive.
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+          description: Profile with the requested ID.
+        '401':
+          content:
+            application/json:
+              example:
+                error: Unauthorized
+                error_description: Token Validation Failure - invalid time in token
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Authentication failed.
+        '403':
+          content:
+            application/json:
+              example:
+                error: Forbidden
+                error_description: |
+                  These credentials do not authorize access. Please contact your customer representative or submit a request here https://developer.here.com/contact-us to upgrade your account. You can also get valid credentials by registering for a free trial license on https://developer.here.com. For details, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html.
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: Access denied.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+          description: Profile not found for the given profile ID.
+      security: []
+      summary: Get profile definition by its ID.
+      tags:
+        - profile
+  /version:
+    get:
+      description: Full version of the API implemented by the service.
+      operationId: getVersion
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Version'
+          description: Version document
+      security: []
+      summary: Full version of the API
+      tags:
+        - service
+components:
+  responses:
+    MatrixResponse:
+      content:
+        application/json:
+          example:
+            matrix:
+              distances:
+                - 109
+                - 10
+              numDestinations: 2
+              numOrigins: 1
+              travelTimes:
+                - 1231
+                - 983
+            matrixId: bc79a808-dbac-4e49-88f2-27ec66a473ef
+            regionDefinition:
+              center:
+                lat: 52.53787
+                lng: 13.40896
+              radius: 10000
+              type: circle
+          schema:
+            $ref: '#/components/schemas/MatrixResponse'
+      description: |
+        Result matrix was calculated for the requested `origins` and `destinations`.
+
+        The matrix contains 2 optional flat arrays, `travelTimes` and `distances` depending
+        on the specified `matrixAttributes` request parameter. Each array represents a 2D matrix
+        where rows correspond to `origins` and columns to `destinations`. The `k`-th position in
+        the array corresponds to the `(i, j)` position in the matrix defined by the following
+        relationship:
+
+        ```
+        k = num_destinations * i + j,
+        ```
+
+        where `i` is origin and `j` is destination.
+
+        If the calculation of a route between `i` and `j` fails or yields a route that violates
+        some options, the response includes
+        another `errorCodes` array with a detailed error code for each failed calculation.
+
+        If the error code for the entry `(i, j)` is not 0 (success) or 3 (violated options) then the
+        value for the entry `(i, j)` in the `travelTimes` and `distances` response array(s)
+        is unspecified; the client using the response should not rely on the value of the
+        entry `(i, j)` in the response array(s) in this case.
+        For the list of supported error codes cf. `errorCodes`.
+
+        If the calculation of the entire matrix failed due to an expected error, e.g. timeout,
+        the `matrix` field is none and the `error` field contains a detailed error description.
+  schemas:
+    AuthError:
+      description: Error object reported in case of authentication or authorization errors.
+      example:
+        error: Unauthorized
+        error_description: ApiKey invalid. ApiKey not found.
+      properties:
+        error:
+          description: Error message
+          type: string
+        error_description:
+          description: Detailed information about the error
+          type: string
+      type: object
+    AutoCircle:
+      description: |
+        Region definition variant defining an automatically derived circle.
+
+        The resulting circle contains all origins and destinations with a margin.
+      properties:
+        margin:
+          default: 10000
+          description: |
+            The minimal distance in meters between a given origin or destination and the perimeter
+            of the region.
+          maximum: 200000
+          type: integer
+        maxRadius:
+          description: |
+            Allows for limiting the radius (in meters) of the `autoCircle` to be used. The `autoCircle` will try to include most waypoints sent in the request.
+            Any waypoints that are outside of the generated `autoCircle` will not be used for travel time or distance calculations. Instead, the `errorCodes` field of the response will contain a value of 4 for the affected entries of the matrix.
+            The `maxRadius` does not include the margin specified, and `maxRadius` + `margin` must be less than or equal to 200000.
+          maximum: 200000
+          type: integer
+        type:
+          type: string
+      required:
+        - type
+    Avoid:
+      description: Avoid routes that violate these properties.
+      properties:
+        areas:
+          description: List of areas to avoid.
+          items:
+            $ref: '#/components/schemas/AvoidArea'
+          maxItems: 250
+          type: array
+        features:
+          $ref: '#/components/schemas/AvoidFeatures'
+        segments:
+          description: |
+            An array of segment identifiers that routes will avoid going through.
+
+            Each entry has the following structure:
+            `{segmentId}(#{direction})?`
+
+            The individual parts are:
+            * segmentId: The identifier of the referenced topology segment inside the catalog, example: `here:cm:segment:207551710`
+            * direction (optional): Either '*' for bidirectional (default), '+' for positive direction, or '-' for negative direction
+
+            Example of a parameter value excluding two segments:
+            `["here:cm:segment:207551710#+", "here:cm:segment:76771992#*"]`
+
+            **Notes**: Maximum amount of penalized segments in one request cannot be greater than 250.
+                    "Penalized segments" refers to segments that have a restriction on maximum baseSpeed with `maxSpeedOnSegment` or are avoided with `avoid[segments]`.            
+          items:
+            type: string
+          minItems: 1
+          type: array
+        truckRoadTypes:
+          description: |
+            An array of truck road type identifiers that routes will avoid going through.
+
+            A truck road type identifier is associated with roads that have additional regulations applied by local administration for traversal by heavy vehicles like trucks.
+            For example, the BK Bearing Class regulations in Sweden, and ET categories in Mexico.
+            Identifiers for supported truck road types are specified at HERE Map Content
+            [TruckRoadType](https://developer.here.com/documentation/here-map-content/dev_guide/topics_schema/truckroadtypeattribute.truckroadtype.html).
+          items:
+            type: string
+          minItems: 1
+          type: array
+        zoneCategories:
+          $ref: '#/components/schemas/AvoidZoneCategories'
+        zoneIdentifiers:
+          description: |
+            An array of routing zone identifiers that routes will avoid going through.
+
+            For example the identifier `here:cm:envzone:2` references the `Berlin Umweltzone` environmental zone
+          items:
+            type: string
+          minItems: 1
+          type: array
+      type: object
+    AvoidArea:
+      description: |
+        Defines an explicit area to avoid when calculating the routes.
+        Areas to be avoided can be specified by boundingBoxes or polygons (as encoded polyline or as list of geopts ).
+
+        Notes:
+         * Maximum count of polygons is 20. The combined total of boundingBoxes and polygons has a maximum limit of 250.
+         * Minimum count of coordinates in any single polygon is 3. If less the corresponding error will be returned.
+         * Maximum count of coordinates in any single polygon is 16. If more the corresponding error will be returned.
+         * Self-intersecting polygons are not supported. If they are present in the request, the corresponding error will be returned.
+      discriminator:
+        mapping:
+          boundingBox: '#/components/schemas/BoundingBox'
+          encodedPolygon: '#/components/schemas/EncodedPolygon'
+          polygon: '#/components/schemas/Polygon'
+        propertyName: type
+      oneOf:
+        - $ref: '#/components/schemas/BoundingBox'
+        - $ref: '#/components/schemas/Polygon'
+        - $ref: '#/components/schemas/EncodedPolygon'
+    AvoidFeatures:
+      description: |
+        `"avoid": {"features": [...]}`: Array of features avoided during matrix calculation.
+         Available avoid feature options:
+          * `tollRoad`
+          * `controlledAccessHighway`
+          * `ferry`
+          * `carShuttleTrain`
+          * `tunnel`
+          * `dirtRoad`
+          * `difficultTurns`: This option avoids difficult turns, sharp turns and U-turns on highways and motorways. It is only supported for the `truck` transport mode.
+          * `uTurns`: This option avoids U-turns on highways and motorways. It is not supported for pedestrian, bicycle and scooter transport modes.
+      items:
+        enum:
+          - tollRoad
+          - controlledAccessHighway
+          - ferry
+          - carShuttleTrain
+          - tunnel
+          - dirtRoad
+          - difficultTurns
+          - uTurns
+        type: string
+      type: array
+      uniqueItems: true
+    AvoidZoneCategories:
+      description: |
+        Specify avoidance of entire categories of routing zones, with the provision to add individual exceptions.
+      properties:
+        categories:
+          description: |
+            An array of routing zone categories to avoid.
+          items:
+            type: string
+            x-extensible-enum:
+              - congestionPricing
+              - environmental
+              - vignette
+          minItems: 1
+          type: array
+        exceptZoneIds:
+          description: |
+            An array of zone identifiers, which will not be taken into account for evaluation of zone categories to avoid
+          items:
+            type: string
+          minItems: 1
+          type: array
+      required:
+        - categories
+      type: object
+    BoundingBox:
+      description: A bounding box defined by two longitudes and two latitudes.
+      properties:
+        east:
+          description: Longitude in WGS-84 degrees of the eastern boundary of the box
+          maximum: 180
+          minimum: -180
+          type: number
+        north:
+          description: Latitude in WGS-84 degrees of the northern boundary of the box
+          maximum: 90
+          minimum: -90
+          type: number
+        south:
+          description: Latitude in WGS-84 degrees of the southern boundary of the box
+          maximum: 90
+          minimum: -90
+          type: number
+        type:
+          type: string
+        west:
+          description: Longitude in WGS-84 degrees of the western boundary of the box
+          maximum: 180
+          minimum: -180
+          type: number
+      required:
+        - type
+        - north
+        - south
+        - west
+        - east
+    Circle:
+      description: Region definition variant defining a circle around a coordinate on Earth.
+      properties:
+        center:
+          $ref: '#/components/schemas/Coordinate'
+        radius:
+          description: Radius in meters
+          maximum: 200000
+          minimum: 0
+          type: integer
+        type:
+          type: string
+      required:
+        - type
+        - center
+        - radius
+    Coordinate:
+      example:
+        lat: 52.53787
+        lng: 13.40896
+      properties:
+        lat:
+          description: Latitude in WGS-84 degrees.
+          format: double
+          type: number
+        lng:
+          description: Longitude in WGS-84 degrees.
+          format: double
+          type: number
+      required:
+        - lat
+        - lng
+      type: object
+    CountryCode:
+      description: ISO-3166-1 alpha-3 code
+      example: FRA
+      type: string
+    DepartureTimeWithAny:
+      description: |
+        Time of departure at all origins, in ISO 8601 (RFC 3339) format: the time zone offset is required.
+
+        When `departureTime` is not specified, it is implicitly assumed to be the current time.
+        The special value `any` enforces non time-aware routing.
+
+        In particular, dynamic traffic information is not taken into account in this case and only
+        free-flow speeds based on historical traffic are applied.
+      type: string
+    Distance:
+      description: Distance in meters
+      minimum: 0
+      type: integer
+    EncodedPolygon:
+      description: |
+        A polygon defined as a [Flexible Polyline](https://github.com/heremaps/flexible-polyline) encoded string.
+
+        The polygon is automatically closed, so repeating the first vertex is not required.
+      properties:
+        outer:
+          description: |
+            [Flexible Polyline](https://github.com/heremaps/flexible-polyline) that defines the outline of the polygon.
+            Notes: 
+             * Support only 2D polyline (without `elevation` specified).
+             * Minimum count of vertices in polygon is 3.
+             * Maximum count of vertices in polygon is 100.
+          type: string
+        type:
+          type: string
+      required:
+        - type
+        - outer
+    ErrorMessage:
+      properties:
+        action:
+          description: Actionable instruction on how to fix this error
+          type: string
+        cause:
+          description: Human readable description of the error and/or its cause.
+          type: string
+        code:
+          description: |
+            Machine readable service error code.
+
+            The prefix `E601` is fixed and is unique for this service. The last three digits
+            describe a specific error. Provide this error code when contacting support.
+
+            | Code      | Reason                                                     |
+            | --------- | ---------------------------------------------------------- |
+            | `E601101` | Invalid json                                               |
+            | `E601102` | Invalid content-type header                                |
+            | `E601103` | Invalid accept-encoding header                             |
+            | `E601104` | Invalid request size                                       |
+            | `E601105` | Invalid or missing accept-encoding                         |
+            | `E601106` | Invalid matrix id                                          |
+            | `E601107` | Method not allowed                                         |
+            | `E601108` | Unknown matrix id                                          |
+            | `E601109` | Missing obligatory path parameter `profileId`              |
+            | `E601110` | Insufficient permissions                                   |
+            | `E601111` | Rate limit exceeded                                        |
+            | `E601112` | Invalid URL query parameters                               |
+            | `E601201` | Unsupported routing mode                                   |
+            | `E601202` | Invalid region size                                        |
+            | `E601203` | Region self intersecting                                   |
+            | `E601204` | Invalid vertex count of region polygon                     |
+            | `E601210` | Invalid truck height option                                |
+            | `E601211` | Invalid truck width option                                 |
+            | `E601212` | Invalid truck length option                                |
+            | `E601213` | Empty origins                                              |
+            | `E601214` | Empty destinations                                         |
+            | `E601215` | Size of matrix exceeds limit                               |
+            | `E601217` | Region definition has to be `world` when a profile is used |
+            | `E601218` | Unknown profile ID                                         |
+            | `E601219` | Departure time has to be `any` when a profile is used      |
+            | `E601220` | Option conflicts with the used profile option              |
+            | `E601221` | Invalid coordinate specified in request                    |
+            | `E601223` | `weightPerAxle` and `weightPerAxleGroup` are incompatible  |
+            | `E601224` | Invalid SegmentId syntax                                   |
+            | `E601225` | Too many segments in avoid[segments]                       |
+            | `E601226` | Invalid country code in exclude[countries]                 |
+            | `E601227` | Invalid Routing Zone Id syntax                             |
+            | `E601228` | Invalid Routing Zone Category                              |
+            | `E601229` | Invalid combination of avoid feature `difficultTurns` or `uTurns` and transport mode. |
+            | `E601230` | `truck[*]` and `vehicle[*]` are incompatible               |
+            | `E601231` | Invalid `vehicle[type]` for transport mode                 |
+            | `E601232` | Too many items in avoid[areas]                             |
+            | `E601233` | Invalid speed for segment                                  |
+            | `E601234` | Invalid `"vehicle":{"speedCap"=*}` value, must be in range 1.00-70.00 m/s |
+            | `E601235` | Invalid `"vehicle":{"speedCap"=*}` transport mode combination |
+            | `E601236` | `radius` and `snapRadius` are incompatible                 |
+            | `E601237` | Too many items in avoid[areas][polygon]                    |
+            | `E601238` | Too many vertices in avoid[areas][polygon]                 |
+            | `E601239` | Not enough vertices in avoid[areas][polygon]               |
+            | `E601240` | Avoided polygon self intersecting                          |
+            | `E601501` | Request timeout                                            |
+            | `E601502` | Request timeout                                            |
+            | `E601503` | Request timeout                                            |
+            | `E6016xx` | Internal error                                             |
+          type: string
+        correlationId:
+          description: |
+            Unique ID of the request which triggered this error.
+
+            Please provide this ID in communication with support.
+          type: string
+        status:
+          description: HTTP status code (coincides with HTTP response status code)
+          type: integer
+        title:
+          description: Title of the error
+          type: string
+      required:
+        - title
+        - status
+        - code
+        - cause
+        - action
+        - correlationId
+      type: object
+    Exclude:
+      description: |
+        Options to exclude strictly during the route calculation.
+
+        Note - Exclude countries guarantees exclusion, but doesn't guarantee
+        finding a route.
+      properties:
+        countries:
+          description: |
+            A list of three-letter country codes (ISO-3166-1 alpha-3 code) that
+            routes will exclude.
+          items:
+            $ref: '#/components/schemas/CountryCode'
+          type: array
+      type: object
+    Matrix:
+      description: Calculated matrix
+      properties:
+        distances:
+          description: |
+            Corresponds to 2D matrix of distances (in meters). Only returned if `distance` is
+            specified in the `matrixAttributes` request parameter.
+          items:
+            format: int32
+            type: integer
+          type: array
+        errorCodes:
+          description: |
+            Contains error codes for entries in the matrix if there is at least one
+            unsuccessful calculation.
+
+            | Value |  Reason                                                                                        |
+            |-------|------------------------------------------------------------------------------------------------|
+            | 0     | Calculation successful                                                                         |
+            | 1     | Graph disconnected (there is no route between `i` and `j`)                                     |
+            | 2     | Matching failed (could not match `i` or `j` to a location where routing could start resp. end) |
+            | 3     | Route was calculated but has some violation(s) (no feasible route without violations between `i` and `j` was found). Potential violations include: <ol><li>road is used that violates a user option, e.g. an `avoid` option</li><li>road is used that violates a legal/physical restriction, e.g., a no-through zone</li><li>road is used that is blocked by a traffic event</li></ol> |
+            | 4     | Waypoints that are matched to or are inside the `margin`, or are completely outside the region limits (could not match `i` or `j` to a location where routing could start resp. end). |
+            | 99    | Unknown error                                                                                  |
+          items:
+            format: int32
+            type: integer
+          type: array
+        numDestinations:
+          description: Number of destinations (columns) in this matrix
+          minimum: 0
+          type: integer
+        numOrigins:
+          description: Number of origins (rows) in this matrix
+          minimum: 0
+          type: integer
+        travelTimes:
+          description: Corresponds to 2D matrix of travelTimes (in seconds).
+          items:
+            format: int32
+            type: integer
+          type: array
+      required:
+        - numOrigins
+        - numDestinations
+      type: object
+    MatrixRequest:
+      properties:
+        avoid:
+          $ref: '#/components/schemas/Avoid'
+        departureTime:
+          $ref: '#/components/schemas/DepartureTimeWithAny'
+        destinations:
+          description: |
+            List of waypoints defining destinations of the routes in the matrix. When no
+            `destinations` are specified, the matrix is assumed to be quadratic with `origins` used
+            as destinations.
+          items:
+            $ref: '#/components/schemas/Waypoint'
+          maxItems: 10000
+          minItems: 1
+          type: array
+        exclude:
+          $ref: '#/components/schemas/Exclude'
+        matrixAttributes:
+          default:
+            - travelTimes
+          description: |
+            Defines which attributes are included in the response as part of the data representation
+            of the matrix entries summaries.
+
+            Can be used together with `profile` parameter.
+          items:
+            enum:
+              - travelTimes
+              - distances
+            type: string
+          type: array
+          uniqueItems: true
+        maxSpeedOnSegment:
+          $ref: '#/components/schemas/MaxSpeedOnSegment'
+        origins:
+          description: List of waypoints defining origins of the routes in the matrix.
+          example:
+            - lat: 52.53787
+              lng: 13.40896
+            - lat: 52.52387
+              lng: 13.70346
+          items:
+            $ref: '#/components/schemas/Waypoint'
+          maxItems: 10000
+          minItems: 1
+          type: array
+        profile:
+          description: |
+            A profile ID enables the calculation of matrices with routes of arbitrary length.
+
+            A profile comes with a set of predefined options. It is not possible to override them.
+            *All* profiles explicitly set `departureTime` to `any` and require that the obligatory
+            request parameter `regionDefinition` is set to `world`.
+
+            | Profile ID            | Description                                  |
+            | --------------------- | -------------------------------------------- |
+            | `carFast`             | Car with fast routing mode                   |
+            | `carShort`            | Car with short routing mode                  |
+            | `truckFast`           | Truck with fast routing mode                 |
+            | `pedestrian`          | Pedestrian transport mode                    |
+            | `bicycle`             | Bicycle transport mode                       |
+
+            For the precise definition of a profile use the `profiles/{profileId}` endpoint, which
+            returns the routing options predefined for the profile.
+
+            It is guaranteed that with each minor API change profiles are only added to the above
+            list, but are never removed or modified. Profile IDs are case-sensitive.
+          enum:
+            - carFast
+            - carShort
+            - truckFast
+            - pedestrian
+            - bicycle
+          type: string
+        regionDefinition:
+          $ref: '#/components/schemas/RegionDefinition'
+        routingMode:
+          $ref: '#/components/schemas/RoutingMode'
+        scooter:
+          allOf:
+            - $ref: '#/components/schemas/Scooter'
+            - description: Specific scooter options to use during route calculation when `transportMode = scooter`.
+        taxi:
+          allOf:
+            - $ref: '#/components/schemas/Taxi'
+            - description: Specific taxi options to use during route calculation when `transportMode = taxi`.
+        traffic:
+          $ref: '#/components/schemas/Traffic'
+        transportMode:
+          $ref: '#/components/schemas/TransportMode'
+        truck:
+          allOf:
+            - $ref: '#/components/schemas/Truck'
+            - description: Renamed to `vehicle`
+            - deprecated: true
+        truckOptions:
+          allOf:
+            - $ref: '#/components/schemas/Truck'
+            - deprecated: true
+              description: Renamed to `truck`
+        vehicle:
+          allOf:
+            - $ref: '#/components/schemas/Vehicle'
+            - description: Different vehicle options to use during route calculation.
+      required:
+        - origins
+        - regionDefinition
+      type: object
+    MatrixResponse:
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorMessage'
+        matrix:
+          $ref: '#/components/schemas/Matrix'
+        matrixId:
+          description: Unique identifier assigned to the matrix by the service
+          type: string
+        regionDefinition:
+          $ref: '#/components/schemas/RegionDefinition'
+      required:
+        - matrixId
+      type: object
+    MatrixStatus:
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorMessage'
+        matrixId:
+          description: Unique identifier assigned to the matrix by the service
+          type: string
+        resultUrl:
+          description: 'If the `status` is `completed`, contains the url to the matrix result.'
+          format: uri
+          type: string
+        status:
+          description: Specifies the status of the matrix calculation.
+          enum:
+            - accepted
+            - inProgress
+            - completed
+            - timeout
+            - error
+          type: string
+        statusUrl:
+          description: 'If the `status` is `accepted`, contains the url to the matrix status.'
+          format: uri
+          type: string
+      required:
+        - matrixId
+        - status
+      type: object
+    MaxSpeedOnSegment:
+      description: |
+        Segments with restrictions on maximum `baseSpeed`.
+
+        **Notes**: Maximum amount of penalized segments in one request cannot be greater than 250.
+        "Penalized segments" refers to segments that have a restriction on maximum baseSpeed with `maxSpeedOnSegment`
+        or are avoided with `avoid[segments]` 
+      items:
+        properties:
+          segment:
+            description: |
+              Identifier of the segment with restrictions on maximum `baseSpeed`.
+
+              Each entry has the following structure:
+              `{segmentId}(#{direction})?`
+            type: string
+          speed:
+            description: |
+              Maximum `baseSpeed` on segment in m/s. 
+            maximum: 69.99
+            minimum: 1
+            type: number
+        type: object
+      type: array
+    Polygon:
+      description: |
+        A polygon defined as a list of coordinates.
+
+        The polygon is automatically closed, so repeating the first vertex is not required.
+      properties:
+        outer:
+          description: List of coordinates defining the outline of the polygon.
+          items:
+            $ref: '#/components/schemas/Coordinate'
+          maxItems: 100
+          minItems: 3
+          type: array
+        type:
+          type: string
+      required:
+        - type
+        - outer
+    Profile:
+      description: |
+        A profile specifies predefined request options that can be used for matrix routing in
+        the whole world.
+      properties:
+        avoid:
+          $ref: '#/components/schemas/Avoid'
+        departureTime:
+          $ref: '#/components/schemas/DepartureTimeWithAny'
+        exclude:
+          $ref: '#/components/schemas/Exclude'
+        maxSpeedOnSegment:
+          $ref: '#/components/schemas/MaxSpeedOnSegment'
+        profileId:
+          description: Unique machine- and human-readable profile ID
+          type: string
+        regionDefinition:
+          $ref: '#/components/schemas/RegionDefinition'
+        routingMode:
+          $ref: '#/components/schemas/RoutingMode'
+        transportMode:
+          $ref: '#/components/schemas/TransportMode'
+        truck:
+          $ref: '#/components/schemas/Vehicle'
+    RegionDefinition:
+      description: |
+        Definition of a region in which the matrix will be calculated.
+
+        Only the data **inside** of the region will be used for the calculation of the matrix. All
+        origins and destinations outside of the region are considered as invalid. The corresponding
+        values in the response matrix will be undefined.
+
+        If the region diameter is too large (cf. corresponding limits), the calculation will not be
+        done and an error will be returned by the service.
+
+        The special variant `world` is used to enable calculation of matrices with routes of
+        arbitrary length. Additionally, a profile has to be selected from the list of supported
+        predefined profiles. For more information, refer to the documentation of the `profile`
+        request parameter.
+      discriminator:
+        mapping:
+          autoCircle: '#/components/schemas/AutoCircle'
+          boundingBox: '#/components/schemas/BoundingBox'
+          circle: '#/components/schemas/Circle'
+          polygon: '#/components/schemas/Polygon'
+          world: '#/components/schemas/World'
+        propertyName: type
+      example:
+        center:
+          lat: 52.53787
+          lng: 13.40896
+        radius: 10000
+        type: circle
+      oneOf:
+        - $ref: '#/components/schemas/Circle'
+        - $ref: '#/components/schemas/BoundingBox'
+        - $ref: '#/components/schemas/Polygon'
+        - $ref: '#/components/schemas/AutoCircle'
+        - $ref: '#/components/schemas/World'
+    RoutingMode:
+      default: fast
+      description: |
+        Optimization applied during route calculation.
+
+        * `fast`: Route calculation from start to destination optimized by travel time. In many
+          cases, the route returned by the `fast` mode may not be the route with the fastest
+          possible travel time. For example, the routing service may favor a route that remains on
+          a highway, even if a faster travel time can be achieved by taking a detour or shortcut
+          through an inconvenient side road.
+        * `short`: Route calculation from start to destination disregarding any speed information.
+          In this mode, the distance of the route is minimized, while keeping the route sensible.
+          This includes, for example, penalizing turns. Due to that, the resulting route will
+          not necessarily be the one with minimal distance.
+
+        For `pedestrian` and `bicycle` transport modes, using both `fast` and `short` routing modes gives the
+        same result.
+
+        Note that `bus`, `privateBus`, `taxi`, and `scooter` transport modes only supports `fast` routing mode.
+      enum:
+        - fast
+        - short
+      type: string
+    Scooter:
+      properties:
+        allowHighway:
+          default: false
+          description: |
+            Specifies whether matrix calculation should take highways into account. When this
+            parameter isn't provided, then by default highways would be avoided. If the avoid
+            feature `controlledAccessHighway` is provided, then highways would be avoided,
+            even if `allowHighway` is set to `true`.
+          type: boolean
+      type: object
+    SideOfStreetHint:
+      description: 'A hint as to which side of the street should be preferred for this waypoint. This hint should be a point next to the street, e.g. a POI'
+      example:
+        lat: 52.5293001
+        lng: 13.3797097
+        match: always
+      properties:
+        lat:
+          description: Latitude in WGS-84 degrees.
+          format: double
+          type: number
+        lng:
+          description: Longitude in WGS-84 degrees.
+          format: double
+          type: number
+        match:
+          default: onlyIfDivided
+          description: |
+            Determines how the side of street hint should be handled
+
+            * `always`: Always use side of street hint
+            * `onlyIfDivided`: Only use side of street hint on divided roads
+          enum:
+            - always
+            - onlyIfDivided
+          type: string
+      required:
+        - lat
+        - lng
+      type: object
+    Taxi:
+      properties:
+        allowDriveThroughTaxiRoads:
+          default: true
+          description: |
+            Specifies if a vehicle is allowed to drive through the taxi-only roads and lanes. It's
+            still allowed on taxi roads after the route start and before the destination even if not
+            allowed to drive through the taxi-only roads.
+
+            **Alpha**: This parameter may not be stable and is subject to change.
+          type: boolean
+      type: object
+    Traffic:
+      description: Traffic specific parameters.
+      properties:
+        overrideFlowDuration:
+          description: |
+            Duration in seconds for which flow traffic event would be considered valid. While flow
+            traffic event is valid it will be used over the historical traffic data.
+
+            **Note**: Flow traffic represents congestion not caused by any long-term incidents.
+            State of the flow traffic often changes fast. The farther away from the current time we
+            move, the less precise current flow traffic data will be and the more precise historical
+            traffic data becomes. That's why it's advised not to use this parameter unless you know
+            what you want to achieve and use the default behavior which is almost always better.
+          type: integer
+      type: object
+    TransportMode:
+      default: car
+      description: |
+        Depending on the transport mode special constraints, speed attributes and weights are
+        taken into account during route calculation.
+
+        * `car`: Route calculation for cars.
+        * `truck`: Route calculation for trucks. This mode considers truck access- and physical limitations. It also
+        uses different speed assumptions when calculating the route.
+        * `pedestrian`: Route calculation for pedestrians.
+        * `bicycle`: Route calculation for bicycles.
+        * `taxi`: Route calculation for taxis. This mode takes into account taxi restricted streets as well as streets
+        reserved for exclusive taxi access. It does not, however, consider exclusive lanes in otherwise shared streets.
+        Also, the taxi exclusive streets are used only if either the origin or destination are on them.
+        Note: `taxi` mode is in Alpha state. It is not yet stable and behavior may change drastically, or even become
+        unsupported, without warning.
+        * `scooter`: Route calculation for scooters. This mode takes into account roads that are allowed for scooters,
+        however dedicated scooter lanes are not supported. It does not consider highways, unless the special parameter
+        `allowHighway` is provided.
+        * `bus`: Route calculation for buses that are allowed to drive through the bus-only roads.
+        * `privateBus`: Route calculation for buses that are not allowed to drive through the bus-only roads.
+      enum:
+        - car
+        - truck
+        - pedestrian
+        - bicycle
+        - taxi
+        - scooter
+        - bus
+        - privateBus
+      type: string
+    Truck:
+      allOf:
+        - $ref: '#/components/schemas/VehicleBase'
+        - deprecated: true
+          properties:
+            type:
+              $ref: '#/components/schemas/TruckType'
+    TruckType:
+      default: straight
+      deprecated: true
+      description: |
+        Specifies the type of truck.
+
+        * `straight`: a truck on a single frame with a permanently attached cargo area
+        * `tractor`: a towing vehicle that can pull one or more semi-trailers (aka semi-truck)
+      enum:
+        - straight
+        - tractor
+      type: string
+    Vehicle:
+      allOf:
+        - $ref: '#/components/schemas/VehicleBase'
+        - properties:
+            type:
+              $ref: '#/components/schemas/VehicleType'
+    VehicleBase:
+      properties:
+        axleCount:
+          description: Total number of axles that the vehicle has.
+          format: int32
+          maximum: 255
+          minimum: 2
+          type: integer
+        category:
+          default: undefined
+          description: |
+            Specifies the category of vehicle
+
+            * `undefined`: The vehicle category is undefined and no special considerations are taken into
+              account. Routing will proceed as normal.
+            * `lightTruck`: The vehicle is a truck light enough to be classified more as a car than as a truck.
+              I.e., this exempts it from many legal restrictions for normal trucks. Restrictions related
+              to the physical dimensions of the truck, or its cargo, however, still apply.
+          enum:
+            - undefined
+            - lightTruck
+          type: string
+        grossWeight:
+          description: 'Total vehicle weight, including trailers and shipped goods, in kilograms.'
+          format: int32
+          minimum: 0
+          type: integer
+        height:
+          description: 'Vehicle height, in centimeters.'
+          format: int32
+          maximum: 5000
+          minimum: 0
+          type: integer
+        length:
+          description: 'Vehicle length, in centimeters.'
+          format: int32
+          maximum: 30000
+          minimum: 0
+          type: integer
+        shippedHazardousGoods:
+          description: |
+            List of hazardous materials in the vehicle.
+
+            | Value                 | Description                                  |
+            | --------------------- | -------------------------------------------- |
+            | `explosive`           | Explosive materials                          |
+            | `gas`                 | Gas                                          |
+            | `flammable`           | Flammable materials                          |
+            | `combustible`         | Combustible materials                        |
+            | `organic`             | Organic materials                            |
+            | `poison`              | Poisonous materials                          |
+            | `radioactive`         | Radioactive materials                        |
+            | `corrosive`           | Corrosive materials                          |
+            | `poisonousInhalation` | Materials that are poisonous upon inhalation |
+            | `harmfulToWater`      | Materials that are harmful to water          |
+            | `other`               | Other types of hazardous materials           |
+          items:
+            enum:
+              - explosive
+              - gas
+              - flammable
+              - combustible
+              - organic
+              - poison
+              - radioactive
+              - corrosive
+              - poisonousInhalation
+              - harmfulToWater
+              - other
+            type: string
+          type: array
+        speedCap:
+          description: |
+            Specifies the maximum speed, in m/s, which the user wishes not to exceed.
+            This parameter affects route ETA and consumption calculation.
+
+            Limitations:
+              * valid for following transport modes: `car`, `truck`, `scooter`, `taxi`, `bus`, and `privateBus`
+
+            Notes:
+              * Car and Truck mode updates route ETA.
+              * Scooter mode updates route optimization and ETA.
+
+            **Disclaimer: this parameter is work in progress and functionality is not complete**
+          maximum: 70
+          minimum: 1
+          type: number
+        trailerCount:
+          default: 0
+          description: Number of trailers attached to the vehicle.
+          format: int32
+          maximum: 255
+          minimum: 0
+          type: integer
+        tunnelCategory:
+          description: |
+            Specifies the [cargo tunnel restriction code](https://adrbook.com/en/2017/ADR/8.6.3). Route will pass only through tunnels of less restrictive categories.
+          enum:
+            - B
+            - C
+            - D
+            - E
+          type: string
+        weightLimit:
+          deprecated: true
+          description: Renamed to `grossWeight`.
+          format: int32
+          minimum: 0
+          type: integer
+        weightPerAxle:
+          description: |
+            Heaviest vehicle weight per axle, in kilograms.
+
+            Heaviest weight per axle, regardless of axle type or axle group. It is evaluated against
+            all axle weight restrictions, including single axle and tandem axle weight restrictions.
+            It is useful if differences between axle types, like tandem and triple axles, are not
+            relevant. This is the case in many countries, since they don't distinguish between these
+            different axle groups on signs and in regulations.
+
+            More fine-grained axle weight input is possible with `weightPerAxleGroup`.
+
+            **Note:** `weightPerAxleGroup` and `weightPerAxle` are incompatible.
+          format: int32
+          minimum: 0
+          type: integer
+        weightPerAxleGroup:
+          $ref: '#/components/schemas/WeightPerAxleGroup'
+        width:
+          description: 'Vehicle width, in centimeters.'
+          format: int32
+          maximum: 5000
+          minimum: 0
+          type: integer
+      type: object
+    VehicleType:
+      description: |
+        Specifies the type of the vehicle
+
+        * `straightTruck`: a truck on a single frame with a permanently attached cargo area. **Note:**
+        default value when truck routing mode is used. **Limitations:** only valid for `transportMode=truck`.
+        * `tractor`: a towing vehicle that can pull one or more semi-trailers (aka semi-truck).
+        **Limitations:** only valid for `transportMode=truck`.
+      enum:
+        - straightTruck
+        - tractor
+      type: string
+    Version:
+      properties:
+        apiVersion:
+          description: API version in format `major.minor.patch`
+          example: 8.0.0
+          type: string
+      required:
+        - apiVersion
+      type: object
+    Waypoint:
+      allOf:
+        - description: WSG-84 coordinates with additional metadata
+          example:
+            course: 143
+            lat: 52.5292745
+            lng: 13.379649
+          properties:
+            course:
+              description: |
+                The direction (degrees in clockwise direction, 0 is north) from which this waypoint should be approached or in which it should be left.
+                Values outside the range are wrapped to the range
+              format: double
+              maximum: 359
+              minimum: 0
+              type: number
+            lat:
+              description: Latitude in WGS-84 degrees.
+              format: double
+              type: number
+            lng:
+              description: Longitude in WGS-84 degrees.
+              format: double
+              type: number
+            minCourseDistance:
+              description: |
+                Requires that the route calculation follow the course set for this
+                waypoint, at least within this distance
+              format: int32
+              minimum: 0
+              type: integer
+            nameHint:
+              description: |
+                Directs the route calculation to search for a location with a similar name
+              type: string
+            sideOfStreetHint:
+              $ref: '#/components/schemas/SideOfStreetHint'
+          required:
+            - lat
+            - lng
+          type: object
+        - oneOf:
+            - properties:
+                radius:
+                  allOf:
+                    - $ref: '#/components/schemas/Distance'
+                    - maximum: 200
+                  description: |
+                    Distance in meters.
+                    Instructs the router to consider all places within the given radius as potential candidates for matching the waypoint.
+                    This can be either because it is not important which place is used, or because it is unknown. Values higher than 200 meters are not supported.
+                    Option cannot be combined with `snapRadius`.
+              type: object
+            - properties:
+                snapRadius:
+                  allOf:
+                    - $ref: '#/components/schemas/Distance'
+                    - maximum: 1000000
+                  description: |
+                    Distance in meters.
+                    Instructs the router to match the waypoint, within the specified radius, to the most "significant" road.
+                    In contrast to the regular `radius` parameter, `snapRadius` sorts potential candidates in order of "significance".
+                    For example, a highway is more significant on a zoomed-out map than a national road, a national road is more significant than a city road, etc.
+                    Hence, `snapRadius` cannot be combined with `radius` parameter. The typical use case for `snapRadius` is when selecting a waypoint on
+                    a zoomed-out view of a map on a drag-and-drop interface. The expectation on such UIs is that only roads that are visible at that zoom level
+                    are considered for matching and a large snapRadius would enable that.
+              type: object
+    WeightPerAxleGroup:
+      description: |
+        Specifies the weights of different axle groups, like single and tandem axles.
+
+        This allows specification of axle weights in a more fine-grained way than `weightPerAxle`. This
+        is relevant in countries with signs and regulations that specify different limits for different
+        axle groups, like the USA and Sweden.
+
+        Weights are specified in kilograms (kg) and are the total weight of the axle group.
+
+        **Note:** `weightPerAxleGroup` and `weightPerAxle` are incompatible.
+      example:
+        single: 11000
+        tandem: 18000
+      properties:
+        single:
+          description: single axle group
+          format: int32
+          minimum: 0
+          type: integer
+        tandem:
+          description: tandem axle group
+          format: int32
+          minimum: 0
+          type: integer
+        triple:
+          description: triple axle group
+          format: int32
+          minimum: 0
+          type: integer
+      type: object
+    World:
+      description: |
+        Unbounded region referring to the whole world.
+
+        The world region is only supported when a predefined profile is specified and no other
+        options are provided. For more information, refer to the documentation of the `profile`
+        request parameter.
+      properties:
+        type:
+          type: string
+      required:
+        - type
+  securitySchemes:
+    ApiKey:
+      description: |
+        A key generated specifically to authenticate API requests. For more information on how to get an API key, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html.
+      in: query
+      name: apiKey
+      type: apiKey
+    Bearer:
+      bearerFormat: JWT
+      description: |
+        A token obtained from a separate endpoint using client credentials and an OAuth 1.0a HMAC-SHA256 signed request.
+        For more information on how to get a bearer token, see https://developer.here.com/documentation/identity-access-management/dev_guide/index.html.
+      scheme: bearer
+      type: http
